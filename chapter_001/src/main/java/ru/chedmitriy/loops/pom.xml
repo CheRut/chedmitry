@@ -1,0 +1,14 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ru.dimcher.part001.loops</groupId>
+	<artifactId>loops</artifactId>
+	<name>loops</name>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	
+	<parent>
+		<groupId>ru.dimcher.part001</groupId>
+		<artifactId>part001</artifactId>
+		<version>1.0</version>
+	</parent>
+</project>

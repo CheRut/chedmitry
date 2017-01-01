@@ -1,1 +1,2 @@
-# chedmitry
+# junior
+Начальный проект для курса Junior
