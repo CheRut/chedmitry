@@ -6,59 +6,91 @@ import java.io.*;
  * Created by dimsan on 30.12.2016.
  */
 public class Abuse {
+/**.
+ * Класс StringBuilder
+ * позволяет изменять
+ * строку,не создавая при этом новой строки,
+ * в отличии от String, где любое изменение строки приводит
+ * к созданию новой строки со значением измененной старой строки.
+ * При этом старая строка остается висеть в памяти,пока ее не уберет
+ * уборщик мусора.
+ * В данном примере выбар пал на StringBuilder ввиду
+ * множественных конкатинаций строк
+ * */
+    public StringBuilder stringBuilder = new StringBuilder();
+
+    public StringBuilder getStringBuilder() {
+        return stringBuilder;
+    }
+
+    public void setStringBuilder(StringBuilder stringBuilder) {
+        this.stringBuilder = stringBuilder;
+    }
+
     /**.
-     * USERDIRECTORY -
-     *  пользовательская директория
-     * 'user.dir'
+     * 'c' - символьная переменная
+     * значение ее принимается как приведенное
+     * целочисленное значение
      * */
-    private final String USERDIRECTORY = System.getProperty("user.dir");
+    char c;
     /**.
-     * PATH - путьк
+     * параметр 't' - принимает
+     * входящий поток*/
+    int t;
+    /**
+     * .
+     * PATH - путь к
      * конкретному файлу
      * 'numbers.txt'
      * в папке resources
+     */
+    public final String PATH = "chapter_003/src/main/resources/abuses.txt";
+    /**
+     * .
+     * PATHOUT - путь
+     * в место сохранения файла
      *
-     * */
-    private final String PATH = "Chapter_003/src/main/resources/abuses.txt";
+     */
+    public final String PATHOUT = "chapter_003/src/main/resources/abusesOut.txt";
 
+    /**
+     * .
+     * Метод 'dropAbuse'- удаляет из
+     * открытого файла слова,определенные
+     * массивом abuses
+     * и записывает полученные значения в
+     * новый файл.
+     * @param in - входной поток - исходный файл
+     * @param out - выходной поток - конечный файл
+     * @param abuse - массив слов,которые необходимо
+     *               убрать из исходного файла.
+     */
+    public void dropAbuses(InputStream in, OutputStream out, String[] abuse)throws IOException {
+        try (InputStreamReader inputStreamReader = new  InputStreamReader(in);
+             OutputStreamWriter outputWriter = new OutputStreamWriter((out))) {
+            while ((t = inputStreamReader.read()) !=-1) {
+                c = (char) t;
+                stringBuilder.append(c);
+                for (String ab : abuse) {
+                    int start = stringBuilder.indexOf(ab);
+                    if (start != -1) {
+                        stringBuilder.delete(start, start + ab.length());
+                    }
 
+                }
 
-    /**.
-     * Метод 'readFile()'-информирует
-     * о содержимом файла-входящего потока
-     * выводя содержимое в консоль*/
-    void readFile(){
-        try {
-            InputStream in = new FileInputStream(new File(USERDIRECTORY,PATH));
-            int number = in.read();
-            char fileContent;
-            System.out.print("Строка,записанная в файле: ");
-            while (number != -1) {
-                fileContent = (char) number;
-                System.out.print(fileContent);
-                number = in.read();
             }
-            System.out.println();
-            in.close();
-        }catch (IOException iOE){
-            iOE.printStackTrace();
+            outputWriter.write(stringBuilder.toString());
         }
-    }
-    // запись в файл используя OutputStream
-    public void write(String st) throws IOException {
-        // инициализируем поток для вывода данных
-        // что позволит нам записать новые данные в файл
-      FileOutputStream  outputStream = new FileOutputStream(PATH);
-        // передаем полученную строку st и приводим её к byte массиву.
-        outputStream.write(st.getBytes());
-        // закрываем поток вывода
-        // только после того как мы закроем поток данные попадут в файл.
-        outputStream.close();
+
     }
 
     public static void main(String[] args) throws IOException {
-        Abuse abuseStream = new Abuse();
-        abuseStream.readFile();
-        abuseStream.write("kjkjkjkjkj");
+        String  abuse[] = {"two", "four", "five", "eight", "ten","seven"};
+        Abuse ab = new Abuse();
+        InputStream in = new FileInputStream(new File(ab.PATH));
+        OutputStream out = new FileOutputStream(new File(ab.PATHOUT));
+        ab.dropAbuses(in,out,abuse);
+        System.out.println(ab.stringBuilder);
     }
 }

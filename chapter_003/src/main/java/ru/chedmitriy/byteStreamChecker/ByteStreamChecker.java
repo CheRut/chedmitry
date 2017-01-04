@@ -25,7 +25,7 @@ public class ByteStreamChecker {
      * в папке resources
      *
      * */
-     public final String PATH = "chapter_003/src/main/resources/numbers.txt";
+     public final String PATH = "Chapter_003/src/main/resources/numbers.txt";
 
 /**.
  * Данный метод,принимает параметр
@@ -40,31 +40,32 @@ public class ByteStreamChecker {
  * */
 public boolean isNumber(InputStream in) throws IOException{
         boolean evenNumb = false;
+        String s;
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            try  {
+                while ((s = br.readLine()) != null) {
 
-            try (BufferedReader  br = new BufferedReader(new InputStreamReader(in))) {
-                String s;
-                while((s = br.readLine())!= null) {
-                    if (Integer.valueOf(s) % 2 == 0 && Integer.valueOf(s) !=0 ) {
+                    if (Integer.valueOf(s) % 2 == 0 && !s.equals("0")) {
                         evenNumb = true;
                         cIO.print(s + " - четное: " + evenNumb);
                         cIO.println("");
                     } else {
-                        evenNumb = false;
                         cIO.print(s + " - нечетное: " + evenNumb);
                         cIO.println("");
                     }
                 }
-
-
+            }catch(FileNotFoundException fex){
+                System.out.println(fex.toString());
+            }
+                finally {
+                    try{br.close();}catch(IOException iex){
+                    System.out.println(iex.toString());
+                }
             }
     return evenNumb;
     }
 
-    public static void main(String[] args) throws IOException {
-        ByteStreamChecker byteStreamChecker =  new ByteStreamChecker();
-        InputStream inputstream = new FileInputStream(new File(byteStreamChecker.PATH).getAbsolutePath());
-        byteStreamChecker.isNumber(inputstream);
-    }
+
 }
 
 
