@@ -19,13 +19,13 @@ public class ByteStreamChecker {
     ConsoleIO cIO = new ConsoleIO();
 
     /**.
-     * PATH - путьк
+     * PATH - путь к
      * конкретному файлу
      * 'numbers.txt'
      * в папке resources
      *
      * */
-     public final String PATH = "Chapter_003/src/main/resources/numbers.txt";
+     public final String PATH = "chapter_003/src/main/resources/numbers.txt";
 
 /**.
  * Данный метод,принимает параметр
@@ -44,22 +44,23 @@ public boolean isNumber(InputStream in) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
             try  {
                 while ((s = br.readLine()) != null) {
-
                     if (Integer.valueOf(s) % 2 == 0 && !s.equals("0")) {
                         evenNumb = true;
                         cIO.print(s + " - четное: " + evenNumb);
                         cIO.println("");
                     } else {
+                        evenNumb = false;
                         cIO.print(s + " - нечетное: " + evenNumb);
                         cIO.println("");
                     }
                 }
-            }catch(FileNotFoundException fex){
-                System.out.println(fex.toString());
+            } catch(FileNotFoundException fex) {
+                cIO.println(fex.toString());
             }
                 finally {
-                    try{br.close();}catch(IOException iex){
-                    System.out.println(iex.toString());
+                    try { br.close();
+                    } catch(IOException iex){
+                   cIO.println(iex.toString());
                 }
             }
     return evenNumb;
