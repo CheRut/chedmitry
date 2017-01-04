@@ -19,14 +19,6 @@ public class Abuse {
  * */
     public StringBuilder stringBuilder = new StringBuilder();
 
-    public StringBuilder getStringBuilder() {
-        return stringBuilder;
-    }
-
-    public void setStringBuilder(StringBuilder stringBuilder) {
-        this.stringBuilder = stringBuilder;
-    }
-
     /**.
      * 'c' - символьная переменная
      * значение ее принимается как приведенное
@@ -76,21 +68,11 @@ public class Abuse {
                     if (start != -1) {
                         stringBuilder.delete(start, start + ab.length());
                     }
-
                 }
 
             }
             outputWriter.write(stringBuilder.toString());
         }
-
     }
-
-    public static void main(String[] args) throws IOException {
-        String  abuse[] = {"two", "four", "five", "eight", "ten","seven"};
-        Abuse ab = new Abuse();
-        InputStream in = new FileInputStream(new File(ab.PATH));
-        OutputStream out = new FileOutputStream(new File(ab.PATHOUT));
-        ab.dropAbuses(in,out,abuse);
-        System.out.println(ab.stringBuilder);
-    }
+  
 }
