@@ -92,7 +92,6 @@ public void init() throws FileNotFoundException {
                 System.out.println("Ошибка ввода/вывода");
                 ex.printStackTrace();
             }
-
         assertTrue(actualTrue.equals(s.toString()));
         assertFalse(actualFalse.equals(s.toString()));
     }
