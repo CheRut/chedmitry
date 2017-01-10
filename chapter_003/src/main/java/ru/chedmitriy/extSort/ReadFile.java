@@ -35,7 +35,7 @@ public class ReadFile {
         * выбираем параметр доступа
          * rw - чтение и запись*/
         String accesMode = "rw";
-int frstPositions = 0;
+    int frstPositions = 0;
     int secPositions = 0;
 
 
@@ -49,32 +49,59 @@ int frstPositions = 0;
          * знач*/
         public void fileSharing()  {
             String line;
+            /**
+             * Параметр объема считанных строк
+             * */
             byte weight = 0;
+
             try {
+                /**
+                 * Указываю пути к файлам
+                 *
+                 * */
                 source = new RandomAccessFile(sourceFile,accesMode);
                 firstOptionalFile = new RandomAccessFile(new File("chapter_003/src/main/resources/optionalFst.txt"),"rw");
                 secondOptionalFile = new RandomAccessFile(new File("chapter_003/src/main/resources/optionalSec.txt"),"rw");
                 distFile = new RandomAccessFile(new File("chapter_003/src/main/resources/distFile.txt"),"rw");
-
+                /**.
+                * Определяю размер файла
+                 * исходного
+                * */
                 long fileSize = source.length();
-                long optionFstFileSize =fileSize/2;
-                long optionSecFileSize = fileSize-optionFstFileSize;
+                /**
+                 * определяю размер
+                 *  дного из вспомогательных файлов
+                 * */
+                long optionFstFileSize = fileSize/2;
+
                 if(fileSize<=1){
                     return;
                 }
                 else {
-                    while ((line = source.readLine()) != null && !line.equals("")) {
+                    /**.
+                     * если прочитанная строка не NULL
+                     *  начинаю цикл
+                     *  */
+                    while ((line = source.readLine()) != null) {
+                            /**до тех пор пока параметр
+                            *  считанных символов не меньше объема первого файла,
+                            *  записываю в него байты с исходника*/
                         if (weight < optionFstFileSize) {
                             firstOptionalFile.write(line.getBytes());
                             firstOptionalFile.write("\n".getBytes());
                             weight += line.getBytes().length;
                             secondOptionalFile.seek(0);
+
+                            /**остальное отдаю во второй
+                             *  вспомогательный файл*/
                         } else if (weight >= optionFstFileSize && weight < fileSize) {
                             secondOptionalFile.write(line.getBytes());
                             secondOptionalFile.write("\n".getBytes());
                             weight += line.getBytes().length;
                         }
                     }
+                    /**здесь предполагается разместить метод слияния
+                     * двух отсортированных файлов - merge*/
                     merge();
                 }
                 source.close();
@@ -91,14 +118,13 @@ int frstPositions = 0;
  * и заносит их в конечный файл distFile
  * */
     public void merge() throws IOException {
-        System.out.println(frstPositions);
-        System.out.println(secPositions);
+
         String line1,line2;
         firstOptionalFile.seek(0);
         secondOptionalFile.seek(0);
+
         while (((line1 = firstOptionalFile.readLine()) != null && (line2 = secondOptionalFile.readLine()) != null)){
             if (line1.length() <= line2.length()) {
-                System.out.println(line1 + " < " + line2);
                 distFile.write(line1.getBytes());
                 distFile.writeUTF(System.getProperty("line.separator"));
                 removeLine(firstOptionalFile, line1);
