@@ -30,24 +30,28 @@ public class ReadFile {
         /**.
         * исходный файл
         * */
-        File sourceFile = new File("chapter_003/src/main/resources/source.txt");
-        /**.
+
+                        /**.
         * выбираем параметр доступа
          * rw - чтение и запись*/
         String accesMode = "rw";
     int frstPositions = 0;
     int secPositions = 0;
 
+    public ReadFile() throws IOException {
+    }
 
 
-        /**.
+    /**.
          * Метод разбивает
          * файл на два
          * вспомагательных
          * файла
          * в каждый из файлов записываются
          * знач*/
-        public void fileSharing()  {
+        public void fileSharing() throws IOException {
+
+            
             String line;
             /**
              * Параметр объема считанных строк
@@ -59,8 +63,8 @@ public class ReadFile {
                  * Указываю пути к файлам
                  *
                  * */
-                source = new RandomAccessFile(sourceFile,accesMode);
-                firstOptionalFile = new RandomAccessFile(new File("chapter_003/src/main/resources/optionalFst.txt"),"rw");
+               // source = new RandomAccessFile(new File();
+                firstOptionalFile = new RandomAccessFile(new File(System.getProperty("java.io.tmpdir")),"rw");
                 secondOptionalFile = new RandomAccessFile(new File("chapter_003/src/main/resources/optionalSec.txt"),"rw");
                 distFile = new RandomAccessFile(new File("chapter_003/src/main/resources/distFile.txt"),"rw");
                 /**.
