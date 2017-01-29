@@ -1,7 +1,11 @@
 package ru.chedmitriy.extSort;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.UUID;
 
 /**
  * Created by dimsan on 05.01.2017.
@@ -10,38 +14,39 @@ public class SortingArray {
     public static void removeNthLine(String f, int toRemove) throws IOException {
 
     }
+
     public static void main(String[] args) throws IOException {
 
       ReadFile rf = new ReadFile();
         rf.fileSharing();
-
-        int numbers[] = {1, 8, 16, 1024,31111};
-        try
-        {
-            RandomAccessFile raf = new RandomAccessFile("int.txt","rw");
-        String line;
-
-
-
-            for (int i = 0; i<numbers.length; i++) {
-                line = String.valueOf(numbers[i]);
-                raf.write(line.getBytes());
-                raf.write("\n".getBytes());
-                if(line.equals("8")){
-                raf.seek(raf.getFilePointer()-line.length()-1);
-                    raf.write("".getBytes());
-                }
-                if(line.equals("16")){
-                    raf.seek(raf.getFilePointer()-line.length()-1);
-                    raf.write("".getBytes());
-                }
-            }
-            System.out.println(raf.length());
-            raf.close();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
-    }
+//
+//        int numbers[] = {1, 8, 16, 1024,31111};
+//        try
+//        {
+//            RandomAccessFile raf = new RandomAccessFile("int.txt","rw");
+//        String line;
+//
+//
+//
+//            for (int i = 0; i<numbers.length; i++) {
+//                line = String.valueOf(numbers[i]);
+//                raf.write(line.getBytes());
+//                raf.write("\n".getBytes());
+//                if(line.equals("8")){
+//                raf.seek(raf.getFilePointer()-line.length()-1);
+//                    raf.write("".getBytes());
+//                }
+//                if(line.equals("16")){
+//                    raf.seek(raf.getFilePointer()-line.length()-1);
+//                    raf.write("".getBytes());
+//                }
+//            }
+//            System.out.println(raf.length());
+//            raf.close();
+//        } catch (IOException e) {
+//            System.err.println(e.getMessage());
+//        }
+//    }
 //               public static void removeLine(RandomAccessFile raf,String line) throws IOException {
 //                   String checkLine;
 //                   long pointer;
@@ -66,5 +71,6 @@ public class SortingArray {
 
 
 
-}
+    }
 
+}

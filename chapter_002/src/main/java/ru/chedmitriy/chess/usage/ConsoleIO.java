@@ -27,7 +27,7 @@ public class ConsoleIO implements Input, Output {
      */
     @Override
     public String ask(String s) {
-       println("Please enter the parameter");
+       println(s);
         return scanner.next();
     }
     /**

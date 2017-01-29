@@ -1,9 +1,10 @@
 package ru.chedmitriy.extSort;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.Scanner;
+import ru.chedmitriy.service.Settings;
+
+import java.io.*;
+import java.net.URL;
+
 
 /**
  * @author Dmitry Cherutsa on 05.01.2017.
@@ -12,39 +13,33 @@ import java.util.Scanner;
  * @since 0.1
  */
 public class WriteToFile {
-    public static void main(String[] args) {
-        RandomAccessFile file;
-        Scanner sc = new Scanner(System.in);
+    public void fileOpen() throws FileNotFoundException {
+String line;
+        Settings settings = new Settings();
+        URL url = getClass().getResource("/source.txt");
+        File file = new File(url.getPath());
+        System.out.println(file.getAbsolutePath());
+        try {
 
-        String name,surname;
-        int age;
-        System.out.println("Please input name");
-        name = sc.next().toLowerCase();
-
-
-        System.out.println("Please input surname");
-        surname = sc.next().toLowerCase();
-
-        System.out.println("Please input age");
-        age = sc.nextInt();
-
-        try{
-            file = new RandomAccessFile(new File("chapter_003/src/main/resources/source.txt"),"rw");
-
-            file.writeUTF(name);
-            for (int i = 0; i < 20-name.length(); i++) {
-                file.writeByte(20);
+            RandomAccessFile  source = new RandomAccessFile(file,"rw");
+            while((line=source.readLine())!=null){
+                System.out.println(line);
             }
-            file.writeUTF(surname);
-            for (int i = 0; i < 20-surname.length(); i++) {
-                file.writeByte(20);
-            }
-            file.writeInt(age);
 
-            file.close();
-        }catch(IOException e){
-            e.getStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
+    }
+
+
+    public static void main(String[] args) {
+        WriteToFile wf = new WriteToFile();
+
+        try {
+            wf.fileOpen();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
