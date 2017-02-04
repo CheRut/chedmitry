@@ -110,13 +110,7 @@ public class ReadFile {
         }
 
     }
-public boolean isSorted(int sortedLines){
-    boolean notNedToSortAnymore = false;
-    if(sortedLines==firstFileLinesCounter) {
-        notNedToSortAnymore=true;
-    }
-    return notNedToSortAnymore;
-}
+
     /**
      * .
      * Метод сравнивает строки из двух файлов
