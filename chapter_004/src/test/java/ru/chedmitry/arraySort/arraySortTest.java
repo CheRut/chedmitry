@@ -37,10 +37,10 @@ public class arraySortTest {
     @Test
     public void testSorting() {
         ArrayList<User> us = new ArrayList<>();
-      List<User> userList = sortUser.sortHash(users);
+        Set<User> userList = sortUser.sort(users);
         String expected = "Stanislav";
         for (User user : userList)
             us.add(user);
-        //assertThat(us.get(0).getName(), is(expected));
+        assertThat(us.get(0).getName(), is(expected));
     }
 }
