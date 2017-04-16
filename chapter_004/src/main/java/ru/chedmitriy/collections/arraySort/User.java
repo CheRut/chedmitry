@@ -56,7 +56,6 @@ public class User implements Comparable <User>{
      * */
     @Override
     public int compareTo(User user) {
-        System.out.println(this.age - user.getAge()+"*");
         return this.age - user.getAge();
 
     }

@@ -27,8 +27,6 @@ public class SortUser extends User {
  * по возрастанию
  * */
     public Set<User> sort (List<User> usList) {
-        for (User t:usList)
-            System.out.println(t.getName()+" "+t.getAge());
         for (int i = 0; i <usList.size() ; i++) {
             for (int j = 0; j <usList.size(); j++) {
                 compareTo(usList.get(i));
@@ -36,9 +34,6 @@ public class SortUser extends User {
         }
         TreeSet<User> result = new TreeSet<>();
         result.addAll(usList);
-        for (User t:result)
-            System.out.println(t.getName()+" "+t.getAge());
-
         return result;
     }
 
