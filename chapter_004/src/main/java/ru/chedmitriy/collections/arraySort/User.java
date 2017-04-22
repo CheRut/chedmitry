@@ -1,11 +1,5 @@
 package ru.chedmitriy.collections.arraySort;
 
-import javax.jws.soap.SOAPBinding;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 /**
  * Программа демонстриует реализацию интерфейса Comparable
  * Сортировка обектов некоторого списка по критерию,здесь
@@ -22,31 +16,16 @@ public class User implements Comparable <User>{
      * */
     private int age;
     /**
-     * параметр хэшкода в списке
-     * */
-
-    private int hashParametr = 0;
-
-    /**
      * Конструктор
      * с параметрами  и Возраст
      * @param name - Имя
      * @param age - Возраст
      * */
-
-
-    User(String name, int age) {
+    public User(String name, int age) {
         this.setName(name);
         this.setAge(age);
     }
-    /**
-     * Конструктор
-     * по  умолчанию
-     * */
-    public User() {
-    }
-
-    /**
+      /**
      * переопределенный метод интерфейса Comparable
      * @param user - объект класса User
      * @return - int: Если  метод возвращает отрицательное число,
@@ -68,7 +47,7 @@ public class User implements Comparable <User>{
         this.name = name;
     }
 
-    int getAge() {
+    private int getAge() {
         return age;
     }
 

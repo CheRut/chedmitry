@@ -17,7 +17,7 @@ public class UserListConvertToMapTest {
     HashMap<Integer,User> dataList;
     @Before
     public void initData() {
-        u = new ArrayList<User>();
+        u = new ArrayList<>();
         dataList = new HashMap<>();
         u.add(new User(1,"Dmitry","Yalta"));
         u.add(new User(2,"Alex","Moscow"));

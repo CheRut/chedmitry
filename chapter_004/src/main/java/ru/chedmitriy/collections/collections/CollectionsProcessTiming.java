@@ -27,7 +27,7 @@ public class CollectionsProcessTiming {
     public long add(final Collection<String> collection, final String line, final int amount) {
         start = System.nanoTime();
         for (int i = 0; i < amount; i++) {
-            collection.add(line);
+            collection.add(line+" - i ");
         }
         long endTime = System.nanoTime() - start;
 
@@ -57,18 +57,14 @@ public class CollectionsProcessTiming {
 
     public long delete(Collection<String> collection, final int amount) {
         int index = 0;
-        Vector<String> vector = new Vector<>();
+        Iterator<String> iterator = collection.iterator();
         start = System.nanoTime();
-        for (String lines:collection) {
-            vector.add(lines);
-        }
-        while(index<amount) {
-            vector.remove(0);
+        while (iterator.hasNext() && index < amount) {
+            iterator.next();
+            iterator.remove();
             index++;
         }
         long endTime = System.nanoTime() - start;
-        collection.clear();
-        collection.addAll(vector);
         cIO.outPrintln(endTime+" - "+collection.getClass().getCanonicalName()+" при операции удаления");
         return endTime;
     }

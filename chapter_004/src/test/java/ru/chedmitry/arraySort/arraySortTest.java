@@ -1,46 +1,68 @@
 package ru.chedmitry.arraySort;
 
 
-import org.junit.After;
+
 import org.junit.Before;
 import org.junit.Test;
 import ru.chedmitriy.collections.arraySort.SortUser;
 import ru.chedmitriy.collections.arraySort.User;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.*;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class arraySortTest {
-    SortUser sortUser;
-    List<User> users;
+    private SortUser sortUser;
+    private List<User> users = new ArrayList<>();
 
     @Before
     public void fillList() {
         sortUser = new SortUser();
         users = new ArrayList<>();
-        users.add(new SortUser("Dmitry", 29));
-        users.add(new SortUser("Andrey", 26));
-        users.add(new SortUser("Nikita", 44));
-        users.add(new SortUser("Sergey", 23));
-        users.add(new SortUser("Denis", 29));
-        users.add(new SortUser("Viktor", 25));
-        users.add(new SortUser("Evgeniy", 37));
-        users.add(new SortUser("Stanislav", 22));
+        users.add(new User("Dmitry", 29));
+        users.add(new User("Andrey", 26));
+        users.add(new User("Aleksandr", 44));
+        users.add(new User("Oleg", 23));
+        users.add(new User("Aleksey", 29));
+        users.add(new User("Anatoliy", 25));
+        users.add(new User("Evgeniy", 37));
+        users.add(new User("Stanislav", 22));
     }
-/**
- * Переведем наш TreeSet в ArrayList<User>
- *     затем,проверим соответствие значений
- *     */
+    /**
+     * Переведем наш TreeSet в ArrayList<User>
+     * затем,проверим соответствие значений
+     *     */
     @Test
     public void testSorting() {
-        ArrayList<User> us = new ArrayList<>();
-        Set<User> userList = sortUser.sort(users);
+        Set<User> userList;
         String expected = "Stanislav";
-        for (User user : userList)
-            us.add(user);
-        assertThat(us.get(0).getName(), is(expected));
+        userList = sortUser.sort(users);
+        assertThat(userList.iterator().next().getName(), is(expected));
+    }
+
+
+    @Test
+    public void testWhenSortingByHashCode() {
+        List<User> userList;
+        userList = sortUser.sortHash(users);
+        assertTrue(userList.get(0).hashCode()<userList.get(1).hashCode());
+        assertTrue(userList.get(1).hashCode()<userList.get(2).hashCode());
+        assertTrue(userList.get(2).hashCode()<userList.get(3).hashCode());
+        assertTrue(userList.get(3).hashCode()<userList.get(4).hashCode());
+
+
+
+    }
+    @Test
+    public void testWhenSortingByNameLength() {
+        List<User> userList;
+        userList = sortUser.sortLength(users);
+        assertTrue(userList.get(0).getName().length() <= userList.get(1).getName().length());
+        assertTrue(userList.get(1).getName().length() <= userList.get(2).getName().length());
+        assertTrue(userList.get(2).getName().length() <= userList.get(3).getName().length());
+        assertTrue(userList.get(3).getName().length() <= userList.get(4).getName().length());
+
     }
 }

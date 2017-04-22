@@ -16,11 +16,11 @@ public class StartUiTest {
     /**
      * Создаем объект класс Tracker
      * */
-	private Tracker tracker;
-	/**
+    private Tracker tracker;
+    /**
      * Заполняем массив объектами Item,Task и Comments
      * */
-	@Before
+    @Before
     public void addingItemTester() {
         tracker = new Tracker();
         tracker.add(new Item("first task", "first desc"));
@@ -33,39 +33,39 @@ public class StartUiTest {
         tracker.add(new Task("eighth task", "eighth desc"));
         tracker.add(new Comments("tenth task", "tens desc","this is comments"));
     }
-	
-/**
- * По оканчании вы полнения тестов,удаляем все элементы
- * */
-@After
-public void cleareList(){
-	    tracker.getItems().clear();
-}
 
-	/**
+    /**
+     * По оканчании вы полнения тестов,удаляем все элементы
+     * */
+    @After
+    public void cleareList(){
+        tracker.getItems().clear();
+    }
+
+    /**
      * Проверяем опцию редактирования:
      * перепишем второй элемент массива
      * */
-	@Test
+    @Test
     public void editItemTester() {
-            tracker.editById((tracker.getItems().get(1)), "dmitry", "junior");
-            String expected = "dmitry";
-            assertThat(((tracker.getItems().get(1)).getName()), is(expected));
+        tracker.editById((tracker.getItems().get(1)), "dmitry", "junior");
+        String expected = "dmitry";
+        assertThat(((tracker.getItems().get(1)).getName()), is(expected));
 
     }
 
-/**
- * Проверярем опцию удаления:
- * удалим 2 -й элемент массива
- * Сначала передаем переменной значение удаляемого
- * элемента,затем проверяем соответствие по удаленному индексу
- * при вызове этого элемента после удаления -  результат false
- * */
+    /**
+     * Проверярем опцию удаления:
+     * удалим 2 -й элемент массива
+     * Сначала передаем переменной значение удаляемого
+     * элемента,затем проверяем соответствие по удаленному индексу
+     * при вызове этого элемента после удаления -  результат false
+     * */
     @Test
     public void deleteItemTester(){
-            Item exp = tracker.getItems().get(1);
-            tracker.deleteById(tracker.getItems().get(1));
-            assertFalse((tracker.getItems().get(1)).equals(exp));
+        Item exp = tracker.getItems().get(1);
+        tracker.deleteById(tracker.getItems().get(1));
+        assertFalse((tracker.getItems().get(1)).equals(exp));
     }
     /**
      * 8 - й  элемент массива имеет
@@ -74,7 +74,7 @@ public void cleareList(){
      * */
     @Test
     public void commentAddingTester(){
-          assertTrue(tracker.getItems().get(8) instanceof Comments);
+        assertTrue(tracker.getItems().get(8) instanceof Comments);
 
-    }   
+    }
 }

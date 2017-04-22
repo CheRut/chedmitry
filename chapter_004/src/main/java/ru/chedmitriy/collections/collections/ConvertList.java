@@ -1,6 +1,6 @@
 package ru.chedmitriy.collections.collections;
 
-    import java.util.*;
+import java.util.*;
 
 /**
  * Главный класс,реализующий преобразование
@@ -25,59 +25,40 @@ public class ConvertList {
     public List<Integer> toList(final int[][] array) {
         ArrayList<Integer> convertedArray = new ArrayList<>();
         int arrLength = array.length;
-        int arr2ndLength = array[0].length;
+        //int arr2ndLength = array[0].length;
         for (int i = 0; i < arrLength; i++) {
-            for (int j = 0; j < arr2ndLength; j++) {
+            for (int j = 0; j < array[i].length; j++) {
                 convertedArray.add(array[i][j]);
             }
         }
-        for (int numb:convertedArray) {
-            System.out.print(numb + " ");
-        }
-        System.out.println();
+
         return convertedArray;
     }
 
     /**
      * Метод,конвертирующий коллекцию целых чисел
      * в двумернй массив
-     * Алгоритм метода:снача проверяем кратность всех
-     * элементов массива строкам
-     * Если кратно-заполняем массив,в противном случае,
-     * добиваем коллекцию нулями,до тех пор,пока количество элементов
-     * не станет кратно строкам,заполняем массив.
+     * Алгоритм метода:
+     * тернарный опреатор считает количество столбцов:
      * @param list - передаваемая коллекция
      * @param rows - количество строк в новом двумерном массиве
      * @return int[][] arr - полученный массив
      * */
     public int[][] toArray(final List<Integer> list, final int rows) {
         int[][] arr = new int[rows][];
-        int fillingElements = list.size() / rows;
-        int index = 0;
-        if (list.size() % rows == 0) {
-            arr = new int[rows][fillingElements];
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < fillingElements; j++) {
-                    arr[i][j] = list.get(index++);
-                }
-            }
-        }
-        else if (list.size() % rows != 0){
-            while (list.size() % rows != 0){
-                list.add(0);
-            }
-            arr = new int[rows][list.size() / rows];
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < list.size() / rows; j++) {
-                    arr[i][j] = list.get(index++);
-                }
-            }
-        }
+        int col = list.size() % rows == 0 ? list.size() / rows : list.size() / rows + 1;
+        Iterator<Integer> iterator = list.iterator();
+        arr = new int[rows][col];
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < list.size() / rows; j++) {
-                System.out.print(arr[i][j] + " ");
+            for (int j = 0; j < col; j++) {
+                if (iterator.hasNext()) {
+                    arr[i][j] = iterator.next();
+                }
+                else {
+                    break;
+                }
             }
-            System.out.println();
+
         }
         return arr;
     }
@@ -99,12 +80,7 @@ public class ConvertList {
                 a[i][j] = rnd.nextInt(bound) + 1;
             }
         }
-        for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < a[i].length; j++) {
-                System.out.print(a[i][j] + " ");
-            }
-            System.out.println();
-        }
+
         return a;
     }
     /**
@@ -116,20 +92,18 @@ public class ConvertList {
      * коллекции массивов,затем - по содержимому каждого массива
      * Полученные элементы заносим в коллекцию allInOne
      * @param list - коллекция массивовцелых чисел
-     * @return allInOne - коллекция содержимого нескольких массивов
+     * @return  - коллекция содержимого нескольких массивов
      * целых чисел
      * */
     public List<Integer> convert(final List<int[]> list){
+        List<Integer>  resultList = new ArrayList<>();
         for (int[] values:list){
             for (int i = 0; i < values.length; i++) {
-                this.allInOne.add(values[i]);
+                resultList.add(values[i]);
             }
         }
-        for (int val:this.allInOne) {
-            System.out.print(val + "; ");
-        }
 
-        return this.allInOne;
+        return resultList;
     }
 
 
