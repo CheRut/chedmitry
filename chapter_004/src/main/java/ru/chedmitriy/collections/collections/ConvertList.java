@@ -1,13 +1,11 @@
 package ru.chedmitriy.collections.collections;
 
 import java.util.*;
-
 /**
  * Главный класс,реализующий преобразование
  * двумерного массива в коллекцию и наоборот...
  */
 public class ConvertList {
-
     /**
      * Метод конвертирующий двумерный массив
      * в коллекцию List параметров Integer
