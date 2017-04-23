@@ -7,11 +7,6 @@ import java.util.*;
  * двумерного массива в коллекцию и наоборот...
  */
 public class ConvertList {
-    /**
-     *.
-     * список значений
-     * */
-    private final List<Integer> allInOne = new ArrayList<>();
 
     /**
      * Метод конвертирующий двумерный массив
