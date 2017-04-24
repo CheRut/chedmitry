@@ -27,7 +27,7 @@ public class CollectionsProcessTiming {
     public long add(final Collection<String> collection, final String line, final int amount) {
         start = System.nanoTime();
         for (int i = 0; i < amount; i++) {
-            collection.add(line+" - i ");
+            collection.add(line+i);
         }
         long endTime = System.nanoTime() - start;
 
@@ -40,19 +40,7 @@ public class CollectionsProcessTiming {
      *                   строки
      *  @param amount - количество строк
      *                с начала контейнера
-     * Алгоритм:
-     * Так как все типы коллекций отличаются,
-     * решено использовать вспомогательный объект
-     * Vector,позволяющий удалять объекты по индексу.
-     * При удалении,в коллекции не образуется "дыр"(как
-     * например в Array,которые заменяются
-     * null при удалении) поэтому достаточно n раз удалить
-     * первый элемент массива; однако это правило будет плохо сказываться
-     * на TreeSet, где при каждом вызове метода,будет разный результат.
-     * Это объясняется тем,что в TreeSet объекты хранятся отсортированными
-     * по возрастанию в порядке сравнения.
-     * Далее,я просто очищаю принятый контейнер и заношу в него
-     * элементы Vector
+     *
      **/
 
     public long delete(Collection<String> collection, final int amount) {
@@ -65,8 +53,9 @@ public class CollectionsProcessTiming {
             index++;
         }
         long endTime = System.nanoTime() - start;
-        cIO.outPrintln(endTime+" - "+collection.getClass().getCanonicalName()+" при операции удаления");
-        return endTime;
+        cIO.outPrintln(String.format("%5s %5s %5s %5s%n",endTime,"-",collection.getClass().getCanonicalName(),
+                "при операции удаления"));
+               return endTime;
     }
 
 }

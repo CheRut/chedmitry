@@ -33,15 +33,18 @@ public class collectionsProcessTimerTest {
         result = 0;
         for(String line:lines)
             result += collectionsProcessTiming.add(aList, line, 1);
-        cIO.outPrintln(result+" - "+" при работе  с контейнером типа "+aList.getClass().getName());
+        cIO.outPrintln(String.format("%5s %5s %5s %5s%n",result,"-","при работе  с контейнером типа ",
+                aList.getClass().getName()));
         result=0;
         for(String line:lines)
             result += collectionsProcessTiming.add(linkList, line, 1);
-        cIO.outPrintln(result+" - "+" при работе  с контейнером типа "+linkList.getClass().getName());
+        cIO.outPrintln(String.format("%5s %5s %5s %5s%n",result,"-","при работе  с контейнером типа ",
+                linkList.getClass().getName()));
         result = 0;
         for(String line:lines)
             result += collectionsProcessTiming.add(tSetList, line, 1);
-        cIO.outPrintln(result+" - "+" при работе  с контейнером типа "+tSetList.getClass().getName());
+        cIO.outPrintln(String.format("%5s %5s %5s %5s%n",result,"-","при работе  с контейнером типа ",
+                tSetList.getClass().getName()));
 
     }
     /**
