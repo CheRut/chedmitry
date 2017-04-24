@@ -20,9 +20,9 @@ public class collectionsProcessTimerTest {
     TreeSet<String> tSetList;
     CollectionsProcessTiming collectionsProcessTiming;
     String[] lines = {"one","two","three","four","five","six","seven","eight","nine","ten"};
-/**
- * Инициализируем значения для
- * тестирования*/
+    /**
+     * Инициализируем значения для
+     * тестирования*/
     @Before
     public void initValueForTest() {
         long result;

@@ -42,7 +42,6 @@ public class CollectionsProcessTiming {
      *                с начала контейнера
      *
      **/
-
     public long delete(Collection<String> collection, final int amount) {
         int index = 0;
         Iterator<String> iterator = collection.iterator();
@@ -57,5 +56,4 @@ public class CollectionsProcessTiming {
                 "при операции удаления"));
                return endTime;
     }
-
 }
