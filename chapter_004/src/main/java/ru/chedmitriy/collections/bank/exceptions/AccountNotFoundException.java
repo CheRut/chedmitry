@@ -8,13 +8,16 @@ package ru.chedmitriy.collections.bank.exceptions;
  * User, выпадет исключение
  * */
 public class AccountNotFoundException extends Exception {
-/**
- * Конструктор,
- * подкласса
- * исключения
- * * */
-    public AccountNotFoundException(String message) {
-        super(message);
-    }
 
+    public AccountNotFoundException() { }
+    /**
+     * Конструктор,
+     * подкласса
+     * исключения
+     **/
+
+    @Override
+    public String getMessage() {
+        return "Account incorrect";
+    }
 }

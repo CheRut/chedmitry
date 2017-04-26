@@ -37,7 +37,7 @@ public class DataBase {
     public void deleteUser(User user) throws UserNotFoundException{
         if(!client.containsKey(user))
             throw new UserNotFoundException(
-                    "User parameter incorrect");
+                    );
 
         this.client.remove(user);
 
@@ -51,7 +51,7 @@ public class DataBase {
     public void addAccountToUser(User user, Account account) throws UserNotFoundException {
         if(!client.containsKey(user))
             throw new UserNotFoundException(
-                    "User parameter incorrect");
+                    );
         this.client.get(getUserAccounts(user).add(account));
 
     }
@@ -65,10 +65,10 @@ public class DataBase {
             AccountNotFoundException {
         if (!client.containsKey(user))
             throw new UserNotFoundException(
-                    "User parameter incorrect");
+                    );
         if (!getUserAccounts(user).contains(account))
             throw new AccountNotFoundException(
-                    "Account incorrect");
+                    );
         this.client.get(getUserAccounts(user).remove(account));
     }
     /**
@@ -79,8 +79,7 @@ public class DataBase {
      * */
     public List<Account> getUserAccounts (User user) throws UserNotFoundException {
         if(!client.containsKey(user))
-            throw new UserNotFoundException(
-                    "User parameter incorrect");
+            throw new UserNotFoundException();
         return this.client.get(user);
     }
     /**
@@ -106,11 +105,11 @@ public class DataBase {
         boolean operationSuccess = true;
         if(!client.containsKey(srcUser) || !client.containsKey(dstUser) )
             throw new UserNotFoundException(
-                    "User parameter incorrect");
+                    );
         if(!getUserAccounts(srcUser).contains(srcAccount) ||
                 !getUserAccounts(dstUser).contains(dstAccount) )
             throw new AccountNotFoundException(
-                    "Account incorrect");
+                    );
         if(srcAccount.getValue() < amount) {
             operationSuccess = false;
         }

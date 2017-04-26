@@ -13,10 +13,10 @@ public class UserNotFoundException extends Exception {
      * подкласса,указывается в
      * точке возможного выпадания
      * исключения
-     *
      * */
-
-    public UserNotFoundException(String message) {
-        super(message);
+    public UserNotFoundException() { }
+    @Override
+    public String getMessage() {
+        return "User parameter incorrect";
     }
 }

@@ -19,7 +19,7 @@ public class BankOperationsTesting {
     private final User user1 = new User("Dmitry","221133");
     private final User user2 = new User("Viktor","003333");
     private final User user3 = new User("Alex","225144");
-
+    User errorUser;
 
     @Before
     public void init() {
@@ -27,7 +27,7 @@ public class BankOperationsTesting {
         dataBase.client.put(user1,new ArrayList<Account>());
         dataBase.client.put(user2,new ArrayList<Account>());
         dataBase.client.put(user3,new ArrayList<Account>());
-
+        errorUser = new User("errorName","someErrorPasport");
 
 
 
@@ -70,7 +70,6 @@ public class BankOperationsTesting {
     public void whenTryingToGetAccount() throws UserNotFoundException {
         dataBase.addAccountToUser(user1,new Account(3000,"1234 5678 9123 4560"));
         assertThat(dataBase.getUserAccounts(user1).get(0).getValue(),is(3000.0));
-
     }
     /**
      * Тестирование метода deleteUser
@@ -83,7 +82,6 @@ public class BankOperationsTesting {
         dataBase.deleteUser(user1);
         int newSizeOfDb = 2;
         assertThat(dataBase.client.size(),is(newSizeOfDb));
-
     }
     /**
      * Тестируем метод addAccountToUser
