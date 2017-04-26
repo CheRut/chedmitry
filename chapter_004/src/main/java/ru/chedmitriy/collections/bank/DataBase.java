@@ -1,5 +1,8 @@
 package ru.chedmitriy.collections.bank;
 
+import ru.chedmitriy.collections.bank.exceptions.AccountNotFoundException;
+import ru.chedmitriy.collections.bank.exceptions.UserNotFoundException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +17,7 @@ public class DataBase {
      * база данных,содержащая
      * всю информацию о клиентах
      * */
-    private final Map<User, List<Account>> client = new HashMap<>();
+    public final Map<User, List<Account>> client = new HashMap<>();
 
     /**
      * .
@@ -24,15 +27,19 @@ public class DataBase {
      *
      * */
     public void addUser(User user) {
-        this.getClient().put(user, new ArrayList<>());
+        this.client.put(user, new ArrayList<>());
     }
     /**
      * .
      * Метод удаляет клиента из базы данных
      * @param user - удаляемый клиент
      * */
-    public void deleteUser(User user) {
-        getClient().remove(user);
+    public void deleteUser(User user) throws UserNotFoundException{
+        if(!client.containsKey(user))
+            throw new UserNotFoundException(
+                    "User parameter incorrect");
+
+        this.client.remove(user);
 
     }
     /**
@@ -41,8 +48,11 @@ public class DataBase {
      * @param user - клиент,которому добавляется     *
      * @param account - реквизиты и остаток средств
      * */
-    public void addAccountToUser(User user, Account account) {
-        getClient().get(getUserAccounts(user).add(account));
+    public void addAccountToUser(User user, Account account) throws UserNotFoundException {
+        if(!client.containsKey(user))
+            throw new UserNotFoundException(
+                    "User parameter incorrect");
+        this.client.get(getUserAccounts(user).add(account));
 
     }
     /**
@@ -51,8 +61,15 @@ public class DataBase {
      * @param user - клиент,чей счет удаляется
      * @param account - удаляемый счет
      * */
-    public void deleteAccountFromUser(User user, Account account) {
-        getClient().get(getUserAccounts(user).remove(account));
+    public void deleteAccountFromUser(User user, Account account) throws UserNotFoundException,
+            AccountNotFoundException {
+        if (!client.containsKey(user))
+            throw new UserNotFoundException(
+                    "User parameter incorrect");
+        if (!getUserAccounts(user).contains(account))
+            throw new AccountNotFoundException(
+                    "Account incorrect");
+        this.client.get(getUserAccounts(user).remove(account));
     }
     /**
      *.
@@ -60,8 +77,11 @@ public class DataBase {
      * клиента
      * @param user - клиент,чей счет интересует
      * */
-    public List<Account> getUserAccounts (User user) {
-        return getClient().get(user);
+    public List<Account> getUserAccounts (User user) throws UserNotFoundException {
+        if(!client.containsKey(user))
+            throw new UserNotFoundException(
+                    "User parameter incorrect");
+        return this.client.get(user);
     }
     /**
      * .
@@ -81,28 +101,31 @@ public class DataBase {
      *
      **/
     public boolean transferMoney (User srcUser, Account srcAccount,
-                                  User dstUser, Account dstAccount, double amount) {
+                                  User dstUser, Account dstAccount, double amount)
+            throws UserNotFoundException, AccountNotFoundException {
         boolean operationSuccess = true;
+        if(!client.containsKey(srcUser) || !client.containsKey(dstUser) )
+            throw new UserNotFoundException(
+                    "User parameter incorrect");
+        if(!getUserAccounts(srcUser).contains(srcAccount) ||
+                !getUserAccounts(dstUser).contains(dstAccount) )
+            throw new AccountNotFoundException(
+                    "Account incorrect");
         if(srcAccount.getValue() < amount) {
             operationSuccess = false;
         }
-        try {
-            for (Account account : getUserAccounts(srcUser)) {
-                if (account.equals(srcAccount)) {
-                    account.setValue(account.getValue() - amount);
-                }
+        for (Account account : getUserAccounts(srcUser)) {
+            if (account.equals(srcAccount)) {
+                account.setValue(account.getValue() - amount);
             }
-            for (Account account : getUserAccounts(dstUser)) {
-                if (account.equals(dstAccount)) {
-                    account.setValue(account.getValue() + amount);
-                }
+        }
+        for (Account account : getUserAccounts(dstUser)) {
+            if (account.equals(dstAccount)) {
+                account.setValue(account.getValue() + amount);
             }
-        } catch (NullPointerException npe) {
-            operationSuccess = false;
         }
         return operationSuccess;
     }
-    public Map<User, List<Account>> getClient() {
-        return client;
-    }
+
+
 }
