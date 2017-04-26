@@ -15,6 +15,12 @@ public class UserNotFoundException extends Exception {
      * исключения
      * */
     public UserNotFoundException() { }
+    /**
+     * Переопределенный метод
+     * выпадающего сообщения
+     * при исключении
+     *
+     * */
     @Override
     public String getMessage() {
         return "User parameter incorrect";
