@@ -7,9 +7,13 @@ import java.util.*;
  * организаций
  * */
 public class Structure {
+    /**
+     * Определим собственный
+     * класс - компоратор
+     * */
     OrganizationStructureComparator oSC = new OrganizationStructureComparator();
     /**
-     * Список всех организаций
+     * Множество всех организаций
      * с отделами и подразделениями
      *
      * */
@@ -28,8 +32,8 @@ public class Structure {
         }
     }
     /**
-     * Возвращаем список организаций
-     * @return список structureList
+     * Возвращаем множество организаций
+     * @return множество structureList
      * */
     public TreeSet<Organization> getStructureList() {
         return structureList;
