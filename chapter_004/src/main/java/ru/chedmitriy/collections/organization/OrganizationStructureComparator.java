@@ -6,6 +6,6 @@ class OrganizationStructureComparator implements Comparator<Organization> {
     @Override
     public int compare(Organization o1, Organization o2) {
 
-        return o2.getName().compareTo(o1.getName());
+        return o1.getName().compareTo(o2.getName());
     }
 }

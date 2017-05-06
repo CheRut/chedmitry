@@ -7,40 +7,21 @@ import java.util.*;
  * организаций
  * */
 public class Structure {
+    OrganizationStructureComparator oSC = new OrganizationStructureComparator();
     /**
      * Список всех организаций
      * с отделами и подразделениями
      *
      * */
-    private final List<Organization> structureList = new ArrayList<>();
-    /**
-     * Для получения информации о
-     * всех организациях при прямом порядке:
-     * организация - отдел - подразделение
-     * Используется интерфейс Comparator c
-     * с переопределенным методом.
-     *
-     * */
-    public  List<Organization> normalSorting(){
-        (this.structureList).sort(new Comparator<Organization>() {
-            @Override
-            public int compare(Organization o1, Organization o2) {
-                return
-                        o1.getName().compareTo(o2.getName());
-            }
-        });
+    private final TreeSet<Organization> structureList = new TreeSet<>(oSC);
 
-        showOrganizationStructure(this.structureList);
-
-        return this.structureList;
-    }
     /**
      * Отображение списка
      * всех организаций в
      * установленном порядке
      *
      * */
-    private void showOrganizationStructure(Collection collection) {
+    public void showOrganizationStructure(Collection collection) {
         for (Organization aCollection : (Iterable<Organization>) collection) {
             System.out.println(aCollection.getName());
 
@@ -50,7 +31,7 @@ public class Structure {
      * Возвращаем список организаций
      * @return список structureList
      * */
-    public List<Organization> getStructureList() {
+    public TreeSet<Organization> getStructureList() {
         return structureList;
     }
 }

@@ -23,8 +23,8 @@ public class StructureTest {
         structure.getStructureList().add(org_22);
         structure.getStructureList().add(org_23);
 
+structure.showOrganizationStructure(structure.getStructureList());
 
-        structure.normalSorting();
 
 
 
