@@ -1,7 +1,5 @@
 package ru.chedmitriy.collections.organization;
 
-import java.util.Comparator;
-
 /**
  * Главный класс - несет в
  * себе информацию об организации,
@@ -10,45 +8,63 @@ import java.util.Comparator;
  * */
 public class Organization {
     /**
-     *
-     * Параметр name -
-     * название организации
+     * название
+     * организации
      * */
-    private final String name;
+    private final String orgName;
     /**
-     * Параметр dep -
-     * отдел организации
+     * название отдела
      * */
-    private final Department dep;
+    private final  String depName;
     /**
-     * Параметр sd -
-     * подразделение
+     * название отделения
      * */
-    private final  Subdivision sd;
-
-    /**
-     * Конструктор принимает название организации и входящие
-     * в ее состав отделы и подразделения
-     * @param name - название организации
-     * @param dep - отдел организации
-     * @param sd - подразделение
-     * */
-    public Organization(String name,Department dep,Subdivision sd) {
-        this.name = name;
-        this.dep = dep;
-        this.sd = sd;
-    }
+    private final String subdevName;
     /**
      *
-     * Возвращаем полное название Организации с входящими
-     * в ее состав отделами и подразделениями
-     * @return - название организации,отдела и подразделения
+     * Конструктор - структура
+     * организации
+     * @param orgName - название организации
+     * @param depName - название отдела
+     * @param subdevName - название отделения
+     *
      * */
-    public String getName() {
-        return  name+dep.getName()+sd.getName();
+    public Organization(String orgName, String depName, String subdevName) {
+        this.orgName = orgName;
+        this.depName = depName;
+        this.subdevName = subdevName;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Organization that = (Organization) o;
 
+        if (orgName != null ? !orgName.equals(that.orgName) : that.orgName != null) return false;
+        if (depName != null ? !depName.equals(that.depName) : that.depName != null) return false;
+        return subdevName != null ? subdevName.equals(that.subdevName) : that.subdevName == null;
+    }
 
+    @Override
+    public int hashCode() {
+        int result = orgName != null ? orgName.hashCode() : 0;
+        result = 31 * result + (depName != null ? depName.hashCode() : 0);
+        result = 31 * result + (subdevName != null ? subdevName.hashCode() : 0);
+        return result;
+    }
+/**
+ * каждый элемент организации
+ * будет отделен символом '/' при
+ * отображениисписка
+ *
+ * */
+    @Override
+    public String toString() {
+        return orgName +
+                '/' +depName +
+                '/' +subdevName+'/';
+
+    }
 }

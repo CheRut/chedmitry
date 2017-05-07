@@ -1,41 +1,50 @@
 package ru.chedmitriy.collections.organization;
 
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 /**
- * Класс,позволяющий работать со структурами
- * организаций
+ * Клас обработки
+ * данных организаций
+ *
  * */
 public class Structure {
     /**
-     * Определим собственный
-     * класс - компоратор
+     * Список организаций
      * */
-    OrganizationStructureComparator oSC = new OrganizationStructureComparator();
+    private final ArrayList<Organization> structureList = new ArrayList<>();
     /**
-     * Множество всех организаций
-     * с отделами и подразделениями
+     *
+     * Конструктор по умолчанию
      *
      * */
-    private final TreeSet<Organization> structureList = new TreeSet<>(oSC);
-
-    /**
-     * Отображение списка
-     * всех организаций в
-     * установленном порядке
-     *
-     * */
-    public void showOrganizationStructure(Collection collection) {
-        for (Organization aCollection : (Iterable<Organization>) collection) {
-            System.out.println(aCollection.getName());
-
-        }
+    public Structure() {
     }
     /**
-     * Возвращаем множество организаций
-     * @return множество structureList
+     * метод сортировки
+     * списка организаций
+     * @return сортированый список
+     *
      * */
-    public TreeSet<Organization> getStructureList() {
+    public List<Organization>sortList() {
+        this.structureList.sort(new Comparator<Organization>() {
+            @Override
+            public int compare(Organization o1, Organization o2) {
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
+        return this.structureList;
+    }
+    public void showList(){
+        for(Organization org:this.structureList) {
+            System.out.println(org.toString());
+        }
+    }
+/**
+ * получаем список организаций
+ * @return - список structureList;
+ * */
+    public ArrayList<Organization> getStructureList() {
         return structureList;
     }
 }
