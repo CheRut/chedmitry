@@ -30,14 +30,18 @@ public class Structure {
         this.structureList.sort(new Comparator<Organization>() {
             @Override
             public int compare(Organization o1, Organization o2) {
-                return o1.toString().compareTo(o2.toString());
+                return ((o1.getOrgName()+o1.getDepName()+o1.getSubdevName())
+                        .compareTo(o2.getOrgName()+o2.getDepName()+o2.getSubdevName()));
+
             }
         });
         return this.structureList;
     }
+
+
     /**
-    *Метод для отображения 
-    *списка организаций    
+    *Метод для отображения
+    *списка организаций
     */
     public void showList(){
         for(Organization org:this.structureList) {

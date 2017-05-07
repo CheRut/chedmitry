@@ -35,6 +35,18 @@ public class Organization {
         this.subdevName = subdevName;
     }
 
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public String getDepName() {
+        return depName;
+    }
+
+    public String getSubdevName() {
+        return subdevName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
