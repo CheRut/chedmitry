@@ -31,7 +31,9 @@ public class StructureTest {
 
                 structure.sortList();
                 structure.showList();
-
+        System.out.println("меняем порядок");
+        structure.backSort();
+        structure.showList();
 
 
 
