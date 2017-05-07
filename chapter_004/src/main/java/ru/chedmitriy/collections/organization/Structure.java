@@ -35,6 +35,10 @@ public class Structure {
         });
         return this.structureList;
     }
+    /**
+    *Метод для отображения 
+    *списка организаций    
+    */
     public void showList(){
         for(Organization org:this.structureList) {
             System.out.println(org.toString());
