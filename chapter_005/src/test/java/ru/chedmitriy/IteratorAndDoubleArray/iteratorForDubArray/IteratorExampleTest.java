@@ -1,4 +1,4 @@
-package ru.chedmitriy;
+package ru.chedmitriy.IteratorAndDoubleArray.iteratorForDubArray;
 
 import org.junit.Test;
 import ru.chedmitriy.IteratorAndDoubleArray.iteratorForDobArray.IteratorExample;
@@ -20,12 +20,16 @@ public class IteratorExampleTest {
      * */
     @Test
     public void whenNextElementChecking() {
-        int[][]ar = new int[][]{{1,2,3},{4,5,6}};
+        int[][]ar = new int[][]{{1,2},{3,4}};
+
 
         IteratorExample it = new IteratorExample(ar);
         it.next();
+        it.next();
         int value = it.next();
-        assertThat(value,is(2));
+        assertThat(value,is(3));
+
+
     }
 
     /**
@@ -40,8 +44,9 @@ public class IteratorExampleTest {
 
     @Test
     public void whileArrayHasAnElements() {
-        int[][]ar = new int[][]{{1,2},{}};
+        int[][]ar = new int[][]{{1},{2},{3}};
         IteratorExample it = new IteratorExample(ar);
+        it.next();
         it.next();
         it.next();
         boolean hasNextValue = it.hasNext();

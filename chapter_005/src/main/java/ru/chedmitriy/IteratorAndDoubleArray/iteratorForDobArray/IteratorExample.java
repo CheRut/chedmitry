@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
  * с двумерными массивами
  * */
 public class IteratorExample implements Iterator {
+    int counter =0;
     /**
      * массив целых чисел.
      * */
@@ -45,7 +46,7 @@ public class IteratorExample implements Iterator {
      * */
     @Override
     public boolean hasNext() {
-        return index < array.length && col <array.length  ;
+        return counter<array.length*array[0].length;
     }
     /**
      * Переопределенный метод
@@ -57,15 +58,15 @@ public class IteratorExample implements Iterator {
      * */
     @Override
     public Integer next() {
+        this.counter++;
         if(col==array[index].length){
             col = 0;
-            if (index<=array.length-1)
+            if(index<array.length)
             index++;
         }
         int i = col;
         int t = index;
         col++;
-        System.out.println(array[t][i]);
         return array[t][i];
     }
 
