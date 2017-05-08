@@ -1,4 +1,4 @@
-package ru.chedmitriy.IteratorAndDoubleArray;
+package ru.chedmitriy.IteratorAndDoubleArray.iteratorForDobArray;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -15,7 +15,7 @@ public class IteratorExample implements Iterator {
      * */
     private final int[][] array;
     /**
-     * парамет "строки массива"
+     * парамет "строки" массива
      * */
     private int index = 0;
     /**

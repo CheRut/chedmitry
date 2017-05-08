@@ -1,9 +1,7 @@
 package ru.chedmitriy;
 
 import org.junit.Test;
-import ru.chedmitriy.IteratorAndDoubleArray.IteratorExample;
-
-import java.util.*;
+import ru.chedmitriy.IteratorAndDoubleArray.iteratorForDobArray.IteratorExample;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
