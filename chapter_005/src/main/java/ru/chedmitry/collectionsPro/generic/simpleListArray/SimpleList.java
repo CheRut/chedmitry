@@ -1,5 +1,8 @@
 package ru.chedmitry.collectionsPro.generic.simpleListArray;
-
+/**
+ * Класс обобщенных типов
+ * рбъектов
+ * */
 public class SimpleList<T >{
     private String id;
 
@@ -57,20 +60,14 @@ public class SimpleList<T >{
      *  по индексу
      *  @param position - индекс искомого
      *                  элемента
-     * @return - полученый элемент
+     *  @return - полученый элемент
      *
      * */
     public T get (int position) {
         return (T) this.objects[position];
     }
 
-    public Object[] getObjects() {
-        return objects;
-    }
 
-    public String getId() {
-        return id;
-    }
 
 
 
