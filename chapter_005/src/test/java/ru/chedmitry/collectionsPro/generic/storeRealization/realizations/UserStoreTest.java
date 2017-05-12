@@ -3,7 +3,6 @@ package ru.chedmitry.collectionsPro.generic.storeRealization.realizations;
 import org.junit.Before;
 import org.junit.Test;
 import ru.chedmitry.collectionsPro.generic.storeRealization.exeptions.WhenObjectNotFoundException;
-import ru.chedmitry.collectionsPro.generic.storeRealization.objects.Role;
 import ru.chedmitry.collectionsPro.generic.storeRealization.objects.User;
 
 import static org.hamcrest.core.Is.is;
