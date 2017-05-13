@@ -32,7 +32,7 @@ public class DynamicArray<E> implements Iterable<E> {
     /**
      * итератор контейнера
      * */
-    DynamicArrayIterator dynamicArray;
+    ArrayIterator dynamicArray;
 
     /**
      * конструктор контейнера
@@ -43,7 +43,7 @@ public class DynamicArray<E> implements Iterable<E> {
      */
     public DynamicArray(int size) {
         this.container = (E[]) new Object[size];
-        dynamicArray = new DynamicArrayIterator(container);
+        dynamicArray = new ArrayIterator(container);
     }
 
     /**
@@ -87,6 +87,7 @@ public class DynamicArray<E> implements Iterable<E> {
         dynamicArray.objectsIterator[index++] = value;
         dynamicArray.next();
     }
+   
 
     /**
      * метод возвращает
@@ -102,29 +103,5 @@ public class DynamicArray<E> implements Iterable<E> {
         return (E)this.container[index];
     }
 
-    public static class DynamicArrayIterator<E> implements Iterator<E> {
-        E[] objectsIterator;
 
-        public E[] getObjectsIterator() {
-            return objectsIterator;
-        }
-
-
-        private int indexPosition;
-
-        public DynamicArrayIterator(E[] objectsIterator){
-            this.objectsIterator = objectsIterator;
-        }
-
-        @Override
-        public boolean hasNext() {
-          return this.objectsIterator.length > indexPosition;
-
-        }
-
-        @Override
-        public E next() {
-            return this.objectsIterator[indexPosition++];
-        }
-    }
 }
