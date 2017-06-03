@@ -16,10 +16,10 @@ public class LinkedListContainerTest {
     }
     @Test
     public void add() {
-        aC.add("first");
-        aC.add("ok");
-        aC.add("one");
-        aC.add("sss");
+        aC.addLast("first");
+        aC.addLast("ok");
+        aC.addLast("one");
+        aC.addLast("sss");
         String[] value = {"first","ok","one","sss"};
         int index =0;
         Iterator it = aC.iterator();
@@ -30,10 +30,10 @@ public class LinkedListContainerTest {
     }
     @Test
     public void get() throws Exception {
-        aC.add("ok");
-        aC.add("one");
+        aC.addLast("ok");
+        aC.addLast("one");
         String value ="one";
-        assertThat(aC.get(1),is(value));
+        assertThat(aC.getNext(1),is(value));
     }
 
 }

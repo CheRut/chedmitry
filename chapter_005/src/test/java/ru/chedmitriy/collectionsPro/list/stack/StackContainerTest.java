@@ -6,74 +6,65 @@ import org.junit.Test;
 import java.util.Iterator;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
+/**
+ * Created by d1msan on 31.05.2017.
+ */
 public class StackContainerTest {
-    StackContainer<String> stack;
+    StackContainer sC;
 
     @Before
     public void init(){
-        stack = new StackContainer<>();
+        sC = new StackContainer();
+        sC.addLast("one");
+        sC.addLast("two");
+        sC.addLast("three");
+
+
+    }
+    @Test
+    public void WhenTryToPeek()  {
+        assertThat(sC.peek(),is("three"));
     }
 
     @Test
-    public void whenTryToPushAnElement() throws Exception {
-        stack.push("fourth");
-        stack.push("third");
-        stack.push("second");
-        stack.push("first");
-        String[] value = {"fourth","third","second","first"};
-        int index = 0;
-        Iterator it = stack.iterator();
+    public void WhenTryToPop()  {
+        assertThat(sC.pop(),is("three"));
+        assertThat(sC.getSize(),is(2));
+        String [] stringList = {"one","two"};
+        int indexCounter = 0;
+        Iterator it = sC.iterator();
         while(it.hasNext()){
-            assertThat(it.next(),is(value[index++]));
-        }
-    }
-    /**
-     * сначала добавляем элементы
-     * в стэк.Затем извлекаем элементы
-     * по принципу LIFO
-     * элемент извлекается
-     * из контэйнера,
-     * его размер уменьшается
-     * @throws Exception
-     */
-    @Test
-    public void whenTryToPopTheElement() throws Exception {
-        stack.push("fourth");
-        stack.push("third");
-        stack.push("second");
-        stack.push("first");
-        stack.pop();
-        String[] value = {"fourth","third","second"};
-        int index = 0;
-        Iterator it = stack.iterator();
-        while(it.hasNext()){
-            assertThat(it.next(),is(value[index++]));
+            assertThat(it.next(),is(stringList[indexCounter]));
+            indexCounter++;
         }
     }
 
     @Test
-    public void whenTryToCheckTheContainerIsEmpty(){
-        assertTrue(stack.empty());
+    public void WhenTryToPush() {
+        sC.push("four");
+        sC.push("five");
+        sC.push("six");
+
+        String [] stringList = {"one","two","three","four","five","six"};
+        int indexCounter = 0;
+        Iterator it = sC.iterator();
+        while(it.hasNext()){
+            assertThat(it.next(),is(stringList[indexCounter]));
+            indexCounter++;
+        }
+    }
+
+    @Test
+    public void WhenTryingSearching() {
+        assertThat(sC.search("one"),is(2));
     }
     @Test
-    public void whenTryToPeek(){
-        stack.push("fourth");
-        stack.push("third");
-        stack.push("second");
-        stack.push("first");
-        String value = "first";
-        assertThat(stack.peek(),is(value));
-    }
-    @Test
-    public void whenTryToSearchTheElement() {
-        stack.push("fourth");
-        stack.push("third");
-        stack.push("second");
-        stack.push("first");
-        String value = "third";
-        assertThat(stack.search(value),is(0));
+    public void WnenTryToCheckAvailabilityOfElements() {
+        StackContainer st = new StackContainer();
+        assertTrue(st.isEmpty());
+        assertFalse(sC.isEmpty());
+
     }
 }
