@@ -7,7 +7,6 @@ import java.util.Iterator;
  */
 public class ArrayIterator<E> implements Iterator<E> {
     E[] objectsIterator;
-
     private int indexPosition;
 
     public ArrayIterator(E[] objectsIterator){

@@ -33,7 +33,7 @@ public class LinkedListContainerTest {
         aC.addLast("ok");
         aC.addLast("one");
         String value ="one";
-        assertThat(aC.get(1),is(value));
+        assertThat(aC.getNext(1),is(value));
     }
 
 }

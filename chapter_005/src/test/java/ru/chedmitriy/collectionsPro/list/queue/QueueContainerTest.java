@@ -3,76 +3,91 @@ package ru.chedmitriy.collectionsPro.list.queue;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.NoSuchElementException;
+
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
-public class QueueContainerTest {
-    QueueContainer queueContainer;
+/**
+ * Created by d1msan on 02.06.2017.
+ */
+public class QueueContainerTest<E> {
+    private QueueContainer queueContainer;
+    private String[] queListForOfferMethod;
+    private  Integer[] queIntListForRemoveMethod;
+    private  String[] queListForPollMEthod;
+    private  Iterator it;
+
+private void arrayEqualing(E[] array){
+    int indexPosition = 0;
+    while(it.hasNext()){
+        assertThat(it.next(),is(array[indexPosition]));
+        indexPosition++;
+    }
+}
     @Before
     public void init(){
         queueContainer = new QueueContainer();
-    }
-
-    @Test
-    public void element() throws Exception {
-    queueContainer.offer("one");
-    queueContainer.offer("two");
-    assertThat(queueContainer.element(),is("one"));
-
+        queListForOfferMethod = new String[]{"six","five","four","three","two","one"};
+        queIntListForRemoveMethod = new Integer[]{1,2,3};
+        queListForPollMEthod = new String[]{"one","two"};
+        it = queueContainer.iterator();
     }
 
     @Test
     public void offer() throws Exception {
-    queueContainer.offer("1");
-    queueContainer.offer("2");
-    queueContainer.offer("3");
-    assertTrue(queueContainer.offer("one"));
-        Iterator it = queueContainer.iterator();
-        it.next();
-        it.next();
-        assertThat(it.next(),is("3"));
-
+        queueContainer.offer("four");
+        queueContainer.offer("five");
+        queueContainer.offer("six");
+        arrayEqualing((E[]) queListForOfferMethod);
     }
 
-    @Test
-    public void peek() throws Exception {
-        queueContainer.offer("1");
-        queueContainer.offer("2");
-        queueContainer.offer("3");
-        assertThat(queueContainer.peek(),is("1"));
+    @Test(expected = NoSuchElementException.class)
+    public void remove(){
+        queueContainer.offer(4);
+        queueContainer.offer(3);
+        queueContainer.offer(2);
+        queueContainer.offer(1);
+        queueContainer.remove();
+        arrayEqualing((E[])queIntListForRemoveMethod);
+        QueueContainer quCont = new QueueContainer();
+        quCont.remove();
     }
 
     @Test
     public void poll() throws Exception {
 
-        queueContainer.addLast("1");
-        queueContainer.addLast("2");
-        queueContainer.addLast("3");
-
-       // System.out.println(queueContainer.pol());
-        System.out.println(queueContainer.get(0));
-//
-//      Queue q = new LinkedList();
-//        q.add("1");
-//        q.add("2");
-//        q.add("3");
-//        q.add("4");
-//
-//        System.out.println(q.peek());
-//        System.out.println(q.poll());
-//        System.out.println(q.peek());
-
-
+        queueContainer.offer("three");
+        queueContainer.offer("two");
+        queueContainer.offer("one");
+        queueContainer.poll();
+        arrayEqualing((E[]) queListForPollMEthod);
+        QueueContainer quCont = new QueueContainer();
+        assertNull(quCont.poll());
     }
 
     @Test
-    public void remove() throws Exception {
+    public void element() throws Exception {
+        queueContainer.offer("one");
+        queueContainer.offer("two");
+        queueContainer.offer("three");
+        assertThat(queueContainer.element(),is("one"));
+        QueueContainer quCont = new QueueContainer();
+        assertNull(quCont.element());
 
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void peek() throws Exception {
+        queueContainer.offer("four");
+        queueContainer.offer("five");
+        queueContainer.offer("six");
+        assertThat(queueContainer.peek(),is("four"));
+        QueueContainer quCont = new QueueContainer();
+        quCont.peek();
     }
 
 }

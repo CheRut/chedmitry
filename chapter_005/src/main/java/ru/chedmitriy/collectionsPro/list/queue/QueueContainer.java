@@ -2,70 +2,76 @@ package ru.chedmitriy.collectionsPro.list.queue;
 
 import ru.chedmitriy.collectionsPro.list.linkedListLike.LinkedListContainer;
 
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
-import java.util.Queue;
 
-public class QueueContainer<E> extends LinkedListContainer<E>{
+
+/**
+ * Created by d1msan on 02.06.2017.
+ * Класс - контейнер очередь
+ */
+public class QueueContainer<E> extends LinkedListContainer<E> {
 
     /**
-     *
-     *  возвращает, но не удаляет,
-     *  элемент из начала очереди.
-     *  Если очередь пуста,
-     *  генерирует
-     *  исключение NoSuchElementException
-     *
-     * @return E
-     */
-    public E element() throws NoSuchElementException{
-        if(get(0) == null) throw new NoSuchElementException();
-        return get(0);
-    }
-    /**
-     *
-     * добавляет элемент element в конец очереди.
+     * добавляет элемент object в конец очереди.
      * Если элемент удачно добавлен,
      * возвращает true, иначе - false
-     * @param element
-     * @return boolean
+     * @param object - добавляемый элемент
+     * @return проверка наличия
+     * добавленного элемента
      */
-    boolean offer(E element){
-        addLast(element);
-        return get(getSize()-1)!=null ? true:false;
+    public boolean offer(E object) {
+        super.addFirst(object);
+        int t = getSize();
+        return super.getNext(t)!= null;
     }
 
     /**
-     * возвращает без удаления элемент
-     * из начала очереди.
-     * Если очередь пуста, возвращает значение null
-     * @return
+     * удаляет элемент из верхушки очереди,
+     * если очередь пуста генерирует исключение
+     * @throws NoSuchElementException - выпадающее
+     * исключение если очередь пуста
+     * @return - удаляемый элемент
+     * */
+    public E remove() {
+        if(super.empty())throw new NoSuchElementException();
+        return super.remove();
+    }
+
+
+    /**
+     * удаляет элемент из верхушки очереди,
+     * если очередь пуста возвращает
+     * null
+     * @return - удаляемый элемент
+     */
+    public E poll() {
+        return super.empty() ? null:super.remove();
+    }
+
+
+    /**
+     * Возвращает элемент
+     * верхушки очереди
+     * Если очередь пуста вернет null;
+     * @return при пустой очереди -null,
+     * при непустой очереди - элемент верхушки
+     */
+    public E element() {
+        return super.empty() ? null:super.getNext(getSize()-1);
+    }
+
+
+    /**
+     * Возвращает элемент
+     * верхушки очереди
+     * Если очередь пуста сгенерирует исключение;
+     * @throws NoSuchElementException -
+     * исключение при пустой очереди
+     * @return при пустой очереди -null,
+     * при непустой очереди - элемент верхушки
      */
     public E peek() {
-        return !this.iterator().hasNext()? null : get(0);
-    }
-
-    /**
-     *
-     * возвращает с удалением
-     * элемент из начала очереди.
-     * Если очередь пуста,
-     * возвращает значение null
-     * @return E
-     */
-    public E pol() {
-        return poll();
-    }
-
-
-    /**
-     * возвращает с удалением
-     * элемент из начала очереди.
-     * Если очередь пуста,
-     * генерирует исключение NoSuchElementException
-     */
-    public E remove() {
-        if(!this.iterator().hasNext()) throw new NoSuchElementException();
-        return removeFirstElement();
+        if(super.empty())throw new NoSuchElementException();
+        return getNext(getSize()-1);
     }
 }

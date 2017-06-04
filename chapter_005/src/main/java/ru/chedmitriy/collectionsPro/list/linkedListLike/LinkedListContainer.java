@@ -1,25 +1,22 @@
 package ru.chedmitriy.collectionsPro.list.linkedListLike;
 
-import ru.chedmitriy.collectionsPro.list.stack.BackIterator;
-
 import java.util.Iterator;
-
 /**
  * Класс-контейнер
  * @param <E>  переменных,содержащиххся
  *           в контейнере
  */
-public class LinkedListContainer<E> implements Iterable<E>,BackIterator<E>{
+public class LinkedListContainer<E> implements Iterable<E>{
     /**
      *  значение первого
      *  элемента контейнера
      */
-    protected ListValue<E> firstListValue;
+    private ListValue<E> firstListValue;
     /**
      * значение последнего
      * элемента контейнера
      */
-    protected ListValue<E> lastListValue;
+    private ListValue<E> lastListValue;
     /**
      * счетчик(размер контейнера)
      */
@@ -38,7 +35,8 @@ public class LinkedListContainer<E> implements Iterable<E>,BackIterator<E>{
      * следующее - lastValue
      */
     public LinkedListContainer() {
-
+        lastListValue = new ListValue<E>(null, firstListValue,null);
+        firstListValue = new ListValue<E>(null,null, lastListValue);
     }
 
     /**
@@ -60,120 +58,45 @@ public class LinkedListContainer<E> implements Iterable<E>,BackIterator<E>{
      *
      * @param someValue
      */
-    public void linkLast(E someValue) {
-        final ListValue<E> l = lastListValue;
-        final ListValue<E> newNode = new ListValue<>(l, someValue, null);
-        lastListValue = newNode;
-        if (l == null)
-            firstListValue = newNode;
-        else
-            l.nextElement = newNode;
+    public void addLast(E someValue) {
+        ListValue<E> prev = lastListValue;
+        prev.setCurrentElement(someValue);
+        lastListValue = new ListValue<E>(null,prev,null);
+        prev.setNextElement(lastListValue);
         size++;
     }
-    public void addLast(E e) {
-        linkLast(e);
-    }
+
     /**
-     * Метод добавляет
-     * элемент в начало контейнера
-     * @param someValue
+     * Метод вставляет элементы в контейнер,
+     * наследующий свойства LinkedListContainer
+     * на первую позицию
+     * @param someValue - добавляемый элемент
      */
-    public void linkFirst(E someValue) {
-        final ListValue<E> f = firstListValue;
-        final ListValue<E> newNode = new ListValue<E>(null, someValue, f);
-        firstListValue = newNode;
-        if (f == null)
-            lastListValue = newNode;
-        else
-            f.prevElement = newNode;
+    public void addFirst(E someValue) {
+        ListValue<E>next = firstListValue;
+        next.setCurrentElement(someValue);
+        firstListValue = new ListValue<E>(null,null,next);
+        next.setPrevElement(firstListValue);
         size++;
     }
-    public void addFirst(E e) {
-        linkFirst(e);
-    }
-
-    public E poll() {
-        final ListValue<E> f = firstListValue;
-        return (f == null) ? null : unlinkFirst(f);
-    }
-
-    private E unlinkFirst(ListValue<E> f) {
-        // assert f == first && f != null;
-        final E element = f.currentElement;
-        final ListValue<E> next = f.nextElement;
-        f.currentElement = null;
-        f.nextElement = null; // help GC
-        firstListValue = next;
-        if (next == null)
-            lastListValue = null;
-        else
-            next.prevElement = null;
-        size--;
-        return element;
-    }
-    private E unlinkLast(ListValue<E> l) {
-        // assert l == last && l != null;
-        final E element = l.currentElement;
-        final ListValue<E> prev = l.prevElement;
-        l.currentElement = null;
-        l.prevElement = null; // help GC
-        lastListValue = prev;
-        if (prev == null)
-            firstListValue = null;
-        else
-            prev.nextElement = null;
-        size--;
-
-        return element;
-    }
-     /**
-     * Удаляем последний элемент
-     * @return - удаляемый элемент
-     */
-    public  E removeLastElement(){
-        ListValue<E>last = lastListValue.getPrevElement();
-        lastListValue = new ListValue<E>(null,null,null);
-         size--;
-        return last.getCurrentElement();
-    }
-    public E removeFirstElement(){
-      firstListValue.setPrevElement(null);
-      return firstListValue.getCurrentElement();
-
-    }
     /**
-     * @return размер контейнера
-     */
-    public int getSize() {
-        return size;
-    }
-
-    /**
-     * метод для изменения
-     * параметра размера контейнера
-     * @param size
-     */
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    /**
-     * Метод создает новое состояние
+     *Метод создает новое состояние
      * объекта,начиная с первого элемента, проверяем
      * его указатель на последний элемент(состояние,
      * которое соответствует реальному значению)
-     * одновременно инкрементируем счетчик до тех пор,
+     *одновременно инкрементируем счетчик до тех пор,
      * пока он меньше index
      * @param index искомое значение
      * @return найденное значение
      */
-    public E get (int index) {
+    public E getNext(int index) {
         ListValue<E> target = firstListValue.getNextElement();
-            for (int i = 0; i < index; i++) {
-                target = getNextElement(target);
+        for (int i = 0; i <index; i++) {
+            target = getNxtElement(target);
         }
         return target.getCurrentElement();
     }
+
     /**
      * вспомогательный метод-
      * помогает определить,относительно
@@ -183,8 +106,31 @@ public class LinkedListContainer<E> implements Iterable<E>,BackIterator<E>{
      * @param current
      * @return - текущий элемент
      */
-    private ListValue<E> getNextElement(ListValue<E> current){
+    private ListValue<E> getNxtElement(ListValue<E> current){
         return current.getNextElement();
+    }
+    /**
+     * Метод извлекает элемент
+     * из вершины стэка и декрементирует
+     * размер
+     * @return  - извлекаемый элемент
+     *
+     * */
+    public E remove(){
+        E removedElement = getNext(size-1);
+        lastListValue = null;
+        size--;
+        return removedElement;
+    }
+
+
+    /**
+     * @return Если размер контейнера равен 0,-
+     * контейнер пуст,вернет true;
+     * в противном слуяае вернет false;
+     */
+    public boolean empty(){
+        return size == 0;
     }
 
     /**
@@ -193,7 +139,6 @@ public class LinkedListContainer<E> implements Iterable<E>,BackIterator<E>{
      */
     @Override
     public Iterator<E> iterator() {
-
         return new Iterator<E>() {
             int index = 0;
             /**
@@ -205,6 +150,7 @@ public class LinkedListContainer<E> implements Iterable<E>,BackIterator<E>{
             public boolean hasNext() {
                 return index < size;
             }
+
             /**
              * возвращаем елемент
              * по индексу
@@ -212,48 +158,33 @@ public class LinkedListContainer<E> implements Iterable<E>,BackIterator<E>{
              */
             @Override
             public E next() {
-                return get(index++);
+                return getNext(index++);
             }
+
         };
     }
 
-    @Override
-    public Iterator<E> backIterator() {
-        return new Iterator<E>() {
-            int index = size - 1;
-            @Override
-            public boolean hasNext() {
-                return index >= 0;
-            }
-            @Override
-            public E next() {
-                return get(index--);
-            }
-        };
-    }
+
 
     /**
      * Класс описывающий структуру
      * объектов хранилища
      * @param <E>
      */
-    public class ListValue<E> {
+    public class ListValue<E>  {
         /**
          *текущее состояние
          */
-        private E currentElement;
+        public E currentElement;
         /**
          * слкдующий элемент
          */
-        private ListValue<E> nextElement;
+        public ListValue<E> nextElement;
         /**
          * предыдущий элемент
          */
-        private ListValue<E> prevElement;
-        /**
-         * индекс-счетчик
-         * */
-        private int index = 0;
+        public ListValue<E> prevElement;
+
 
         /**
          * конструктор состояния
@@ -262,17 +193,9 @@ public class LinkedListContainer<E> implements Iterable<E>,BackIterator<E>{
          * @param prevElement - предыдущий элемент
          * @param nextElement - следующий элемент
          */
-        public ListValue(ListValue<E> prevElement, E currentElement, ListValue<E> nextElement) {
+        public ListValue(E currentElement, ListValue<E> prevElement, ListValue<E> nextElement) {
             this.currentElement = currentElement;
             this.nextElement = nextElement;
-            this.prevElement = prevElement;
-        }
-
-        public ListValue<E> getPrevElement() {
-            return prevElement;
-        }
-
-        public void setPrevElement(ListValue<E> prevElement) {
             this.prevElement = prevElement;
         }
 
@@ -291,23 +214,33 @@ public class LinkedListContainer<E> implements Iterable<E>,BackIterator<E>{
         }
 
         /**
-         * @return ListValue<E>
+         * @return - следующий элемент
          */
         public ListValue<E> getNextElement() {
             return nextElement;
         }
 
         /**
-         * @param nextElement
+         * @param nextElement - следующий элемент
          */
         public void setNextElement(ListValue<E> nextElement) {
             this.nextElement = nextElement;
         }
 
-
-
-
-
+        /**
+         * @param prevElement - предыдущий элемент
+         */
+        public void setPrevElement(ListValue<E> prevElement) {
+            this.prevElement = prevElement;
+        }
     }
+
+    /**
+     * @return  - мнимый размер(количество всех Нод)
+     */
+    public int getSize() {
+        return size;
+    }
+
 
 }
