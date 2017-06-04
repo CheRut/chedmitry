@@ -2,8 +2,6 @@ package ru.chedmitriy.collectionsPro.list.stack;
 
 import ru.chedmitriy.collectionsPro.list.linkedListLike.LinkedListContainer;
 
-import java.util.LinkedList;
-
 /**
  * Класс - контейнер Stack,в
  * котором объекты расположены
@@ -27,7 +25,7 @@ public class StackContainer<E> extends LinkedListContainer<E>{
      *                элемент
      */
     public void push(E element){
-        this.addLast(element);
+        this.addFirst(element);
     }
     /**
      * Метод извлекает
@@ -37,7 +35,7 @@ public class StackContainer<E> extends LinkedListContainer<E>{
      * текущий элемент контейнера
      */
     public E pop() {
-        return this.remove();
+        return this.removeLastElement();
     }
     /**
      * Возвращает верхний элемент,
@@ -54,11 +52,14 @@ public class StackContainer<E> extends LinkedListContainer<E>{
      * @return boolean
      * */
     public boolean empty(){
-        return this.iterator().hasNext()? false : true;
+        return this.iterator().hasNext() ? false : true;
     }
     /**
      * Метод ищет заданный
-     * элемент в стеке. Если заданный
+     * элемент в стеке и возвращает
+     * количество операций pop
+     * для вывода элемента на вершину
+     * стэка.Если заданный
      * элемент в стеке отсутствует,
      * этот метод возвращает -1
      * @param element
@@ -66,9 +67,11 @@ public class StackContainer<E> extends LinkedListContainer<E>{
      */
     public int search(E element){
         int popOperationsIsNeededToDone = -1;
+        int count = 0;
         while (!empty()){
+            count++;
             if(element.equals(peek())) {
-                popOperationsIsNeededToDone = 0;
+                popOperationsIsNeededToDone = count;
                 break;
             }
             setSize(getSize()-1);

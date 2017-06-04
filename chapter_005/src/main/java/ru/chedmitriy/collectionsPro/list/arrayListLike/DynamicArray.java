@@ -1,4 +1,4 @@
-package ru.chedmitriy.collectionsPro.list;
+package ru.chedmitriy.collectionsPro.list.arrayListLike;
 
 import java.util.Arrays;
 import java.util.Iterator;

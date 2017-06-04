@@ -2,6 +2,7 @@ package ru.chedmitriy.collectionsPro.list;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.chedmitriy.collectionsPro.list.arrayListLike.DynamicArray;
 
 
 import static org.hamcrest.core.Is.is;
@@ -26,7 +27,7 @@ public class DynamicArrayTest {
 
     }
     /**
-     * проверка метода add()
+     * проверка метода addLast()
      * можем добавлять элементы
      * любых типов
      * проверку

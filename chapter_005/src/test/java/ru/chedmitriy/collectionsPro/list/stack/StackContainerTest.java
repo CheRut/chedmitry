@@ -74,6 +74,6 @@ public class StackContainerTest {
         stack.push("second");
         stack.push("first");
         String value = "third";
-        assertThat(stack.search(value),is(0));
+        assertThat(stack.search(value),is(3));
     }
 }
