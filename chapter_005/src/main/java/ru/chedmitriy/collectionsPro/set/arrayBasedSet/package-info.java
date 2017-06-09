@@ -1,4 +1,4 @@
-package ru.chedmitriy.collectionsPro.list.set;
+package ru.chedmitriy.collectionsPro.set.arrayBasedSet;
 /**
  * Создается Сэт на базе ранее
  * подготовленного итератора

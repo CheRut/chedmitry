@@ -1,4 +1,4 @@
-package ru.chedmitriy.collectionsPro.list.set;
+package ru.chedmitriy.collectionsPro.set.arrayBasedSet;
 
 import ru.chedmitriy.collectionsPro.list.arrayListLike.ArrayIterator;
 

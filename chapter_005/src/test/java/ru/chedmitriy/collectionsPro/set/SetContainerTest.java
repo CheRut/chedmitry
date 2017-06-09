@@ -1,9 +1,8 @@
-package ru.chedmitriy.collectionsPro.list.set;
+package ru.chedmitriy.collectionsPro.set;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Iterator;
+import ru.chedmitriy.collectionsPro.set.arrayBasedSet.SetContainer;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
