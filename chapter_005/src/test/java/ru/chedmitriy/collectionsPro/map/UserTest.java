@@ -30,9 +30,6 @@ public class UserTest {
         System.out.println(second.hashCode());
         assertThat(first,is(second));
     }
-    @Test
-    public void reflexive(){
-
-    }
+    
 
 }
