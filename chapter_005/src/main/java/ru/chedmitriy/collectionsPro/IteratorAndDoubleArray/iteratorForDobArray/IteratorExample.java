@@ -45,7 +45,8 @@ public class IteratorExample implements Iterator {
      * */
     @Override
     public boolean hasNext() {
-        return counter<array.length*array[0].length;
+
+        return counter < array.length*array[index].length;
     }
     /**
      * Переопределенный метод

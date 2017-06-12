@@ -20,7 +20,7 @@ public class IteratorExampleTest {
      * */
     @Test
     public void whenNextElementChecking() {
-        int[][]ar = new int[][]{{1,2},{3,4}};
+        int[][]ar = new int[][]{{1,2},{3}};
 
 
         IteratorExample it = new IteratorExample(ar);
@@ -35,22 +35,27 @@ public class IteratorExampleTest {
     /**
      *
      * протеструем метод hasNext()
-     * В переданномконструктору массиве
-     * всего два элемента если дважды
-     * воспользоваться методом next()
+     * В переданном конструктору массиве
+     * всего 7 элемента и если
+     * семь раз вызвать метод  next()
      * мы должны добраться до крайнего и,
      * вызвав метод hasNext получить false.
      * */
 
     @Test
     public void whileArrayHasAnElements() {
-        int[][]ar = new int[][]{{1},{2},{3}};
+        int[][]ar = new int[][]{{1,2},{2,5,7,2},{3}};
         IteratorExample it = new IteratorExample(ar);
+        it.next();
+        it.next();
+        it.next();
+        it.next();
         it.next();
         it.next();
         it.next();
         boolean hasNextValue = it.hasNext();
         assertThat(hasNextValue,is(false));
+
     }
 
 
