@@ -6,88 +6,86 @@ import java.util.*;
  * Iterator<Integer>
  *
  * */
-public class ConvertIterator implements IteratorConverterInterface{
+public class ConvertIterator<T> implements Iterator{
     /**
-     * Итератор Итератора
-     * */
-    private  Iterator<Iterator<Integer>> iteratorOfIterator;
-    /**
-     * Итератор получаем после конвертации
-     * */
-    private Iterator<Integer> resultItertor;
-    /**
-     * некоторый список значений
-     * */
-    private final List<Integer> listOne = new ArrayList<>(Arrays.asList(4,2,0,4,6,4,9));
-    /**
-     * некоторый список значений
-     * */
-    private final List<Integer>listTwo = new ArrayList<>(Arrays.asList(0,9,8,7,5));
-    /**
-     * некоторый список значений
-     * */
-    private final List<Integer>listThree = new ArrayList<>(Arrays.asList(1,3,5,6,7,0,9,8,4));
-    /**
-     * конструктор по умолчанию
+     * параметр Итератор Итератора
      *
      * */
-    public ConvertIterator()  {
+    private final Iterator<Iterator<T>> iterator;
+    /**
+     * параметр текущий Итератор
+     * */
+    private Iterator<T> currentIterator = null;
 
-    }
     /**
-     * метод создает итератор итераторов
-     * списков значений
-     * */
-    public void doubleListIterator() {
-        List<Iterator<Integer>> combinedList =
-                new ArrayList<>(Arrays.asList(listOne.iterator(),
-                        listTwo.iterator(),
-                        listThree.iterator()));
-        this.iteratorOfIterator = combinedList.iterator();
+     * конструктор принимает Итератор итератора
+     * @param iterator - принимаемый итератор итератора
+     */
+    public ConvertIterator(Iterator<Iterator<T>> iterator)
+    {
+        this.iterator = iterator;
+    }
 
-    }
     /**
-     * @return - итератор итераторов
-     *
-     * */
-    public Iterator<Iterator<Integer>> getIteratorOfIterator() {
-        return iteratorOfIterator;
-    }
-    /**
-     * Метод получает итератор итераторов
-     * и возвращает итератор целых чисел
-     * @param it - итератор итераторов
-     * @return resultIterator - итератор целых чисел.
-     *
-     * */
+     * переопределяем метод
+     * @return true, если текущий итератор не равен null
+     * и в текущем итераторе имеется следующее значение
+     */
     @Override
-    public Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
-        int size = 0;
-        while (resultItertor == null || !resultItertor.hasNext()) {
-            resultItertor = iteratorOfIterator.next();
+    public boolean hasNext()
+    {
+        selectCurrentIterator();
+        return (currentIterator != null && currentIterator.hasNext());
+    }
+
+    /**
+     * @throws NoSuchElementException - если текущий
+     * итератор null - исключение
+     * @return - следующий элемнт текущего итератора
+     */
+    @Override
+    public T next()
+    {
+        selectCurrentIterator();
+        if (currentIterator == null)
+        {
+            throw new NoSuchElementException();
         }
-        return resultItertor;
+        return currentIterator.next();
     }
+
     /**
-     * Метод проверки на наличие
-     * следующего элемента
-     * */
-    @Override
-    public boolean hasNext() {
+     * Суть данного метода заключается
+     * в том, что мы создаем итератор
+     * в котором может содержаться
+     * разное количество итераторов.
+     * а значению currentIterator мы присваиваем
+     * значение каждого итератора поочереди,пока
+     * новый currentIterator имеет элементы.
+     * return в первом условии нас выбрасывает из метода до тех
+     * пор,пока условие не перестанет выполняться.
+     * В это время будут повторяться выполненния методов
+     * hasNext() и next() для каждого итератора
 
-        while (resultItertor == null || !resultItertor.hasNext()) {
-            if (!iteratorOfIterator.hasNext()) return false;
-            resultItertor = iteratorOfIterator.next();
+     */
+    private void selectCurrentIterator()
+    {
+        if (currentIterator != null && currentIterator.hasNext())
+        {
+            return;
         }
-        return true;
+        currentIterator = null;
+        while (iterator.hasNext())
+        {
+            Iterator<T> nextIterator = iterator.next();
+            if (nextIterator.hasNext())
+            {
+                currentIterator = nextIterator;
+                break;
+            }
+        }
     }
 
-    @Override
-    public Object next() {
-        return resultItertor.next();
-    }
 
-    public Iterator<Integer> getResultItertor() {
-        return resultItertor;
-    }
 }
+

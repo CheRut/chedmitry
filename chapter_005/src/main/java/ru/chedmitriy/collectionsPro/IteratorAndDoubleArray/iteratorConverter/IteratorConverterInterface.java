@@ -2,7 +2,7 @@ package ru.chedmitriy.collectionsPro.IteratorAndDoubleArray.iteratorConverter;
 
 import java.util.Iterator;
 
-public interface IteratorConverterInterface extends Iterator {
+public interface IteratorConverterInterface  {
     /**
      * .
      * Метод конвертирует несколько объектов
