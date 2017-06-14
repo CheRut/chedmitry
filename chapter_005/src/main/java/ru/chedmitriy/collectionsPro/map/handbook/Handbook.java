@@ -62,15 +62,10 @@ public class Handbook<T,V> implements Iterable{
      * @return
      */
     boolean delete(T key){
-        int index = 0;
-        while(mapIterator.hasNext()){
-           if(mapDataBase[index].equals(mapIterator.next())){
-               System.out.println("удалено"+" - "+mapDataBase[index].getValue());
-               mapDataBase[index] = null;
-               break;
-           }
-           index++;
-        }
+     Database db= null;
+     while(mapIterator.hasNext()){
+
+     }
         return false;
     }
 
