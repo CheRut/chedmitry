@@ -23,6 +23,7 @@ public class HandbookTest {
         hb.insert(2,"two");
         hb.insert(3,"three");
         hb.insert(4,"four");
+        hb.insert(2,"five");
         for (int i = 0; i <hb.mapDataBase.length ; i++) {
             System.out.println(hb.mapDataBase[i].getKey());
         }
@@ -35,6 +36,7 @@ public class HandbookTest {
         hb.insert(2,"two");
         hb.insert(3,"three");
         hb.insert(4,"four");
+
         String value = "two";
         hb.get(1);
         assertThat(value,is(hb.get(2)));
@@ -46,7 +48,10 @@ public class HandbookTest {
         hb.insert(2,"two");
         hb.insert(3,"three");
         hb.insert(4,"four");
-        hb.delete(3);
+        hb.delete(4);
+        for (int i = 0; i <hb.mapDataBase.length ; i++) {
+            System.out.println(hb.mapDataBase[i].getKey());
+        }
     }
 
 }

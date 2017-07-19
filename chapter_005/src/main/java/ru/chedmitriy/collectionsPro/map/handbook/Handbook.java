@@ -1,5 +1,6 @@
 package ru.chedmitriy.collectionsPro.map.handbook;
 
+import com.sun.corba.se.impl.orb.DataCollectorBase;
 import ru.chedmitriy.collectionsPro.list.arrayListLike.ArrayIterator;
 
 import javax.xml.crypto.Data;
@@ -9,6 +10,7 @@ import java.util.Iterator;
  * Created by d1msan on 13.06.2017.
  */
 public class Handbook<T,V> implements Iterable{
+    int index = 0;
     ArrayIterator mapIterator;
     /**
      *
@@ -38,39 +40,47 @@ public class Handbook<T,V> implements Iterable{
      *           в массиве
      * */
     boolean insert(T key, V value){
-        this.mapDataBase[position++] = new Database(key,value);
-        return true;
-    }
-
-    /**
-     *
-     * @param key
-     * @return
-     */
-    V get (T key) {
-        Database db = null;
-        while(mapIterator.hasNext()){
-            db = (Database) mapIterator.next();
-            if(db.getKey().equals(key))
-                break;
+            while (mapIterator.hasNext()&&mapDataBase[index]!=null) {
+                mapIterator.next();
+                if (this.mapDataBase[index].getKey().equals(key)) {
+                    return false;
+                }
+                index++;
         }
-        return (V)db.value;
-    }
+            this.mapDataBase[position++] = new Database(key,value);
+            return true;
+        }
 
-    /**
-     * @param key
-     * @return
-     */
+        /**
+         *
+         * @param key
+         * @return
+         */
+        V get (T key) {
+            Database db = null;
+            while(mapIterator.hasNext()){
+                db = (Database) mapIterator.next();
+                if(db.getKey().equals(key))
+                    break;
+            }
+            return (V)db.value;
+        }
+
+        /**
+         * @param key
+         * @return
+         */
     boolean delete(T key){
         int index = 0;
         while(mapIterator.hasNext()){
-           if(mapDataBase[index].equals(mapIterator.next())){
-               System.out.println("удалено"+" - "+mapDataBase[index].getValue());
-               mapDataBase[index] = null;
-               break;
-           }
-           index++;
+            mapIterator.next();
+            if(mapDataBase[index].getKey().equals(key)){
+                System.out.println("удаляем "+mapDataBase[index].getValue());
+                mapDataBase[index] = null;
+            }
+            index++;
         }
+
         return false;
     }
 
