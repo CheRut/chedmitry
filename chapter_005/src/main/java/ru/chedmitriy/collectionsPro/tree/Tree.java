@@ -9,8 +9,11 @@ import java.util.List;
  * @author Cherutsa Dmitry
  */
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
-    private Node<E>root;
+    private Node<E> root;
     private int size = 0;
+    private int key = 0;
+    Node<E>[] nodes;
+
 
     /**
      * Конструктор создает
@@ -24,17 +27,21 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      *              корень дерева
      */
     public Tree(E value){
+
         root = new Node<>(null);
         root.value = value;
+        nodes = new Node[16];
 
     }
 
     /**
-     * Если текущий root
-     * равен parent,добавляем
-     * в список children элемнт
-     * child-инкрементируем параметр size
-     * возвращаем true...
+     * Сначала определяем не пусто
+     * ли значение root и равно ли оно
+     * значению parent.
+     * если значения равны,добавляем
+     * в список root значение child.
+     * Иначе делаем такое же сравнение с
+     * дочерним элементом
      * В противном случае - вернется false
      * @param parent - родитель
      * @param child - дочерний элеент
@@ -43,22 +50,41 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     @Override
     public boolean add(E parent, E child) {
-        if (root.value.compareTo(parent)!=0){
-            return false;
+        if(root.getValue()!=null) {
+            nodes[key++] = root;
         }
-        if(root.value.compareTo(parent)==0){
-            root.children.add(new Node<>(child));
-            root = new Node<>(child);
+        Node<E> newRoot = null;
+     if(root.getValue() != null && root.getValue().compareTo(parent)==0){
+         root.children.add(new Node<>(child));
+         size++;
+     }
+     else if(root.children.get(0).getValue()!= null && root.children.get(0).getValue().compareTo(parent)==0){
+            newRoot = new Node<>(root.children.get(0).getValue());
+            newRoot.children.add(new Node(child));
+            root = newRoot;
             size++;
-        }
-
-        return true;
+     }
+     else return false;
+     root = new Node<>(child);
+     return true;
     }
 
 
     @Override
     public Iterator<E> iterator() {
-     return null;
+     return new Iterator<E>() {
+         int position = 0;
+
+         @Override
+         public boolean hasNext() {
+             return nodes[position]!= null ? position < nodes.length:false;
+         }
+
+         @Override
+         public E next() {
+             return nodes[position++].getValue();
+         }
+     };
     }
 
     public Node<E> getRoot() {
@@ -82,9 +108,12 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      * из которых состоит дерево
      * @param <E> - любая ссылочная переменная
      */
-    private class Node<E>{
+    public class Node<E>{
         private List<Node<E>> children;
         private E value;
+
+        public Node() {
+        }
 
         public Node(E value) {
             this.value = value;
