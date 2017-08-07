@@ -1,6 +1,7 @@
 package ru.chedmitriy.collectionsPro.tree;
 
 
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private Node<E> root;
     private int size = 0;
     private int key = 0;
+
     Node<E>[] nodes;
 
 
@@ -28,8 +30,8 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     public Tree(E value){
 
-        root = new Node<>(null);
-        root.value = value;
+        root = new Node<>(value);
+
         nodes = new Node[16];
 
     }
@@ -50,41 +52,58 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     @Override
     public boolean add(E parent, E child) {
+        Node<E> newRoot = null;
         if(root.getValue()!=null) {
             nodes[key++] = root;
+
         }
-        Node<E> newRoot = null;
-     if(root.getValue() != null && root.getValue().compareTo(parent)==0){
-         root.children.add(new Node<>(child));
-         size++;
-     }
-     else if(root.children.get(0).getValue()!= null && root.children.get(0).getValue().compareTo(parent)==0){
+
+        if(root.getValue() != null && root.getValue().compareTo(parent)==0){
+            root.children.add(new Node<>(child));
+            size++;
+        }
+        else if(root.children.get(0).getValue()!= null && root.children.get(0).getValue().compareTo(parent)==0){
             newRoot = new Node<>(root.children.get(0).getValue());
             newRoot.children.add(new Node(child));
             root = newRoot;
             size++;
-     }
-     else return false;
-     root = new Node<>(child);
-     return true;
+        }
+        else return false;
+        root = new Node<>(child);
+        return true;
     }
-
 
     @Override
     public Iterator<E> iterator() {
-     return new Iterator<E>() {
-         int position = 0;
+        return new Iterator<E>() {
 
-         @Override
-         public boolean hasNext() {
-             return nodes[position]!= null ? position < nodes.length:false;
-         }
+            int position = 0;
 
-         @Override
-         public E next() {
-             return nodes[position++].getValue();
-         }
-     };
+
+            E value = null;
+            Iterator childIterator = nodes[position].children.iterator();
+
+            @Override
+            public boolean hasNext() {
+                return nodes[position]!= null ? position < size:false;
+            }
+
+            @Override
+            public E next() {
+                value = root.value;
+
+
+                if (nodes[position].children.get(0) != null) {
+                    value = nodes[position].children.get(0).getValue();
+                }
+                else {
+                    value = nodes[position].value;
+                }
+
+                position++;
+                return value;
+            }
+        };
     }
 
     public Node<E> getRoot() {
