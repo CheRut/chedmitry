@@ -43,13 +43,17 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     @Override
     public boolean add(E parent, E child) {
-        if (root.value.compareTo(parent)!=0){
-            return false;
-        }
         if(root.value.compareTo(parent)==0){
             root.children.add(new Node<>(child));
             root = new Node<>(child);
             size++;
+        }
+        else {
+            if (root.children.get(0).value.compareTo(parent)==0){
+                root.children.get(0).setValue(parent);
+                root.children.get(0).children.add(new Node<>(child));
+                size++;
+            }
         }
 
         return true;
