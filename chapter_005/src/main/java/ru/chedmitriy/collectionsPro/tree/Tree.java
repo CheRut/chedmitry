@@ -8,20 +8,21 @@ import java.util.*;
 /**
  * @author Cherutsa Dmitry
  */
+
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
     /**
      * корнево элемент дерева
      */
-    private Node<E> root;
+    private final Node<E> root;
     /**
      * множество всех нод
      * */
-    public Set<Node<E>> nodes;
+    private final Set<Node<E>> nodes;
     /**
      * список всех нод
      * */
-    ArrayList<Node<E>> list;
+    private final ArrayList<Node<E>> list;
 
 
 
@@ -80,7 +81,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      * @param parent - искомое значение
      * @param child - значение дочернего элемента
      */
-    public void add(Node<E> findingNode,E parent,E child){
+    private void add(Node<E> findingNode, E parent, E child){
         if(findingNode.value.compareTo(parent)==0){
             findingNode.children.add(new Node<>(child));
         }
@@ -105,15 +106,14 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      *             метода родитель
      * @return - true
      */
-    public void depthFirstSearch(Node<E> root){
+    private void depthFirstSearch(Node<E> root){
         nodes.add(root);
         for (Node<E> node:root.children){
             if (node==null ){
-              node.visited = true;
+                return;
             }
             else {
                 depthFirstSearch(node);
-                node.visited = true;
 
             }
         }
@@ -173,23 +173,16 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         /**
          * Список дочерних нод
          */
-        private List<Node<E>> children;
+        private final List<Node<E>> children;
 
         /**
          * значение Ноды
          */
-        private E value;
+        private final E value;
         /**
          * уникальное число значения ноды
          */
         private int hash;
-
-
-
-        /**
-         * параметр посещаемости нод
-         */
-         boolean visited = false;
 
 
         /**
@@ -209,14 +202,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
          */
         public E getValue() {
             return value;
-        }
-
-        /**
-         * сеттер
-         * @param value
-         */
-        public void setValue(E value) {
-            this.value = value;
         }
 
         @Override
