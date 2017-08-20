@@ -122,6 +122,22 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     }
 
     /**
+     * циклический проход в глубину был
+     * произведен ранее при наполнении множества
+     * поэтому,просто проверяю в множестве нод
+     * размеры дочерних списков
+     *
+     * @return true, если дерево бинарное
+     */
+    public boolean isBinary() {
+        for(Node<E> node:nodes){
+            if (node.children.size()>2){
+               return false;
+            }
+        }
+        return true;
+    }
+    /**
      * меткод по значению
      * находит ноду и возвращает
      * список дочерних

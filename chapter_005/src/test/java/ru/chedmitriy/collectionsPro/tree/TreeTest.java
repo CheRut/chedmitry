@@ -33,5 +33,15 @@ public class TreeTest {
         }
 
   }
+  @Test
+    public void isBinaryTreeCheck(){
+        assertTrue(tree.isBinary());
+
+  }
+  @Test
+    public void isNotBinaryTree(){
+      tree.add("8","17");
+      assertFalse(tree.isBinary());
+  }
 
 }
