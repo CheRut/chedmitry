@@ -2,19 +2,27 @@ package ru.chedmitriy.collectionsPro.tree;
 
 
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+
+import java.util.*;
 
 /**
  * @author Cherutsa Dmitry
  */
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
-    private Node<E> root;
-    private int size = 0;
-    private int key = 0;
 
-    Node<E>[] nodes;
+    /**
+     * корнево элемент дерева
+     */
+    private Node<E> root;
+    /**
+     * множество всех нод
+     * */
+    public Set<Node<E>> nodes;
+    /**
+     * список всех нод
+     * */
+    ArrayList<Node<E>> list;
+
 
 
     /**
@@ -29,122 +37,209 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      *              корень дерева
      */
     public Tree(E value){
-
         root = new Node<>(value);
+        nodes = new HashSet<>();
+        list = new ArrayList();
 
-        nodes = new Node[16];
 
     }
 
     /**
-     * Сначала определяем не пусто
-     * ли значение root и равно ли оно
+     * Сначала определяем  равно ли значение корня
      * значению parent.
      * если значения равны,добавляем
      * в список root значение child.
      * Иначе делаем такое же сравнение с
      * дочерним элементом
-     * В противном случае - вернется false
      * @param parent - родитель
-     * @param child - дочерний элеент
+     * @param child - дочерний элемент
      * @return -  true если добавление
      * прошло успешно
      */
     @Override
     public boolean add(E parent, E child) {
-        Node<E> newRoot = null;
-        if(root.getValue()!=null) {
-            nodes[key++] = root;
-
+        if(this.root.value.compareTo(parent)==0 ){
+            this.root.children.add(new Node<>(child));
+            nodes.add(root);
         }
 
-        if(root.getValue() != null && root.getValue().compareTo(parent)==0){
-            root.children.add(new Node<>(child));
-            size++;
+        else {
+            add(this.root,parent,child);
         }
-        else if(root.children.get(0).getValue()!= null && root.children.get(0).getValue().compareTo(parent)==0){
-            newRoot = new Node<>(root.children.get(0).getValue());
-            newRoot.children.add(new Node(child));
-            root = newRoot;
-            size++;
-        }
-        else return false;
-        root = new Node<>(child);
         return true;
     }
 
+    /**
+     * вспомогательный метод
+     * проверяем равенство значения parent
+     * со значением передаваемой
+     * в параметр ноды
+     * если значения не равны,рекурсивно
+     * проверяем дочерние элементы по этому условию
+     * @param findingNode - передаваемая в параметр нода
+     * @param parent - искомое значение
+     * @param child - значение дочернего элемента
+     */
+    public void add(Node<E> findingNode,E parent,E child){
+        if(findingNode.value.compareTo(parent)==0){
+            findingNode.children.add(new Node<>(child));
+        }
+        else {
+            for (Node<E> v:findingNode.children){
+                add(v,parent,child);
+
+            }
+        }
+     depthFirstSearch(findingNode);
+    }
+
+    /**
+     * Обход в глубину.
+     * Здесь если  элемент дочернего
+     * списка равен null помечаем
+     * всю ноду посещенной если нет -
+     * рекурсивное проходимся по списку
+     * Также в этом методе заполняем множество
+     * значений nodes
+     * @param root переаваемый в параметр
+     *             метода родитель
+     * @return - true
+     */
+    public void depthFirstSearch(Node<E> root){
+        nodes.add(root);
+        for (Node<E> node:root.children){
+            if (node==null ){
+              node.visited = true;
+            }
+            else {
+                depthFirstSearch(node);
+                node.visited = true;
+
+            }
+        }
+
+
+    }
+
+    /**
+     * меткод по значению
+     * находит ноду и возвращает
+     * список дочерних
+     * элементов
+     * @param parentValue - искомый родитель
+     * @return
+     */
+    public List<Node<E>>showNodeValues(E parentValue){
+        for(Node<E> n:nodes){
+            if (n.value.equals(parentValue)){
+                return n.children;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * переопределенный итератор
+     * для списка элемента нод
+     * Здесь в список нод заносим
+     * элементы множества,
+     * далее обращаясь к списку нод
+     * получаем значения
+     * @return
+     */
     @Override
     public Iterator<E> iterator() {
+        list.addAll(nodes);
+
         return new Iterator<E>() {
-
             int position = 0;
-
-
-            E value = null;
-            Iterator childIterator = nodes[position].children.iterator();
-
             @Override
             public boolean hasNext() {
-                return nodes[position]!= null ? position < size:false;
+                return  position < list.size();
             }
-
             @Override
             public E next() {
-                value = root.value;
-
-
-                if (nodes[position].children.get(0) != null) {
-                    value = nodes[position].children.get(0).getValue();
-                }
-                else {
-                    value = nodes[position].value;
-                }
-
-                position++;
-                return value;
+                return list.get(position++).value;
             }
         };
     }
-
-    public Node<E> getRoot() {
-        return root;
-    }
-
-    public void setRoot(Node<E> root) {
-        this.root = root;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
     /**
      * Класс Нод,
      * из которых состоит дерево
      * @param <E> - любая ссылочная переменная
      */
     public class Node<E>{
+
+        /**
+         * Список дочерних нод
+         */
         private List<Node<E>> children;
+
+        /**
+         * значение Ноды
+         */
         private E value;
+        /**
+         * уникальное число значения ноды
+         */
+        private int hash;
 
-        public Node() {
-        }
 
+
+        /**
+         * параметр посещаемости нод
+         */
+         boolean visited = false;
+
+
+        /**
+         * конструктор нод
+         * Каждая нода должна иметь какое-то
+         * значение
+         * @param value - значение ноды
+         */
         public Node(E value) {
             this.value = value;
             this.children = new LinkedList<>();
         }
 
+        /**
+         * геттер
+         * @return
+         */
         public E getValue() {
             return value;
         }
+
+        /**
+         * сеттер
+         * @param value
+         */
         public void setValue(E value) {
             this.value = value;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o instanceof Node) {
+               Node<E> node = (Node<E>) o;
+                return (
+                        Objects.equals(value, node.getValue()) &&
+                        Objects.equals(hash, node.hashCode()));
+            }
+            return false;
+        }
+        @Override
+        public int hashCode() {
+            hash = 31;
+            hash = hash * 17 + value.hashCode();
+            return hash;
+        }
+
+
+
     }
+
 
 }
