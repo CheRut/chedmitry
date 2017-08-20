@@ -20,9 +20,9 @@ public class TreeTest {
     @Test
     public void add() throws Exception {
         tree.add("8","9");
-        tree.add("9","1");
-        tree.add("1","4");
-        tree.add("4","6");
+        tree.add("2","4");
+        tree.add("3","7");
+        tree.add("1","6");
 
         Iterator it = tree.iterator();
         while (it.hasNext()){

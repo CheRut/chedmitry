@@ -5,12 +5,14 @@ package ru.chedmitriy.collectionsPro.tree;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * @author Cherutsa Dmitry
  */
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private Node<E> root;
+    private Node<E> rootNode;
     private int size = 0;
     private int key = 0;
 
@@ -29,9 +31,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      *              корень дерева
      */
     public Tree(E value){
-
         root = new Node<>(value);
-
         nodes = new Node[16];
 
     }
@@ -52,27 +52,32 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     @Override
     public boolean add(E parent, E child) {
-        Node<E> newRoot = null;
-        if(root.getValue()!=null) {
-            nodes[key++] = root;
-
-        }
-
-        if(root.getValue() != null && root.getValue().compareTo(parent)==0){
+        if(dfs(root,parent))
             root.children.add(new Node<>(child));
-            size++;
+        else {
+            root = new Node<>(parent);
+            root.children.add(new Node<>(child));
         }
-        else if(root.children.get(0).getValue()!= null && root.children.get(0).getValue().compareTo(parent)==0){
-            newRoot = new Node<>(root.children.get(0).getValue());
-            newRoot.children.add(new Node(child));
-            root = newRoot;
-            size++;
-        }
-        else return false;
-        root = new Node<>(child);
+        System.out.println(root.value);
+
         return true;
+
     }
 
+    public boolean dfs(Node<E> root,E parent) {
+        if (root.value.equals(parent)) {
+            System.out.println(root.value);
+
+            return true;
+        } else for (Node<E> v : root.children) {
+            if (v.value.equals(parent)) {
+                System.out.println(v.value);
+                return true;
+            }
+            return dfs(v, parent);
+        }
+        return false;
+    }
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
@@ -81,7 +86,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
 
             E value = null;
-            Iterator childIterator = nodes[position].children.iterator();
 
             @Override
             public boolean hasNext() {
