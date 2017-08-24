@@ -24,11 +24,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      * */
     private final ArrayList<Node<E>> list;
 
-
-
-
-
-
     /**
      * Конструктор создает
      * новое дерево,где
@@ -44,9 +39,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         root = new Node<>(value);
         nodes = new HashSet<>();
         list = new ArrayList();
-
-
-
     }
 
     /**
@@ -91,9 +83,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         Node<E> newNode = new Node<>(e);
         Node<E> lastNode = findLastNode(this.root, newNode);
 
-        if (lastNode == null) {
-            return false;
-        }
+        if (lastNode == null) { return false; }
 
         newNode.parent = lastNode;
         if (lastNode.value.compareTo(newNode.value) < 0) {
@@ -103,7 +93,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             lastNode.left = newNode;
             return true;
         }
-
     }
 
     /**
@@ -122,20 +111,18 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         Node<E> lastNode = root;
         int comp = root.value.compareTo(newNode.value);
 
-        if(comp<0 && root.right!=null){
+        if(comp < 0 && root.right != null){
             lastNode = findLastNode(root.right,newNode);
         }
-        if(comp>0&&root.left!=null){
+        if(comp>0&&root.left != null){
             lastNode = findLastNode(root.left,newNode);
         }
-        if (comp ==0){
+        if (comp == 0){
             return null;
         }
         depthFirstSearch(root);
-
         return lastNode;
     }
-
 
     /**
      * вспомогательный метод
@@ -152,14 +139,12 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         if(findingNode.value.compareTo(parent)==0){
             findingNode.children.add(new Node<>(child));
         }
-
         else {
             for (Node<E> v:findingNode.children){
                 add(v,parent,child);
             }
         }
         depthFirstSearch(findingNode);
-
     }
 
     /**
@@ -177,20 +162,13 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private void depthFirstSearch(Node<E> root){
         nodes.add(root);
         for (Node<E> node:root.children){
-
             if (node==null ){
                 return;
             }
-
-
             else {
                 depthFirstSearch(node);
-
-
             }
         }
-
-
     }
 
     /**
@@ -206,10 +184,10 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             if (node.children.size()>2){
                 return false;
             }
-
         }
         return true;
     }
+
     /**
      * меткод по значению
      * находит ноду и возвращает
@@ -227,7 +205,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         return null;
     }
 
-
     /**
      * переопределенный итератор
      * для списка элемента нод
@@ -240,7 +217,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     @Override
     public Iterator<E> iterator() {
         list.addAll(nodes);
-
         return new Iterator<E>() {
             int position = 0;
             @Override
@@ -269,6 +245,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
          * значение Ноды
          */
         private final E value;
+
         /**
          * уникальное число значения ноды
          */
@@ -278,10 +255,12 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
          * Левый лист
          */
         public Node<E> left;
+
         /**
          * правый лист
          */
         public Node<E> right;
+
         /**
          * родитель
          */
@@ -296,7 +275,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         public Node(E value) {
             this.value = value;
             this.children = new LinkedList<>();
-
         }
 
         /**
@@ -318,6 +296,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             }
             return false;
         }
+
         @Override
         public int hashCode() {
             hash = 31;
