@@ -9,19 +9,26 @@ import java.util.Iterator;
  * с двумерными массивами
  * */
 public class IteratorExample implements Iterator {
+
+    /**
+     * Счетчик элементов
+     */
     private int counter =0;
     /**
      * массив целых чисел.
      * */
     private final int[][] array;
+
     /**
      * параметр "столбцы" массива
      * */
     private  int columns = 0;
+
     /**
      * параметр "строки" массива
      * */
     private int rows = 0;
+
     /**
      * Конструктор,принимающий
      * в качестве параметра двумерный массив
@@ -51,9 +58,9 @@ public class IteratorExample implements Iterator {
             rows++;
             columns = 0;
         }
-
         return counter < array.length*array[0].length;
     }
+
     /**
      * Переопределенный метод
      * позволяющий перебирать индексы массива
@@ -66,11 +73,6 @@ public class IteratorExample implements Iterator {
     public Integer next() {
         counter++;
      return  array[rows][columns++];
-
     }
-
-
-
-
    }
 
