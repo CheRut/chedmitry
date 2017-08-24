@@ -26,6 +26,9 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
 
 
+
+
+
     /**
      * Конструктор создает
      * новое дерево,где
@@ -41,6 +44,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         root = new Node<>(value);
         nodes = new HashSet<>();
         list = new ArrayList();
+
 
 
     }
@@ -63,12 +67,75 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             this.root.children.add(new Node<>(child));
             nodes.add(root);
         }
-
         else {
             add(this.root,parent,child);
         }
         return true;
     }
+
+    /**
+     * добавляем элемент
+     * в наше бинарное
+     * дерево поиска
+     * Здесь на первом этапе
+     * определяем последнюю ноду
+     * далее сравниваем компоратором
+     * и заполняем "Листья" дерева
+     *
+     * @param e - добавляемый элемент
+     * @return - true если все условия
+     * выполнились
+     */
+    @Override
+    public boolean add(E e) {
+        Node<E> newNode = new Node<>(e);
+        Node<E> lastNode = findLastNode(this.root, newNode);
+
+        if (lastNode == null) {
+            return false;
+        }
+
+        newNode.parent = lastNode;
+        if (lastNode.value.compareTo(newNode.value) < 0) {
+            lastNode.right = newNode;
+            return true;
+        } else {
+            lastNode.left = newNode;
+            return true;
+        }
+
+    }
+
+    /**
+     * поиск последней ноды
+     * сравниваем компоратором
+     * ранее существующие ноды и
+     * ноду созданную на основе нового
+     * значения
+     * и по результату работы компоратора
+     * рекурсивно смотрим либо правый лист ноды,либо левый.
+     * @param root
+     * @param newNode
+     * @return
+     */
+    private Node<E> findLastNode(Node<E> root, Node<E> newNode) {
+        Node<E> lastNode = root;
+        int comp = root.value.compareTo(newNode.value);
+
+        if(comp<0 && root.right!=null){
+            lastNode = findLastNode(root.right,newNode);
+        }
+        if(comp>0&&root.left!=null){
+            lastNode = findLastNode(root.left,newNode);
+        }
+        if (comp ==0){
+            return null;
+        }
+        depthFirstSearch(root);
+
+        return lastNode;
+    }
+
 
     /**
      * вспомогательный метод
@@ -85,13 +152,14 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         if(findingNode.value.compareTo(parent)==0){
             findingNode.children.add(new Node<>(child));
         }
+
         else {
             for (Node<E> v:findingNode.children){
                 add(v,parent,child);
-
             }
         }
-     depthFirstSearch(findingNode);
+        depthFirstSearch(findingNode);
+
     }
 
     /**
@@ -109,11 +177,15 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private void depthFirstSearch(Node<E> root){
         nodes.add(root);
         for (Node<E> node:root.children){
+
             if (node==null ){
                 return;
             }
+
+
             else {
                 depthFirstSearch(node);
+
 
             }
         }
@@ -132,8 +204,9 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     public boolean isBinary() {
         for(Node<E> node:nodes){
             if (node.children.size()>2){
-               return false;
+                return false;
             }
+
         }
         return true;
     }
@@ -153,6 +226,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         }
         return null;
     }
+
 
     /**
      * переопределенный итератор
@@ -184,7 +258,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      * из которых состоит дерево
      * @param <E> - любая ссылочная переменная
      */
-    public class Node<E>{
+    class Node<E> {
 
         /**
          * Список дочерних нод
@@ -200,6 +274,18 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
          */
         private int hash;
 
+        /**
+         * Левый лист
+         */
+        public Node<E> left;
+        /**
+         * правый лист
+         */
+        public Node<E> right;
+        /**
+         * родитель
+         */
+        public Node<E> parent;
 
         /**
          * конструктор нод
@@ -210,6 +296,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         public Node(E value) {
             this.value = value;
             this.children = new LinkedList<>();
+
         }
 
         /**
@@ -224,10 +311,10 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o instanceof Node) {
-               Node<E> node = (Node<E>) o;
+                Node<E> node = (Node<E>) o;
                 return (
                         Objects.equals(value, node.getValue()) &&
-                        Objects.equals(hash, node.hashCode()));
+                                Objects.equals(hash, node.hashCode()));
             }
             return false;
         }
@@ -238,9 +325,16 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             return hash;
         }
 
+        public Node<E> getLeft() {
+            return left;
+        }
 
-
+        public Node<E> getRight() {
+            return right;
+        }
     }
 
-
+    public Set<Node<E>> getNodes() {
+        return nodes;
+    }
 }
