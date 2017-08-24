@@ -15,14 +15,6 @@ public class TreeTest {
     @Before
     public void init() {
         tree = new Tree<>(8);
-//        tree.add(8,9);
-//        tree.add(9,1);
-//        tree.add(8,4);
-//        tree.add(4,6);
-//        tree.add(9,10);
-//        tree.add(1,7);
-//        tree.add(7,12);
-//        tree.add(12,14);
         tree.add(3);
         tree.add(10);
         tree.add(1);
