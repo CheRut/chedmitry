@@ -16,7 +16,6 @@ public class WordsCounterTest {
         settings.load();
         path =  settings.getValue("inputFile");
     }
-
     @Test
     public void counter() throws Exception {
 

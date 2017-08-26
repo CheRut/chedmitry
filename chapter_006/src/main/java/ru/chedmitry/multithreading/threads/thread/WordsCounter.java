@@ -1,45 +1,43 @@
 package ru.chedmitry.multithreading.threads.thread;
 
 import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
-import ru.chedmitry.multithreading.threads.InputOutput.Output;
-import ru.chedmitry.multithreading.threads.service.Settings;
+
 
 import java.io.*;
 import java.util.Scanner;
 
 
 public class WordsCounter  extends Thread {
-
-    /**
-     * параметр ввода/вывода
-     */
-    private  InputOutput iO;
     /**
      * путь к файлу
      */
-    private String path;
+    private final String path;
+    /**
+     * параметр ввода/вывода
+     */
+    private final InputOutput iO;
 
     /**
      * параметр чтения строк
      */
-    Scanner sc;
+    private Scanner sc;
 
     /**
      * поток ввода
      */
-    InputStream stream;
+    private final InputStream stream;
     /**.
      * 'c' - символьная переменная
      * значение ее принимается как приведенное
      * целочисленное значение
      * */
-    char c;
+    private char c;
     /**.
      * параметр 't' - принимает
      * входящий поток*/
-    int t;
+    private int t;
 
-    public WordsCounter(String path) {
+    public WordsCounter(final String path) {
         iO=new InputOutput();
         this.path = path;
         this.stream = getClass().getResourceAsStream(path) ;
@@ -81,7 +79,6 @@ public class WordsCounter  extends Thread {
         public int wsCounter(){
             int count = 0;
             try {
-
                 while ((t = stream.read()) !=-1) {
                     c = (char)t;
                     if(c ==' ') {
@@ -89,10 +86,13 @@ public class WordsCounter  extends Thread {
                         iO.println("Количество пробелов: "+count);
                     }
                 }
-
-                stream.close();
             }catch(IOException e){
                 e.printStackTrace();
+            }             finally {
+                try { stream.close();
+                } catch(IOException iex){
+                    iO.println(iex.toString());
+                }
             }
             return count;
         }
@@ -104,11 +104,12 @@ public class WordsCounter  extends Thread {
     public int wordsCounter(){
         sc = new Scanner(stream);
         int count=0;
-        while(sc.hasNext()){
+        while (sc.hasNext()) {
             sc.next();
             count++;
             iO.println("Количество слов: " + count);
         }
+        sc.close();
         return count;
     }
 
