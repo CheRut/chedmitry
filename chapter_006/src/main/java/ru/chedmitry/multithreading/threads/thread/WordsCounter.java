@@ -88,7 +88,8 @@ public class WordsCounter  extends Thread {
                 }
             }catch(IOException e){
                 e.printStackTrace();
-            }             finally {
+            }
+            finally {
                 try { stream.close();
                 } catch(IOException iex){
                     iO.println(iex.toString());
