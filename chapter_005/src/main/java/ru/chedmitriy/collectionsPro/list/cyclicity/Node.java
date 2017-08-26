@@ -1,6 +1,6 @@
 package ru.chedmitriy.collectionsPro.list.cyclicity;
 
-public class Node<T> {
+public class Node<T>  {
     /**
      * элемент Ноды
      * */

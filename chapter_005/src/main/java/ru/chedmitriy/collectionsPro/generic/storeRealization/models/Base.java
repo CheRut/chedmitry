@@ -3,7 +3,7 @@ package ru.chedmitriy.collectionsPro.generic.storeRealization.models;
 
 /**
  *Класс общий для
- * всех обеъкто Role и User
+ * всех обеъкто Role и Node
  */
 public abstract class Base {
     /**
@@ -16,7 +16,7 @@ public abstract class Base {
     private String name;
     /**
      * Конструктор создает новый
-     * обеъкт Role или User
+     * обеъкт Role или Node
      * @param name
      */
     public Base(String name) {

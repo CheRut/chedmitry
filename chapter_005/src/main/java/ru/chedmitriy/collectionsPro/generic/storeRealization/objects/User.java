@@ -5,13 +5,13 @@ import ru.chedmitriy.collectionsPro.generic.storeRealization.models.Base;
 
 /**
  * Класс создает новый объект
- * User
+ * Node
  * */
 public class User extends Base {
     /**
      * Конструктор
      * для создания нового
-     * объекта User
+     * объекта Node
      * @param name
      */
     public User(String name) {

@@ -6,25 +6,25 @@ public class User {
 
     /**
      * параметр name дял Объекта
-     * User
+     * Node
      */
     String name;
     /**
      * количесвтенный
      * параметр children
-     * для объекта User
+     * для объекта Node
      */
     int children;
 
     /**
      * параметр birthday
-     * для объекта User
+     * для объекта Node
      */
     Calendar birthday;
 
     /**
      * конструтор клаасса
-     * User:
+     * Node:
      * @param name - именной параметр Объекта
      * @param children - количественное состояние
      *                 параметра children Объекта

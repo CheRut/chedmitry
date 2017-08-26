@@ -4,8 +4,8 @@ import ru.chedmitriy.collectionsPro.generic.storeRealization.exeptions.WhenObjec
 
 /**
  * Интерфейс добавления,удаления,
- * редактирования объектов Role и User
- * @param <T> - объект класса Role или User
+ * редактирования объектов Role и Node
+ * @param <T> - объект класса Role или Node
  */
 public interface Store<T extends Base> {
     /**

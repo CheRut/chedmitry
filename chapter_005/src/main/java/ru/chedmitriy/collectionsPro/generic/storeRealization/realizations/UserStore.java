@@ -7,7 +7,7 @@ import ru.chedmitriy.collectionsPro.generic.storeRealization.models.Store;
 import ru.chedmitriy.collectionsPro.generic.storeRealization.objects.User;
 
 /**
- * Класс - хрнилище объектов User
+ * Класс - хрнилище объектов Node
  */
 public class UserStore extends SimpleArray<User> implements Store<User> {
     /**
