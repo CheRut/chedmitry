@@ -9,19 +9,26 @@ import java.util.Iterator;
  * с двумерными массивами
  * */
 public class IteratorExample implements Iterator {
-    int counter =0;
+
+    /**
+     * Счетчик элементов
+     */
+    private int counter =0;
     /**
      * массив целых чисел.
      * */
     private final int[][] array;
-    /**
-     * парамет "строки" массива
-     * */
-    private int index = 0;
+
     /**
      * параметр "столбцы" массива
      * */
-    private  int col = 0;
+    private  int columns = 0;
+
+    /**
+     * параметр "строки" массива
+     * */
+    private int rows = 0;
+
     /**
      * Конструктор,принимающий
      * в качестве параметра двумерный массив
@@ -29,8 +36,9 @@ public class IteratorExample implements Iterator {
      *              массив целых чисел;
      *
      * */
-    public IteratorExample(int[][] array) {
-        this.array = array;
+
+    public IteratorExample(final int[][] array) {
+        this.array = array ;
     }
 
     /**
@@ -38,6 +46,7 @@ public class IteratorExample implements Iterator {
      * Переопределенный метод,
      * определяющий наличие следующего
      * элемента в массиве
+     *
      * @return - true, если количество
      * столбцов и строк принадлежат области
      * определения
@@ -45,9 +54,13 @@ public class IteratorExample implements Iterator {
      * */
     @Override
     public boolean hasNext() {
-
-        return counter < array.length*array[index].length;
+        if(columns == array[0].length){
+            rows++;
+            columns = 0;
+        }
+        return counter < array.length*array[0].length;
     }
+
     /**
      * Переопределенный метод
      * позволяющий перебирать индексы массива
@@ -58,17 +71,8 @@ public class IteratorExample implements Iterator {
      * */
     @Override
     public Integer next() {
-        this.counter++;
-        if(col==array[index].length){
-            col = 0;
-            if(index<array.length)
-            index++;
-        }
-        int i = col;
-        int t = index;
-        col++;
-        return array[t][i];
+        counter++;
+     return  array[rows][columns++];
     }
-
    }
 
