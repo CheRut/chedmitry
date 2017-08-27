@@ -1,19 +1,30 @@
 package ru.chedmitry.multithreading.threads.thread;
 
 import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
+import ru.chedmitry.multithreading.threads.service.Settings;
 
 
 import java.io.*;
 import java.util.Scanner;
 
 
-public class WordsCounter  extends Thread {
+/**
+ * Класс счетчик слов в текстовом файле
+ * @author cheDmitry
+ * @since 27.08.2017
+ * @version 1.0
+ */
+public class WordsCounter extends Thread {
+
     /**
-     * путь к файлу
+     * параметр конфигурации
+     * @see ru.chedmitry.multithreading.threads.service.Settings
      */
-    private final String path;
+    private Settings settings;
+
     /**
      * параметр ввода/вывода
+     * @see ru.chedmitry.multithreading.threads.InputOutput.InputOutput
      */
     private final InputOutput iO;
 
@@ -26,21 +37,20 @@ public class WordsCounter  extends Thread {
      * поток ввода
      */
     private final InputStream stream;
-    /**.
-     * 'c' - символьная переменная
-     * значение ее принимается как приведенное
-     * целочисленное значение
-     * */
-    private char c;
-    /**.
-     * параметр 't' - принимает
-     * входящий поток*/
-    private int t;
 
-    public WordsCounter(final String path) {
-        iO=new InputOutput();
-        this.path = path;
-        this.stream = getClass().getResourceAsStream(path) ;
+    /**
+     * Конструктор - инициализирует
+     * поток ввода из текстового файла.
+     * Путь к текстовому файлу лежит
+     * в файле конфигурации app.properties
+     *
+     *
+     */
+    public WordsCounter() {
+        iO = new InputOutput();
+        this.settings = new Settings();
+        settings.load();
+        this.stream = getClass().getResourceAsStream(settings.getValue("inputFile"));
     }
 
     /**
@@ -50,68 +60,25 @@ public class WordsCounter  extends Thread {
      */
     @Override
     public void run() {
-        wordsCounter();
-    }
-
-    /**
-     * класс,в котором
-     * производится опрекделение
-     * символов в тексте,
-     * в нашем случае символа пробела
-     *
-     */
-    public  class WhitespaceCounter  implements Runnable{
-        /**
-         * при объевлении нового потока из
-         * этого класса,данный
-         * метод станет точкой вхождения
-         */
-        @Override
-        public void run(){
-            wsCounter();
-        }
-
-        /**
-         * метод обработки входящего потока,
-         * подсчет пробелов,вывод результатов
-         *
-         */
-        public int wsCounter(){
-            int count = 0;
-            try {
-                while ((t = stream.read()) !=-1) {
-                    c = (char)t;
-                    if(c ==' ') {
-                        count++;
-                        iO.println("Количество пробелов: "+count);
-                    }
-                }
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-            finally {
-                try { stream.close();
-                } catch(IOException iex){
-                    iO.println(iex.toString());
-                }
-            }
-            return count;
-        }
-    }
-
-    /**
-     * метод подсчета слов в строке
-     */
-    public int wordsCounter(){
         sc = new Scanner(stream);
-        int count=0;
+        int count = 0;
         while (sc.hasNext()) {
             sc.next();
-            count++;
+            try {
+                count++;
+                sleep(1000);
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
             iO.println("Количество слов: " + count);
         }
-        sc.close();
-        return count;
+        try {
+            stream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
 }
