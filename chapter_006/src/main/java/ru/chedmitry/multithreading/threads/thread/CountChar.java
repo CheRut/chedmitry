@@ -5,27 +5,29 @@ import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
 import static java.lang.Thread.sleep;
 
 /**
- * Created by dimsan on 27.08.17.
+ * @author - cheDmitry
+ * @since 27.08.2017
+ * @version - 1.0
  */
 public class CountChar implements Runnable {
     /**
      * Счетчик операций
      */
-    int countingOperations=0;
+    private int countingOperations=0;
     /**
      * Строка для обработки
      */
-    private String chars;
+    private final String chars;
     /**
      * параметр ввода
      */
-    private InputOutput iO;
+    private final InputOutput iO;
 
     /**
      * конструктор,принимающий
      * в качестве параметра
      * обрабатываемую строку
-     * @param chars
+     * @param chars - обрабатываемая строка
      */
     public CountChar(String chars) {
         this.chars = chars;

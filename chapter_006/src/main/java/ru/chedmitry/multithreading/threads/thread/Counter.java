@@ -5,7 +5,6 @@ import ru.chedmitry.multithreading.threads.service.Settings;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Scanner;
 
 /**
  * класс,в котором
@@ -17,11 +16,6 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class Counter extends WordsCounter {
-    /**
-     * параметр конфигурации
-     * @see ru.chedmitry.multithreading.threads.service.Settings
-     */
-    private final Settings settings;
 
 
     /**
@@ -34,23 +28,13 @@ public class Counter extends WordsCounter {
      * поток ввода
      */
     private final InputStream stream;
-    /**
-     * .
-     * 'c' - символьная переменная
-     * значение ее принимается как приведенное
-     * целочисленное значение
-     */
-    private char c;
-    /**
-     * .
-     * параметр 't' - принимает
-     * входящий поток
-     */
-    private int t;
 
     public Counter() {
         iO = new InputOutput();
-        this.settings = new Settings();
+        /*
+      параметр конфигурации
+      */
+        Settings settings = new Settings();
         settings.load();
         this.stream = getClass().getResourceAsStream(settings.getValue("inputFile"));
 
@@ -65,8 +49,20 @@ public class Counter extends WordsCounter {
         int count = 0;
 
         try {
+            /*
+      .
+      параметр 't' - принимает
+      входящий поток
+     */
+            int t;
             while ((t = stream.read()) != -1) {
-                c = (char) t;
+                /*
+      .
+      'c' - символьная переменная
+      значение ее принимается как приведенное
+      целочисленное значение
+     */
+                char c = (char) t;
                 if (c == ' ') {
                     try{
                         count++;

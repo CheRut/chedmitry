@@ -14,24 +14,13 @@ import java.util.Scanner;
  * @since 27.08.2017
  * @version 1.0
  */
-public class WordsCounter extends Thread {
-
-    /**
-     * параметр конфигурации
-     * @see ru.chedmitry.multithreading.threads.service.Settings
-     */
-    private Settings settings;
+class WordsCounter extends Thread {
 
     /**
      * параметр ввода/вывода
      * @see ru.chedmitry.multithreading.threads.InputOutput.InputOutput
      */
     private final InputOutput iO;
-
-    /**
-     * параметр чтения строк
-     */
-    private Scanner sc;
 
     /**
      * поток ввода
@@ -48,7 +37,10 @@ public class WordsCounter extends Thread {
      */
     public WordsCounter() {
         iO = new InputOutput();
-        this.settings = new Settings();
+        /*
+      параметр конфигурации
+      */
+        Settings settings = new Settings();
         settings.load();
         this.stream = getClass().getResourceAsStream(settings.getValue("inputFile"));
     }
@@ -60,7 +52,10 @@ public class WordsCounter extends Thread {
      */
     @Override
     public void run() {
-        sc = new Scanner(stream);
+        /*
+      параметр чтения строк
+     */
+        Scanner sc = new Scanner(stream);
         int count = 0;
         while (sc.hasNext()) {
             sc.next();

@@ -1,14 +1,11 @@
 /**
  * @author cheDmitry
  * @since 27.08.2017
- *
- */
-package ru.chedmitry.multithreading.threads.thread;
-/**
  * В пакете продесонстрирована работа
  * параллельных потоков:
  * 1-й поток считает количкство слов в тестовом файле
  * 2-й поток - количество пробелов
  * 3-й поток определяет начало и конец выполнени программы
  *
- * */
+ */
+package ru.chedmitry.multithreading.threads.thread;

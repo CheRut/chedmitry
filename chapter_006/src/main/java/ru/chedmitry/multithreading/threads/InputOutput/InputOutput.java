@@ -7,10 +7,10 @@ public class InputOutput implements Input,Output {
      * параметр 'scanner' принимает введенные
      * пользователем значения
      * */
-    Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     @Override
     public String askString(String s) {
-        print("Введите строку: ");
+        println("Введите строку: ");
         return scanner.nextLine();
     }
 

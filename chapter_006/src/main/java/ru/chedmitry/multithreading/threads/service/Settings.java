@@ -1,7 +1,6 @@
 package ru.chedmitry.multithreading.threads.service;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 
@@ -30,7 +29,7 @@ public class Settings {
     /**
      * получаем значение по ключу
      * @param key - искомый ключ
-     * @return
+     * @return найденный ключ
      */
     public String getValue(String key) {
         return this.prop.getProperty(key);

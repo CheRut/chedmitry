@@ -5,17 +5,20 @@ import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
 import static java.lang.Thread.sleep;
 
 /**
- * Created by dimsan on 27.08.17.
+ * @author - cheDmitry
+ * @since 27.08.2017
+ * @version - 1.0
  */
+
 public class Time implements Runnable {
     /**
      * параметр ввода
      * */
-    private InputOutput iO;
+    private final InputOutput iO;
     /**
      * новый поток, основанный на классе CountChar
      * */
-    private Thread thread;
+    private final Thread thread;
 
 
     /**
@@ -45,16 +48,5 @@ public class Time implements Runnable {
         }
     }
 
-    /**
-     * главный метод
-     * @param args
-     * @throws InterruptedException
-     */
-    public static void main(String[] args) throws InterruptedException {
-        CountChar countChar = new CountChar("kklklklklk");
-        Thread timer = new Thread(new Time(countChar));
-        timer.start();
-        Thread.sleep(2500);
-        timer.interrupt();
-    }
+
 }

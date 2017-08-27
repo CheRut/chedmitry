@@ -1,6 +1,6 @@
 package ru.chedmitry.multithreading.threads.InputOutput;
 
-public interface Input {
+interface Input {
     /**
      * Метод 'ask()' Выводит строку -вопрос и принимает
      * введенные значения - строку

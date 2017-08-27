@@ -16,7 +16,6 @@ public class TimeTest {
         timer.start();
         Thread.sleep(2500);
         timer.interrupt();
-
         assertThat(countChar.getCountingOperations(),is(4));
 
 

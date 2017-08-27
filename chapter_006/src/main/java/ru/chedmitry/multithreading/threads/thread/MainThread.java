@@ -2,8 +2,6 @@ package ru.chedmitry.multithreading.threads.thread;
 
 import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
 
-import static java.lang.Thread.sleep;
-
 /**
  * главный класс
  * демонстрирует параллельную работу

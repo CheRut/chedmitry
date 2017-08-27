@@ -3,7 +3,9 @@ package ru.chedmitry.multithreading.threads.thread;
 import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
 
 /**
- * Created by dimsan on 27.08.17.
+ * @author - cheDmitry
+ * @since 27.08.2017
+ * @version - 1.0
  */
 public class MAinThreadInterrupt {
 
