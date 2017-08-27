@@ -2,7 +2,9 @@ package ru.chedmitry.multithreading.threads;
 
 
 import org.junit.Test;
+import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
 import ru.chedmitry.multithreading.threads.service.Settings;
+
 
 
 import static org.hamcrest.core.Is.is;
@@ -17,5 +19,6 @@ public class WordsCounterTest {
         assertThat(settings.getValue("inputFile"),is("/text.txt"));
 
     }
+
 
 }
