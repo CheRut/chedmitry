@@ -9,6 +9,10 @@ import static java.lang.Thread.sleep;
  */
 public class CountChar implements Runnable {
     /**
+     * Счетчик операций
+     */
+    int countingOperations=0;
+    /**
      * Строка для обработки
      */
     private String chars;
@@ -37,6 +41,7 @@ public class CountChar implements Runnable {
         for (int i = 0; i <chars.length() ; i++) {
             try {
                 count++;
+
                 sleep(500);
             } catch (InterruptedException e) {
                 iO.println("Поток "+Thread.currentThread().getName()+" завершен ");
@@ -44,6 +49,12 @@ public class CountChar implements Runnable {
 
             }
             iO.println("символов в строке: "+ count);
+            countingOperations++;
+            countingOperations = count;
         }
+    }
+
+    public int getCountingOperations() {
+        return countingOperations;
     }
 }
