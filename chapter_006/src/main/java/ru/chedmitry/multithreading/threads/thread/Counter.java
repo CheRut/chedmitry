@@ -63,15 +63,17 @@ public class Counter extends WordsCounter {
     @Override
     public void run() {
         int count = 0;
+
         try {
             while ((t = stream.read()) != -1) {
                 c = (char) t;
                 if (c == ' ') {
-                    try {
-                        sleep(1000);
+                    try{
                         count++;
+                        sleep(1000);
                     } catch (InterruptedException iEx) {
-                        iEx.printStackTrace();
+                        iO.println("подсчет пробелов остановлен");
+                        break;
                     }
                     iO.println("Количество пробелов: " + count);
                 }

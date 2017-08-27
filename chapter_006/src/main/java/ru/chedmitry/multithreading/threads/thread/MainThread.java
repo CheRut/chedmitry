@@ -17,28 +17,20 @@ public class MainThread {
      * потоком
      * @param args - принимаемые параметры
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         InputOutput iO = new InputOutput();
         Counter space = new Counter();
         WordsCounter wordsCounter = new WordsCounter();
-        iO.println("Start");
+        iO.println("Программа для подсчета числа слов и пробелов");
         wordsCounter.start();
         space.start();
-        if(space.isAlive()){
-            try {
-                space.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        if(wordsCounter.isAlive()){
-            try {
-                wordsCounter.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
 
-        iO.println("Finish");
+        if(wordsCounter.isAlive()){
+            wordsCounter.join();
+        }
+        if(space.isAlive()){
+            space.join();
+        }
+        iO.println("программа завершилась");
     }
 }

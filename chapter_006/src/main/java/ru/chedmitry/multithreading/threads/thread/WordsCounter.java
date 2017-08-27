@@ -67,8 +67,9 @@ public class WordsCounter extends Thread {
             try {
                 count++;
                 sleep(1000);
-            } catch (InterruptedException e){
-                e.printStackTrace();
+            }catch (InterruptedException e){
+                iO.println("подсчет слов остановлен");
+                 break;
             }
             iO.println("Количество слов: " + count);
         }
