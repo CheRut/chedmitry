@@ -2,6 +2,8 @@ package ru.chedmitry.multithreading.threads.thread;
 
 import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
 
+import static java.lang.Thread.sleep;
+
 /**
  * главный класс
  * демонстрирует параллельную работу
@@ -24,7 +26,6 @@ public class MainThread {
         iO.println("Программа для подсчета числа слов и пробелов");
         wordsCounter.start();
         space.start();
-
         if(wordsCounter.isAlive()){
             wordsCounter.join();
         }
@@ -32,5 +33,8 @@ public class MainThread {
             space.join();
         }
         iO.println("программа завершилась");
+
+
     }
+
 }
