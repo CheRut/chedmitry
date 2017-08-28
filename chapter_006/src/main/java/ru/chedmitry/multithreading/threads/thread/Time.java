@@ -11,6 +11,7 @@ import static java.lang.Thread.sleep;
  */
 
 public class Time implements Runnable {
+
     /**
      * параметр ввода
      * */
@@ -27,8 +28,10 @@ public class Time implements Runnable {
      * @param countChar -объект типа Runnable
      */
     public Time(CountChar countChar) {
+
         this.iO = new InputOutput();
         this.thread = new Thread(countChar);
+
 
     }
 
@@ -38,14 +41,13 @@ public class Time implements Runnable {
      */
     @Override
     public void run() {
-        iO.println("запуск потока");
         thread.start();
         try {
             sleep(3000);
         } catch (InterruptedException e) {
-           iO.println("завершение потока "+thread.getName());
             thread.interrupt();
         }
+
     }
 
 

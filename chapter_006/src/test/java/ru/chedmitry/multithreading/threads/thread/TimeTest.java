@@ -11,12 +11,12 @@ import static org.junit.Assert.*;
 public class TimeTest {
     @Test
     public void run() throws Exception {
-        CountChar countChar = new CountChar("kklklklklk");
+        CountChar countChar = new CountChar("kklklklklkлдлдлдлд");
         Thread timer = new Thread(new Time(countChar));
         timer.start();
-        Thread.sleep(2500);
+        Thread.sleep(3000);
         timer.interrupt();
-        assertThat(countChar.getCountingOperations(),is(4));
+        assertThat(countChar.getCountingOperations(),is(5));
 
 
     }

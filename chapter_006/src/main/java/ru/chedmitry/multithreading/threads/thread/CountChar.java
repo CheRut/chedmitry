@@ -36,23 +36,28 @@ public class CountChar implements Runnable {
 
     /**
      * точка входа в поток
+     * В методе ведется потсчет
+     * символов в строке дл тех пор
+     * пока isInterrupt() возвращает false
      */
     @Override
     public void run() {
+        iO.println("запуск потока: "+Thread.currentThread().getName());
         int count = 0;
         for (int i = 0; i <chars.length() ; i++) {
-            try {
-                count++;
-
-                sleep(500);
-            } catch (InterruptedException e) {
-                iO.println("Поток "+Thread.currentThread().getName()+" завершен ");
+            if (Thread.currentThread().isInterrupted()){
                 break;
-
             }
-            iO.println("символов в строке: "+ count);
+            else {
+                try {
+                    count++;
+                    sleep(500);
+                    iO.println("символов в строке: "+ count);
+                } catch (InterruptedException e) {
+                    iO.println("Поток "+Thread.currentThread().getName()+" завершен");
+                }
+            }
             countingOperations++;
-            countingOperations = count;
         }
     }
 
