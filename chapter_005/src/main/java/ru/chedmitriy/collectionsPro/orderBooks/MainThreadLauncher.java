@@ -12,6 +12,11 @@ import java.io.IOException;
 import java.util.*;
 
 /**
+ * Главный класс
+ * @author - cheDmitry
+ * @since 16.09.2017
+ * @version - 1.0
+ *//**
  * Created by dimsan on 16.09.17.
  */
 public class MainThreadLauncher {
@@ -20,37 +25,33 @@ public class MainThreadLauncher {
      *В качестве обработчика файла,выбираем
      *@see SAXParserFactory
      */
-    SAXParserFactory factory;
+    private final SAXParserFactory factory;
 
     /**
      * непосредтвенно,парсер
      */
-    SAXParser saxParser = null;
+    private SAXParser saxParser = null;
     /**
      *  Получаем дотуп к файлу конфигурации
      */
-    Settings set;
+    private Settings set;
     /**
      * экземпляр класса
      * -наследника DefaultHandler
      * для поиска аттрибутов тэга <AddOrder> </AddOrder>
      */
-    AddOrderTags addOrderTags;
+    private final AddOrderTags addOrderTags;
     /**
      * экземпляр класса
      * -наследника DefaultHandler
      * для поиска аттрибутов тэга <DeleteOrder> </DeleteOrder>
      */
-    DelOrderTags delOrderTags;
-    /**
-     *Экземпляр класса Book
-     */
-    private Book book;
+    private final DelOrderTags delOrderTags;
     /**
      *Список всех книг,соответствующих
      * заказам
      */
-    private List<Book> bookList;
+    private final List<Book> bookList;
     /**
      * Конструктор,задающий начальное состояние
      * для экземпляра класса SAXParser - factory;
@@ -59,7 +60,7 @@ public class MainThreadLauncher {
      * а такжк инициализуруют bookList
      *
      */
-    public MainThreadLauncher() {
+    private MainThreadLauncher() {
         this.factory = SAXParserFactory.newInstance();
         this.addOrderTags = new AddOrderTags();
         this.delOrderTags = new DelOrderTags();
@@ -72,7 +73,7 @@ public class MainThreadLauncher {
      * @return - путь,соответствующий
      * запрашиваемому значению
      */
-    public String getPath(){
+    private String getPath(){
         set = new Settings();
         set.load();
         return set.getValue("sourceFile");
@@ -81,7 +82,7 @@ public class MainThreadLauncher {
      * метод парсит
      * файл по соответствующим тэгам
      */
-    public void xmlReader(){
+    private void xmlReader(){
         try {
             saxParser = factory.newSAXParser();
             XMLReader xmlReader = saxParser.getXMLReader();
@@ -89,11 +90,7 @@ public class MainThreadLauncher {
             xmlReader.parse((getPath()));
             xmlReader.setContentHandler(delOrderTags);
             xmlReader.parse((getPath()));
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -108,7 +105,7 @@ public class MainThreadLauncher {
      * @param map - список покупок или продаж
      * @param order - искомый заказ
      */
-    public void add(final Map<Float, Order> map, Order order) {
+    private void add(final Map<Float, Order> map, Order order) {
         Order findOrder = map.get(order.getPrice());
         if (findOrder != null) {
             map.put(findOrder.getPrice(), new Order(findOrder.getName(), findOrder.getOperation(), findOrder.getPrice(), findOrder.getVolume() +
@@ -122,7 +119,7 @@ public class MainThreadLauncher {
      * и добавляет их в список
      * @return - список уникальных имен
      */
-    public List<String> typesOfBooks(){
+    private List<String> typesOfBooks(){
         Set<String> names = new TreeSet<>();
         for(Order order:addOrderTags.getOrders().values()){
             names.add(order.getName());
@@ -134,7 +131,7 @@ public class MainThreadLauncher {
      *из списков добавленных ордеров  исключаем
      * списки удаленных ордеров
      */
-    public  void delete() {
+    private void delete() {
         addOrderTags.getOrders().keySet().removeAll(delOrderTags.getDelOrderList());
     }
     /**
@@ -145,10 +142,13 @@ public class MainThreadLauncher {
      * далее проверяем сделки,
      * согласно условию задачи
      */
-    public void sortByOperations(){
+    private void sortByOperations(){
         delete();
         for (String name:typesOfBooks()){
-            book = new Book();
+            /*
+     Экземпляр класса Book
+     */
+            Book book = new Book();
             book.setBookName(name);
             for (Order order:addOrderTags.getOrders().values()){
                 if(order.getName().equals(name)){
@@ -156,7 +156,7 @@ public class MainThreadLauncher {
                 }
             }
             bookList.add(book);
-            book = null;
+
         }
         for(Book book:bookList){
             book.dealChecker(book);

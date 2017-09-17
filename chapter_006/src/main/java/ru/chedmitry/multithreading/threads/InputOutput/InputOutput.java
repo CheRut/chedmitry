@@ -36,4 +36,9 @@ public class InputOutput implements Input,Output {
     public void print(Object object) {
         System.out.print(object);
     }
+
+    @Override
+    public void printf(Object object) {
+        System.out.printf(String.format(String.valueOf(object)));
+    }
 }

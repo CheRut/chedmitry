@@ -8,5 +8,6 @@ interface Output {
     void println(Object object);
     /**  */
     void print(Object object);
+    void printf(Object object);
 
 }
