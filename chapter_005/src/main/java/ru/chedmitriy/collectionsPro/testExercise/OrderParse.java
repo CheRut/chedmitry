@@ -40,9 +40,11 @@ public class OrderParse extends DefaultHandler  {
     static Set<String> names;
     static int index = 0;
     private String currentElement;
+    private static List<Order> orders;
 
     public OrderParse() {
         this.book = new Book();
+        this.orders = new ArrayList<>();
     }
 
     @Override
@@ -79,48 +81,32 @@ public class OrderParse extends DefaultHandler  {
 
 
     public static void sortBidAsk(){
-
+        Order order;
         for (String name:names()) {
-            Order order = new Order(name);
+           order = new Order(name);
             for (Book book : addOrderList.values()) {
                 if (book != null && book.getBookName().equals(name)) {
-                    if (book.getOperation().equals("BUY")) {
-                       order.getBuyList().put(book.getPrice(), book);
-                    } else if (book.getOperation().equals("SELL")) {
-                        order.getSellList().put(book.getPrice(), book);
-                    }
 
+                    order.add(book.getOperation().equals("BUY")?order.buyList:order.sellList,book);
                 }
-
             }
-
-            allOrders.put(name,order);
-
-              // System.out.println(allOrders.get("book-1").getBuyList().values());
-           }
-
+            orders.add(order);
+            for (Order o:orders){
+                System.out.println(o);
+            }
+        }
     }
 
     public static void removeOrders(){
-
         addOrderList.keySet().removeAll(delOrderList);
-
-
         sortBidAsk();
     }
 
-
-
-
-
-
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-
         OrderParse orderParse = new OrderParse();
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser saxParser = factory.newSAXParser();
         XMLReader xmlReader= saxParser.getXMLReader();
-
         xmlReader.setContentHandler(orderParse);
         Settings set = new Settings();
         set.load();
@@ -128,7 +114,6 @@ public class OrderParse extends DefaultHandler  {
         System.out.println("start");
         xmlReader.parse(set.getValue("sourceFile"));
         removeOrders();
-
         long end = System.nanoTime()-start;
         double seconds = (double)end / 1000000000.0;
         System.out.println(seconds);

@@ -11,8 +11,7 @@ public class Book {
     private Float price;
     private int volume;
     private String id;
-    public  Map<Float,Book> bidList;
-    public  Map<Float,Book> askList;
+
 
     public Book() {
 
@@ -43,6 +42,7 @@ public class Book {
         this.volume = volume;
         this.id = id;
     }
+
 
 
 
@@ -99,11 +99,7 @@ public class Book {
     }
 
 
-    public  void calculate(){
-        for (Float k:bidList.keySet()){
-            System.out.println(k);
-        }
-    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -127,4 +123,7 @@ public class Book {
 
         return hash;
     }
+
+
+
 }

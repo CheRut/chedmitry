@@ -1,6 +1,7 @@
 package ru.chedmitriy.collectionsPro.testExercise;
 
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -11,14 +12,18 @@ import java.util.TreeMap;
 public class Order {
     private Book book;
     private String name;
-    private Map <Float,Book> buyList;
-    private Map <Float,Book> sellList;
+    public ArrayList<Book> orders;
+    public Map <Float,Book> buyList;
+    public Map <Float,Book> sellList;
 
     public Order(String name) {
+        this.book = new Book();
         this.name = name;
+        this.orders = new ArrayList<>();
         buyList = new TreeMap<>(BID);
         sellList = new TreeMap<>(ASK);
     }
+
     private static final Comparator<Float> BID = new Comparator<Float>(){
         int compare = 0;
         @Override
@@ -45,6 +50,7 @@ public class Order {
             return compare;
         }
     };
+
     public Book getBook() {
         return book;
     }
@@ -61,19 +67,18 @@ public class Order {
         this.name = name;
     }
 
-    public Map<Float, Book> getBuyList() {
-        return buyList;
+    public void add(final Map<Float, Book> map, Book book){
+        Book temp = map.get(book);
+        System.out.println(temp.getBookName());
+        if(temp!=null){
+
+            map.put(book.getPrice(),new Book(book.getBookName(),book.getOperation(),book.getPrice(),book.getVolume()
+                    +temp.getVolume(),book.getId()));
+        }
+        else {
+            map.put(temp.getPrice(),temp);
+        }
+
     }
 
-    public void setBuyList(Map<Float, Book> buyList) {
-        this.buyList = buyList;
-    }
-
-    public Map<Float, Book> getSellList() {
-        return sellList;
-    }
-
-    public void setSellList(Map<Float, Book> sellList) {
-        this.sellList = sellList;
-    }
 }
