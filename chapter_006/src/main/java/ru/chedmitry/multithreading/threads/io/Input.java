@@ -1,4 +1,4 @@
-package ru.chedmitry.multithreading.threads.InputOutput;
+package ru.chedmitry.multithreading.threads.io;
 
 interface Input {
     /**

@@ -1,6 +1,6 @@
 package ru.chedmitry.multithreading.threads.thread;
 
-import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
+import ru.chedmitry.multithreading.threads.io.InputOutput;
 
 import static java.lang.Thread.sleep;
 
@@ -9,11 +9,11 @@ import static java.lang.Thread.sleep;
  * @since 27.08.2017
  * @version - 1.0
  */
-public class CountChar implements Runnable {
+class CountChar implements Runnable {
     /**
      * Счетчик операций
      */
-    private int countingOperations=0;
+    private int countingOperations = 0;
     /**
      * Строка для обработки
      */
@@ -27,10 +27,10 @@ public class CountChar implements Runnable {
      * конструктор,принимающий
      * в качестве параметра
      * обрабатываемую строку
-     * @param chars - обрабатываемая строка
      */
-    public CountChar(String chars) {
-        this.chars = chars;
+    public CountChar() {
+        String s = "kklklklklkлдлдлдлд";
+        this.chars = s;
         iO = new InputOutput();
     }
 
@@ -42,19 +42,18 @@ public class CountChar implements Runnable {
      */
     @Override
     public void run() {
-        iO.println("запуск потока: "+Thread.currentThread().getName());
+        iO.println("запуск потока: " + Thread.currentThread().getName());
         int count = 0;
-        for (int i = 0; i <chars.length() ; i++) {
-            if (Thread.currentThread().isInterrupted()){
+        for (int i = 0; i < chars.length(); i++) {
+            if (Thread.currentThread().isInterrupted()) {
                 break;
-            }
-            else {
+            } else {
                 try {
                     count++;
                     sleep(500);
-                    iO.println("символов в строке: "+ count);
+                    iO.println("символов в строке: " + count);
                 } catch (InterruptedException e) {
-                    iO.println("Поток "+Thread.currentThread().getName()+" завершен");
+                    iO.println("Поток " + Thread.currentThread().getName() + " завершен");
                 }
             }
             countingOperations++;

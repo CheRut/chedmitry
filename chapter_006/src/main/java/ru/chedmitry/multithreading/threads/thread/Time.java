@@ -1,6 +1,6 @@
 package ru.chedmitry.multithreading.threads.thread;
 
-import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
+import ru.chedmitry.multithreading.threads.io.InputOutput;
 
 import static java.lang.Thread.sleep;
 
@@ -10,12 +10,8 @@ import static java.lang.Thread.sleep;
  * @version - 1.0
  */
 
-public class Time implements Runnable {
+class Time implements Runnable {
 
-    /**
-     * параметр ввода
-     * */
-    private final InputOutput iO;
     /**
      * новый поток, основанный на классе CountChar
      * */
@@ -28,10 +24,7 @@ public class Time implements Runnable {
      * @param countChar -объект типа Runnable
      */
     public Time(CountChar countChar) {
-
-        this.iO = new InputOutput();
         this.thread = new Thread(countChar);
-
 
     }
 

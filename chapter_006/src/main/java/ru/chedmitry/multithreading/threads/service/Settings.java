@@ -9,21 +9,20 @@ import java.util.Properties;
  * к фйлу конфигурации
  */
 public class Settings {
-
-
     /**
      * параметр доступа к
      * конфигураионному файлу
      */
     private final Properties prop = new Properties();
-
     /**
      * загрузка файла конфигурации
      */
-    public void load(){
-        try{
+    public void load() {
+        try {
             this.prop.load(getClass().getClassLoader().getResourceAsStream("app.properties"));
-        }catch (IOException ex){ex.printStackTrace();}
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**

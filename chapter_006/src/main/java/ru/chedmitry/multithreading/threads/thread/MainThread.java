@@ -1,6 +1,6 @@
 package ru.chedmitry.multithreading.threads.thread;
 
-import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
+import ru.chedmitry.multithreading.threads.io.InputOutput;
 
 /**
  * главный класс
@@ -24,15 +24,13 @@ public class MainThread {
         iO.println("Программа для подсчета числа слов и пробелов");
         wordsCounter.start();
         space.start();
-        if(wordsCounter.isAlive()){
+        if (wordsCounter.isAlive()) {
             wordsCounter.join();
         }
-        if(space.isAlive()){
+        if (space.isAlive()) {
             space.join();
         }
         iO.println("программа завершилась");
-
-
     }
 
 }

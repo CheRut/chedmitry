@@ -1,4 +1,4 @@
-package ru.chedmitry.multithreading.threads.InputOutput;
+package ru.chedmitry.multithreading.threads.io;
 
 interface Output {
     /**
@@ -6,8 +6,6 @@ interface Output {
      *               выводимый в консоль с переносом строки
      * */
     void println(Object object);
-    /**  */
-    void print(Object object);
-    void printf(Object object);
+
 
 }

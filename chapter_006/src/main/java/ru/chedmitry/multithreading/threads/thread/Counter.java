@@ -1,6 +1,6 @@
 package ru.chedmitry.multithreading.threads.thread;
 
-import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
+import ru.chedmitry.multithreading.threads.io.InputOutput;
 import ru.chedmitry.multithreading.threads.service.Settings;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class Counter extends WordsCounter {
 
     /**
      * параметр ввода/вывода
-     * @see ru.chedmitry.multithreading.threads.InputOutput.InputOutput
+     * @see ru.chedmitry.multithreading.threads.io.InputOutput
      */
     private final InputOutput iO;
 
@@ -49,22 +49,13 @@ public class Counter extends WordsCounter {
         int count = 0;
 
         try {
-            /*
-      .
-      параметр 't' - принимает
-      входящий поток
-     */
+
             int t;
             while ((t = stream.read()) != -1) {
-                /*
-      .
-      'c' - символьная переменная
-      значение ее принимается как приведенное
-      целочисленное значение
-     */
+
                 char c = (char) t;
                 if (c == ' ') {
-                    try{
+                    try {
                         count++;
                         sleep(1000);
                     } catch (InterruptedException iEx) {

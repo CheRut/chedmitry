@@ -15,7 +15,7 @@ public class WordsCounterTest {
     public void whenConfigFileCall() throws Exception {
         Settings settings = new Settings();
         settings.load();
-        assertThat(settings.getValue("inputFile"),is("/text.txt"));
+        assertThat(settings.getValue("inputFile"), is("/text.txt"));
 
     }
 

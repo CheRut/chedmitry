@@ -1,13 +1,18 @@
-package ru.chedmitry.multithreading.threads.InputOutput;
+package ru.chedmitry.multithreading.threads.io;
 
 import java.util.Scanner;
 
-public class InputOutput implements Input,Output {
+/**
+ * класс ввода-вывода
+ */
+public class InputOutput implements Input, Output {
     /**.
      * параметр 'scanner' принимает введенные
      * пользователем значения
      * */
     private final Scanner scanner = new Scanner(System.in);
+
+
     @Override
     public String askString(String s) {
         println("Введите строку: ");
@@ -32,13 +37,7 @@ public class InputOutput implements Input,Output {
         System.out.println(object);
     }
 
-    @Override
-    public void print(Object object) {
-        System.out.print(object);
-    }
 
-    @Override
-    public void printf(Object object) {
-        System.out.printf(String.format(String.valueOf(object)));
-    }
+
+
 }

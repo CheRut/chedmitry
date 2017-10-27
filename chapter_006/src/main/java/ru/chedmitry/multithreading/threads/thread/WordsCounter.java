@@ -1,6 +1,6 @@
 package ru.chedmitry.multithreading.threads.thread;
 
-import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
+import ru.chedmitry.multithreading.threads.io.InputOutput;
 import ru.chedmitry.multithreading.threads.service.Settings;
 
 
@@ -15,31 +15,24 @@ import java.util.Scanner;
  * @version 1.0
  */
 class WordsCounter extends Thread {
-
     /**
      * параметр ввода/вывода
-     * @see ru.chedmitry.multithreading.threads.InputOutput.InputOutput
+     * @see ru.chedmitry.multithreading.threads.io.InputOutput
      */
     private final InputOutput iO;
-
     /**
      * поток ввода
      */
     private final InputStream stream;
-
     /**
      * Конструктор - инициализирует
      * поток ввода из текстового файла.
      * Путь к текстовому файлу лежит
      * в файле конфигурации app.properties
-     *
-     *
      */
     public WordsCounter() {
         iO = new InputOutput();
-        /*
-      параметр конфигурации
-      */
+
         Settings settings = new Settings();
         settings.load();
         this.stream = getClass().getResourceAsStream(settings.getValue("inputFile"));
@@ -62,9 +55,9 @@ class WordsCounter extends Thread {
             try {
                 count++;
                 sleep(1000);
-            }catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 iO.println("подсчет слов остановлен");
-                 break;
+                break;
             }
             iO.println("Количество слов: " + count);
         }
