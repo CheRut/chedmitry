@@ -2,7 +2,7 @@ package ru.chedmitry.multithreading.threads.monitor.ex1104;
 
 /**
  * @author cheDmitry
- * @since 27.08.2017
+ * @since 27.10.2017
  * @version 1.0
  * в данном классе
  * создается пользователь
