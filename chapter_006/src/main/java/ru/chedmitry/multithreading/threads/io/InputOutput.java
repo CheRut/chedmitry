@@ -3,7 +3,11 @@ package ru.chedmitry.multithreading.threads.io;
 import java.util.Scanner;
 
 /**
- * класс ввода-вывода
+ * ru.chedmitry.multithreading.threads.io
+ *
+ * @author cheDmitry
+ * @version 1.0
+ * @since 28.10.2017
  */
 public class InputOutput implements Input, Output {
     /**.

@@ -1,5 +1,12 @@
 package ru.chedmitry.multithreading.threads.io;
 
+/**
+ * ru.chedmitry.multithreading.threads.io
+ *
+ * @author cheDmitry
+ * @version 1.0
+ * @since 28.10.2017
+ */
 interface Input {
     /**
      * Метод 'ask()' Выводит строку -вопрос и принимает
