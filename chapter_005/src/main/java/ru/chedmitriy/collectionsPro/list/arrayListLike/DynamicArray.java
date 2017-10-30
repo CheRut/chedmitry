@@ -10,6 +10,7 @@ import ru.chedmitriy.collectionsPro.exceptions.CatchArrayOutOfBoundException;
  *
  * @param <E>
  */
+
 public class DynamicArray<E> implements Iterable<E> {
 private int size;
     /**

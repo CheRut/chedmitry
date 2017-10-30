@@ -64,6 +64,7 @@ class SomeThread extends Thread{
         list.addFirst("two");
         list.addFirst("three");
 
+        list.addLast("thirty");
     }
 
 }
@@ -75,6 +76,8 @@ class AnotherThread extends Thread{
 
     @Override
     public void run() {
+        list.addLast("twenty");
+
         list.addFirst("four");
         list.addFirst("five");
         list.addFirst("six");

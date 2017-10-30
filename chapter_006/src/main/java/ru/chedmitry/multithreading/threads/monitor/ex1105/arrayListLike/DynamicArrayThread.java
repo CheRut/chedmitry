@@ -1,5 +1,7 @@
 package ru.chedmitry.multithreading.threads.monitor.ex1105.arrayListLike;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 import ru.chedmitriy.collectionsPro.list.arrayListLike.DynamicArray;
 
 /**
@@ -12,6 +14,7 @@ import ru.chedmitriy.collectionsPro.list.arrayListLike.DynamicArray;
  * созданный ранее динамический список
  *
  */
+@ThreadSafe
 public class DynamicArrayThread {
 
     /**
@@ -19,6 +22,7 @@ public class DynamicArrayThread {
      * динамическому списку
      * @see ru.chedmitriy.collectionsPro.list.arrayListLike.DynamicArray
      */
+    @GuardedBy("this")
    private final  DynamicArray array;
 
     /**
