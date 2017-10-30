@@ -11,7 +11,7 @@ import ru.chedmitriy.collectionsPro.exceptions.CatchArrayOutOfBoundException;
  * @param <E>
  */
 public class DynamicArray<E> implements Iterable<E> {
-
+private int size;
     /**
      * контейнер элементов
      * принимает информацию о размере
@@ -44,6 +44,7 @@ public class DynamicArray<E> implements Iterable<E> {
     public DynamicArray(int size) {
         this.container = (E[]) new Object[size];
         dynamicArray = new ArrayIterator(container);
+        this.size = size;
     }
 
     /**
@@ -72,6 +73,7 @@ public class DynamicArray<E> implements Iterable<E> {
                 dynamicArray.objectsIterator.length+CAPACITY_UP_ON_FOR_ONE_POSITION_HIGHER);
         if(!dynamicArray.hasNext()) {
             dynamicArray.objectsIterator = containerBuffer;
+            size = dynamicArray.objectsIterator.length;
         }
         return (E[])dynamicArray.objectsIterator;
     }
@@ -103,5 +105,7 @@ public class DynamicArray<E> implements Iterable<E> {
         return (E)this.container[index];
     }
 
-
+    public int getSize() {
+        return size;
+    }
 }

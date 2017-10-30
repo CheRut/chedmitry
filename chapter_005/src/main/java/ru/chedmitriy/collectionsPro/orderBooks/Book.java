@@ -1,6 +1,7 @@
 package ru.chedmitriy.collectionsPro.orderBooks;
 
-import ru.chedmitry.multithreading.threads.InputOutput.InputOutput;
+
+import ru.chedmitriy.collectionsPro.io.InputOutput;
 
 import java.util.*;
 

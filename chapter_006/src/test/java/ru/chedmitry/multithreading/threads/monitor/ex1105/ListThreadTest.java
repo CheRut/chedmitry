@@ -36,7 +36,7 @@ public class ListThreadTest {
     }
     @Test
     public void whenSizeIsChanging() throws Exception {
-        assertThat(listThread.getArray().size, is(6));
+        assertThat(listThread.getArray().getSize(), is(6));
     }
 
 }
