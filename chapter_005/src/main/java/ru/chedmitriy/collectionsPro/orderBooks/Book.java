@@ -1,7 +1,7 @@
 package ru.chedmitriy.collectionsPro.orderBooks;
 
-import ru.chedmitriy.collections.modifiingTracker.objects.ConsoleInput;
 
+import ru.chedmitriy.collectionsPro.io.InputOutput;
 
 import java.util.*;
 
@@ -14,7 +14,7 @@ import java.util.*;
  * @version - 1.0
  */
 class Book {
-    private final ConsoleInput io;
+    private final InputOutput io;
     /**
      * Название книги
      */
@@ -37,7 +37,7 @@ class Book {
      *
      */
     public Book() {
-        io = new ConsoleInput();
+        io = new InputOutput();
         this.sell = new TreeMap<>(SELL);
         this.buy = new TreeMap<>(BUY);
     }
@@ -105,11 +105,11 @@ class Book {
         List<Order> toClearBuyOrders = new ArrayList<>();
         List<Order> toClearSellOrders = new ArrayList<>();
         int size = buyList.size()>=sellList.size()?buyList.size():sellList.size();
-        io.outPrintln(book.getBookName());
+        io.println(book.getBookName());
         for (int i = 0; i < size ; i++) {
             try {
                 if (buyList.get(i).getPrice() < sellList.get(i).getPrice() && sellList.get(i) != null) {
-                    io.outPrintln(String.format("%s \t\t%s",buyList.get(i).getVolume() + "@" + buyList.get(i).getPrice(),
+                    io.println(String.format("%s \t\t%s",buyList.get(i).getVolume() + "@" + buyList.get(i).getPrice(),
                             sellList.get(i).getVolume() + "@" + sellList.get(i).getPrice()));
                 }
                 else {
@@ -117,7 +117,7 @@ class Book {
                     toClearSellOrders.add(sellList.get(i));
                 }
             }catch (IndexOutOfBoundsException ind){
-                io.outPrintln(String.format("%s \t\t%s","----------",
+                io.println(String.format("%s \t\t%s","----------",
                        sellList.get(i).getVolume()+"@"+sellList.get(i).getPrice()));
             }
         }

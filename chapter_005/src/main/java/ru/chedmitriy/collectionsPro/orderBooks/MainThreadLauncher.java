@@ -2,9 +2,8 @@ package ru.chedmitriy.collectionsPro.orderBooks;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import ru.chedmitriy.collections.modifiingTracker.objects.ConsoleInput;
+import ru.chedmitriy.collectionsPro.io.InputOutput;
 import ru.chedmitriy.collectionsPro.service.Settings;
-
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -165,14 +164,14 @@ public class MainThreadLauncher {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        ConsoleInput io = new ConsoleInput();
+        InputOutput io = new InputOutput();
         long start = System.nanoTime();
         MainThreadLauncher mainThreadLauncher = new MainThreadLauncher();
         mainThreadLauncher.xmlReader();
         mainThreadLauncher.sortByOperations();
         long end = System.nanoTime()-start;
         double seconds = (double)end / 1000000000.0;
-        io.outPrintln(String.format("time:\t\t\t%s",seconds));
+        io.println(String.format("time:\t\t\t%s",seconds));
     }
 
 
