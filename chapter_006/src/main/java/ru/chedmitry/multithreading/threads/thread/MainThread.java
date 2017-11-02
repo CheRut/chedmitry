@@ -1,5 +1,6 @@
 package ru.chedmitry.multithreading.threads.thread;
 
+import ru.chedmitriy.collections.modifiingTracker.objects.ConsoleInput;
 import ru.chedmitry.multithreading.threads.io.InputOutput;
 
 /**
@@ -18,10 +19,10 @@ public class MainThread {
      * @param args - принимаемые параметры
      */
     public static void main(String[] args) throws InterruptedException {
-        InputOutput iO = new InputOutput();
+        ConsoleInput iO = new ConsoleInput();
         Counter space = new Counter();
         WordsCounter wordsCounter = new WordsCounter();
-        iO.println("Программа для подсчета числа слов и пробелов");
+        iO.outPrintln("Программа для подсчета числа слов и пробелов");
         wordsCounter.start();
         space.start();
         if (wordsCounter.isAlive()) {
@@ -30,7 +31,7 @@ public class MainThread {
         if (space.isAlive()) {
             space.join();
         }
-        iO.println("программа завершилась");
+        iO.outPrintln("программа завершилась");
     }
 
 }

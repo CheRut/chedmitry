@@ -29,7 +29,7 @@ public class CountTest {
             threadB.start();
             threadA.join();
             threadB.join();
-            assertThat(incrementer.count,is(18000000));
+            assertThat(incrementer.count, is(18000000));
 
     }
 }
