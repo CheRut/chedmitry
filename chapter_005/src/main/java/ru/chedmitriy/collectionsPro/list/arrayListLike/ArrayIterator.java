@@ -43,6 +43,7 @@ public class ArrayIterator<E> implements Iterator<E> {
      */
     @Override
     public E next() {
-        return this.objectsIterator[indexPosition++];
+        return (E)this.objectsIterator[indexPosition++];
     }
+
 }

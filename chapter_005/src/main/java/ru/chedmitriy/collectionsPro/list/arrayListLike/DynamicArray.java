@@ -1,6 +1,7 @@
 package ru.chedmitriy.collectionsPro.list.arrayListLike;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 
 import ru.chedmitriy.collectionsPro.exceptions.CatchArrayOutOfBoundException;
@@ -11,14 +12,14 @@ import ru.chedmitriy.collectionsPro.exceptions.CatchArrayOutOfBoundException;
  * @param <E>
  */
 
-public class DynamicArray<E> implements Iterable<E> {
-private int size;
+public class DynamicArray<E> implements Iterable<E>  {
+    private  int size;
     /**
      * контейнер элементов
      * принимает информацию о размере
      * контейнера
      */
-    private E[] container ;
+    private Object[] container ;
     /**
      * Параметр
      * */
@@ -29,7 +30,7 @@ private int size;
      * индекс
      * элементов контейнера
      * */
-    private int index = 0;
+    private  int index = 0;
     /**
      * итератор контейнера
      * */
@@ -43,9 +44,10 @@ private int size;
      * @param size -  размер контейнера
      */
     public DynamicArray(int size) {
-        this.container = (E[]) new Object[size];
+        this.container = (E[])new Object[size];
         dynamicArray = new ArrayIterator(container);
-        this.size = size;
+
+
     }
 
     /**
@@ -74,9 +76,10 @@ private int size;
                 dynamicArray.objectsIterator.length+CAPACITY_UP_ON_FOR_ONE_POSITION_HIGHER);
         if(!dynamicArray.hasNext()) {
             dynamicArray.objectsIterator = containerBuffer;
-            size = dynamicArray.objectsIterator.length;
         }
-        return (E[])dynamicArray.objectsIterator;
+        size =  dynamicArray.objectsIterator.length;
+        container = dynamicArray.objectsIterator;
+        return (E[]) dynamicArray.objectsIterator;
     }
 
     /**
@@ -87,7 +90,7 @@ private int size;
      */
     public void add(E value) {
         resizeContainer();
-        dynamicArray.objectsIterator[index++] = value;
+        container[index++] = value;
         dynamicArray.next();
     }
    
@@ -102,11 +105,13 @@ private int size;
      * @throws CatchArrayOutOfBoundException
      */
     public <E> E get(int index) throws CatchArrayOutOfBoundException {
-        if (index >= container.length || index <0) throw new CatchArrayOutOfBoundException();
-        return (E)this.container[index];
+        if (index >= size || index < 0) throw new CatchArrayOutOfBoundException();
+        return (E) container[index];
     }
 
     public int getSize() {
-        return size;
+        return container.length;
     }
+
+
 }
