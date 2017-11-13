@@ -47,12 +47,6 @@ class UserStorage {
      */
     public synchronized void remove(int id) {
         if (storage.size() > 0) {
-            //Передаем управление другому потоку
-            if (Thread.currentThread().getName().equals("one")) {
-
-                Thread.yield();
-            }
-
             storage.remove(id);
         }
     }
