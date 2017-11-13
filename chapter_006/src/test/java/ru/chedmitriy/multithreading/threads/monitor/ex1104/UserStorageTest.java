@@ -28,6 +28,12 @@ public class UserStorageTest {
         us.add(new User(4, 40));
         us.add(new User(5, 50));
         us.add(new User(6, 60));
+        us.add(new User(7, 70));
+        us.add(new User(8, 80));
+        us.add(new User(9, 90));
+        us.add(new User(10, 100));
+        us.add(new User(11, 110));
+        us.add(new User(12, 120));
         one = new ThreadOne(us);
         two = new ThreadTwo(us);
         one.start();
@@ -40,28 +46,29 @@ public class UserStorageTest {
     }
     @Test
     public void whenNewUserWasAdded() throws Exception {
+
+                assertThat(us.getStorage().get(11).getAmount(), is(140));
+
+
         for (User user:us.getStorage()) {
-            if (user.getId() == 10) {
-                assertThat(user.getAmount(), is(100));
-            }
-        }
-        for (User user:us.getStorage()) {
-            System.out.println(user);
+            System.out.print(user);
         }
     }
 
     @Test
     public void whenFirstUserWasRemoved() throws Exception {
-        assertThat(us.getStorage().size(), is(6));
+
+        assertThat(us.getStorage().size(), is(12));
     }
     @Test
     public void whenAmountWasTransferBetweenTwoUsers() {
         for (User user:us.getStorage()) {
-            if (user.getId() == 5) {
-                assertThat(user.getAmount(), is(49));
+            if (user.getId() == 3) {
+
+                assertThat(user.getAmount(), is(45));
             }
             if (user.getId() == 4) {
-                assertThat(user.getAmount(), is(41));
+                assertThat(user.getAmount(), is(25));
             }
         }
 
@@ -80,10 +87,10 @@ class ThreadOne extends Thread {
 
     @Override
     public void run() {
-        us.add(new User(10, 100));
-        us.transfer(5, 4, 1);
-        us.remove();
-        us.update();
+        us.add(new User(13, 130));
+        us.transfer(4, 3, 15);
+        us.remove(6);
+        us.update(1);
     }
 }
 class ThreadTwo extends Thread {
@@ -95,8 +102,8 @@ class ThreadTwo extends Thread {
 
     @Override
     public void run() {
-        us.remove();
-        us.transfer(6, 3, 20);
-        us.add(new User(12, 120));
+        us.remove(5);
+        us.transfer(10, 9, 20);
+        us.add(new User(14, 140));
     }
 }

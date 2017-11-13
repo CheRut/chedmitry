@@ -1,9 +1,7 @@
 package ru.chedmitriy.multithreading.threads.monitor.ex1106;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -37,7 +35,17 @@ public class ParallelSearching {
      * параметр - списки путей к файлам,
      * в которых найден искомый текст
      */
-    private List<String> result;
+    private Set<String> result;
+
+    /**
+     * множество файлов однопоточного варианта
+     */
+    private Set<File> singleThreadResult = new HashSet<>();
+
+    /**
+     * множество файлов многопоточного варианта
+     */
+    private Set<File> findingFiles = new HashSet<>();
     /**
      * счетчик файлов с текстом
      */
@@ -55,7 +63,7 @@ public class ParallelSearching {
         this.root = root;
         this.text = text;
         this.exts = exts;
-        result = new ArrayList<>();
+        result = new HashSet<>();
     }
 
 
@@ -87,15 +95,48 @@ public class ParallelSearching {
     }
 
     /**
+     * получаем множетво
+     * файлов указанной
+     * директории и вложенных папок
+     * @param rootDirectory - корневая директория
+     * @return - множество
+     */
+    private Set<File> getFile(File rootDirectory) {
+
+        //получаем список всех объектов в текущей директории
+        File[] list = rootDirectory.listFiles();
+
+        if (list == null  ) {
+            new InputOutput().println(" файлы отсутствуют ");
+
+        } else {
+            System.out.printf(String.format("%s %s %s \n",
+                    "всего в папке найдено",
+                    list.length,
+                    "файлов;"));
+        }
+        for(int i = 0; i < list.length; i++) {
+
+            if(list[i].isDirectory()) {
+                getFile(list[i]);
+            }
+
+                findingFiles.add(list[i]);
+            }
+        return findingFiles;
+    }
+    /**
      * проверяем файлы
      * на наличие
      * искомого текста
      *
      * 1.выполняем проверку
+     *
      * списка файлов выбранной директории
      * 2.если пустая - выводим сообщение
      * 3.Инициализируем сервис-испонитель
      * для пула потоков
+     *
      * 4.Если все проверки прошли, читаем файл
      *
      * 5.выполняем поставленные задачи,ждем
@@ -105,38 +146,30 @@ public class ParallelSearching {
      *
      *
      */
+
     public void textParser() {
-        File directory = new File(root);
-        File[] files = directory.listFiles();
-        if (files == null ) {
-            new InputOutput().println(" файлы отсутствуют ");
-            return;
-        } else {
-            System.out.printf(String.format("%s %s %s \n",
-                    "всего в папке найдено",
-                    files.length,
-                    "файлов;"));
-        }
-        ExecutorService service = Executors.newFixedThreadPool(10);
-        for (final File f : files) {
-            if (!f.isFile() || getFileExtension(f) == -1) {
-                continue;
-            }
+        File rootDirectory = new File(root);
+        getFile(rootDirectory);
+        ExecutorService service = Executors.newFixedThreadPool(4);
+        for(final File f:findingFiles) {
             service.execute(new Runnable() {
                 @Override
                 public void run() {
-                    String s;
-                    try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
-                        while ((s = reader.readLine()) != null) {
-                            if (s.equals(text)) {
-                                fCount++;
-                                result.add(f.getAbsolutePath());
+                    if (getFileExtension(f) != -1) {
+                        String s;
+                        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+                            while ((s = reader.readLine()) != null) {
+                                if (s.contains(text)) {
+                                    fCount++;
+                                    result.add(f.getAbsolutePath());
 
+                                }
                             }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
+
                 }
             });
 
@@ -147,6 +180,7 @@ public class ParallelSearching {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         System.out.printf(String.format("%s %s %s%n","текст найден в",fCount,"файлах"));
     }
 
@@ -171,16 +205,17 @@ public class ParallelSearching {
         public void textParseSingleThread() {
             String txt;
             File directory = new File(root);
-            File[] files = directory.listFiles();
 
-            for (final File f : files) {
+
+            for (final File f : getFile(directory)) {
                 if (!f.isFile() || getFileExtension(f) == -1) {
                     return;
                 }
+
                 try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
                     while ((txt = reader.readLine()) != null) {
-                        if (txt.equals(text)) {
-                            result.add(f.getAbsolutePath());
+                        if (txt.contains(text)) {
+                            singleThreadResult.add(f);
                         }
                     }
                 } catch (FileNotFoundException e) {
@@ -271,6 +306,7 @@ class ProcessCompare {
 
     public static void main(String[] args) {
         set.load();
+        System.out.println(set.getValue("inputFile"));
         System.out.printf(String.format("%n%s%n%.2f %s \n",
                 "Класс с пулом потоков в",
                 new ProcessCompare(

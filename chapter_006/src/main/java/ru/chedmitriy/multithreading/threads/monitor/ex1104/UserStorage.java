@@ -1,5 +1,8 @@
 package ru.chedmitriy.multithreading.threads.monitor.ex1104;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +16,13 @@ import java.util.List;
  * класс имитирует некоторое хранилище
  * данных типа User.
  */
-
+@ThreadSafe
 class UserStorage {
 
     /**
      * хранилище данных типа User.
      */
+    @GuardedBy("this")
     private final List<User> storage = new ArrayList<>();
 
     /**
@@ -27,6 +31,7 @@ class UserStorage {
      * в хранилище.
      * @param user - новый объект хранилища.
      */
+
     public synchronized void add(User user) {
         storage.add(user);
     }
@@ -40,17 +45,15 @@ class UserStorage {
      *          хранилища при успехе,
      *          null - при неудаче.
      */
-    public synchronized void remove() {
-
+    public synchronized void remove(int id) {
         if (storage.size() > 0) {
-
             //Передаем управление другому потоку
             if (Thread.currentThread().getName().equals("one")) {
 
                 Thread.yield();
             }
 
-            storage.remove(0);
+            storage.remove(id);
         }
     }
 
@@ -60,15 +63,12 @@ class UserStorage {
      *  объекта user,если выполгняется
      *  некоторое условие.
      */
-    public synchronized void update() {
+    public synchronized void update(int id) {
+        for (User us : storage) {
+            if (us != null) {
 
-        for (User user : storage) {
-
-            if (user != null) {
-
-                if (user.getAmount() % 3 == 0) {
-
-                    user.setAmount(user.getAmount() + 1);
+                if (us.getId() == id) {
+                    us.setAmount(us.getAmount() + 1);
                 }
             }
 
@@ -87,28 +87,16 @@ class UserStorage {
      * @param fromId - id объекта,от которого передаем.
      * @param toId - id объекта,которому передаем.
      * @param amount - величина значения для переноса.
+     * @throws IllegalArgumentException - исключение при отсутствии хотя бы
+     *               одного из значений
      */
     public synchronized void transfer(int fromId, int toId, int amount) {
-
-        for (User user : storage) {
-
-            if (user != null) {
-
-                if (user.getId() == fromId) {
-
-                    user.setAmount(user.getAmount() - amount);
-                }
-
-                if (user.getId() == toId) {
-
-                    user.setAmount(user.getAmount() + amount);
-                }
-
-            } else {
-
-                throw new NullPointerException("User не найден");
-            }
+        if (storage.get(fromId - 1 ) == null || storage.get(toId - 1 ) == null) {
+            throw new IllegalArgumentException();
         }
+            storage.get(fromId - 1 ).setAmount(storage.get(fromId - 1).getAmount() - amount);
+            storage.get(toId - 1).setAmount(storage.get(toId - 1).getAmount() + amount);
+
     }
 
     /**

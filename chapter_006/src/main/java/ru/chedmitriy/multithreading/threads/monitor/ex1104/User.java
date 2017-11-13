@@ -66,12 +66,11 @@ class User {
 
     @Override
     public String toString() {
-        return "User{"
-                + "amount = "
-                + amount
-                + ", id = "
-                + id
-                + '}';
+        return String.format("%s %s  %s %s%n",
+                "id ="
+                ,id,
+                "amount =",
+                amount);
     }
 
 }
