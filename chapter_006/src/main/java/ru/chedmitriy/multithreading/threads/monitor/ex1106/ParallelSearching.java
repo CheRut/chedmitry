@@ -40,12 +40,12 @@ public class ParallelSearching {
     /**
      * множество файлов однопоточного варианта
      */
-    private Set<File> singleThreadResult = new HashSet<>();
+    private Set<File> singleThreadResult;
 
     /**
      * множество файлов многопоточного варианта
      */
-    private Set<File> findingFiles = new HashSet<>();
+    private Set<File> findingFiles;
     /**
      * счетчик файлов с текстом
      */
@@ -63,7 +63,9 @@ public class ParallelSearching {
         this.root = root;
         this.text = text;
         this.exts = exts;
-        result = new HashSet<>();
+        singleThreadResult = Collections.synchronizedSet(new HashSet<>());
+        findingFiles = Collections.synchronizedSet(new HashSet<>());
+        result = Collections.synchronizedSet(new HashSet<>());
     }
 
 
