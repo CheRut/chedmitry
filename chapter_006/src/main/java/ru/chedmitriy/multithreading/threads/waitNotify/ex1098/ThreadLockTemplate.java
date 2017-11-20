@@ -9,7 +9,7 @@ package ru.chedmitriy.multithreading.threads.waitNotify.ex1098;
  */
 public class ThreadLockTemplate {
     public static void main(String[] args) {
-        Store store = new Store(12);
+        Store store = new Store(5);
         new Producer(store).start();
         new Customer(store).start();
     }
@@ -152,7 +152,7 @@ class Customer extends Thread {
     @Override
     public void run() {
         try {
-            for (int i = 0; i < 12 ; i++) {
+            for (int i = 0; i < 5 ; i++) {
                 this.store.get();
             }
 
