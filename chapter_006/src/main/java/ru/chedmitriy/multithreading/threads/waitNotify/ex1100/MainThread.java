@@ -3,7 +3,7 @@ package ru.chedmitriy.multithreading.threads.waitNotify.ex1100;
 import java.util.Random;
 
 /**
- * junior
+ * junior.
  *
  * @author CheDmitry
  * @version 1.0
@@ -28,26 +28,26 @@ class CapacityFill {
      */
     private final double minVolume = 0.15;
     /**
-     * макимальное количетво воды
+     * макимальное количетво воды.
      */
     private final double maxVolume = 0.4;
 
     /**
-     * объем первой емкоти
+     * объем первой емкоти.
      */
     private double capOneVol = 0;
     /**
-     * объем виорой емкости
+     * объем виорой емкости.
      */
     private double capTwoVol = 0;
     /**
-     * количетво налитой/слитой воды
+     * количетво налитой/слитой воды.
      */
     private double oddValue = 0;
 
     /**
      * расчет лучайног количества воды
-     * добавляемой или сливаемой
+     * добавляемой или сливаемой.
      * @return - значение типа double
      */
     public double randomVolumeStream() {
@@ -97,16 +97,16 @@ class CapacityFill {
      * происходит
      * до тех пор, пока объем залитой
      * жидкости не установится на уровне,
-     * установленном в условии
+     * установленном в условии.
      *
      */
     public synchronized void add() {
 
-        while (capOneVol >= 5 ) {
+        while (capOneVol >= 5) {
             try {
                 wait();
             } catch (InterruptedException e) {
-
+                    e.printStackTrace();
             }
         }
         oddValue = randomVolumeStream();
@@ -132,7 +132,7 @@ class CapacityFill {
     /**
      * получаем
      * количество заполненности
-     * второй емкости
+     * второй емкости.
      * @return - значение типа double
      */
     public double getCapTwoVol() {
@@ -142,53 +142,58 @@ class CapacityFill {
 
 /**
  * поток наполняемости
- * первой емкости
+ * первой емкости.
  */
 class SmallContainer implements Runnable {
 
     /**
      * объект определяющий алгоритм
-     * действий
+     * действий.
      */
     private final CapacityFill capacityFill;
     /**
-     * конструктор потока
+     * конструктор потока.
      * @param capacityFill - наполненние емкостей
      */
 
-    SmallContainer(CapacityFill capacityFill){
+    SmallContainer(CapacityFill capacityFill) {
         this.capacityFill = capacityFill;
     }
 
     @Override
-    public void run(){
-        while (capacityFill.getCapTwoVol() <= 10)
+    public void run() {
+        while (capacityFill.getCapTwoVol() <= 10) {
             capacityFill.add();
+        }
     }
 }
 
 /**
  * поток наполняемости
  * второй емкости при переливании
- * второй
+ * второй.
  */
-class BigContainer implements Runnable{
+class BigContainer implements Runnable {
 
     /**
      * объект определяющий алгоритм
-     * действий
+     * действий.
      */
     private final CapacityFill capacityFill;
+
     /**
-     * конструктор потока
+     * конструктор потока.
      * @param capacityFill - наполненние емкостей
      */
-    BigContainer(CapacityFill capacityFill){
+
+    BigContainer(CapacityFill capacityFill) {
         this.capacityFill = capacityFill;
     }
+
     @Override
-    public void run(){
-        while (capacityFill.getCapTwoVol()<=10)
+    public void run() {
+        while (capacityFill.getCapTwoVol() <= 10) {
             capacityFill.get();
+        }
     }
 }
