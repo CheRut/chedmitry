@@ -6,7 +6,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
 import ru.chedmitriy.multithreading.threads.service.Settings;
 import ru.chedmitriy.multithreading.threads.io.InputOutput;
 /**
@@ -136,7 +135,9 @@ public class ParallelSearching {
      * 1.выполняем проверку
      *
      * списка файлов выбранной директории
+     *
      * 2.если пустая - выводим сообщение
+     *
      * 3.Инициализируем сервис-испонитель
      * для пула потоков
      *
