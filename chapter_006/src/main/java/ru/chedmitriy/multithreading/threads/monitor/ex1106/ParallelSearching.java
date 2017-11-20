@@ -2,6 +2,7 @@ package ru.chedmitriy.multithreading.threads.monitor.ex1106;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +36,7 @@ public class ParallelSearching {
      * параметр - списки путей к файлам,
      * в которых найден искомый текст
      */
-    private Set<String> result;
+    private CopyOnWriteArraySet<String> result;
 
     /**
      * множество файлов однопоточного варианта
@@ -63,9 +64,9 @@ public class ParallelSearching {
         this.root = root;
         this.text = text;
         this.exts = exts;
-        singleThreadResult = Collections.synchronizedSet(new HashSet<>());
-        findingFiles = Collections.synchronizedSet(new HashSet<>());
-        result = Collections.synchronizedSet(new HashSet<>());
+        singleThreadResult = new HashSet<>();
+        findingFiles = new HashSet<>();
+        result = new CopyOnWriteArraySet<String>();
     }
 
 
