@@ -21,9 +21,9 @@ public class GamePlay {
             final Board board = new Board();
             MoveAct moveAct = new MoveAct(board);
             StayAct stayAct = new StayAct(board);
-            for (int i = 0; i < 60; i++) {
+            for (int i = 0; i < 10; i++) {
                 service.execute(stayAct);
-                service.execute (moveAct);
+                service.execute(moveAct);
             }
             service.shutdown();
         }

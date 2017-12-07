@@ -86,7 +86,7 @@ class MoveAct extends Thread {
             if(this.board.getBoard()[y][x] == null) {
                 this.board.getBoard()[y][x] = new ReentrantLock();
             }
-            boolean tLock = this.board.getBoard()[y][x].tryLock(100, TimeUnit.MILLISECONDS);
+            boolean tLock = this.board.getBoard()[y][x].tryLock(1000, TimeUnit.MILLISECONDS);
             if (tLock) {
                 try {
                     System.out.print(String.format(
@@ -95,11 +95,11 @@ class MoveAct extends Thread {
                     this.board.getBoard()[y][x].unlock();
                 }
             } else if (this.board.getBoard()[y][x].isLocked()) {
-                Thread.sleep(500);
+                Thread.sleep(5000);
                 System.out.print(String.format(
                         "Ячейка  (%s)(%s) заблокирована, ожидаем \n", y, x));
 
-                return;
+                interrupt ();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -137,18 +137,19 @@ class StayAct extends Thread {
         if (this.board.getBoard()[y][x] == null) {
             this.board.getBoard()[y][x] = new ReentrantLock();
         }
-        this.board.getBoard()[y][x].lock();
+
         try {
+            this.board.getBoard()[y][x].lockInterruptibly ();
             try {
                 System.out.print(String.format(
                         "Ячейка  (%s)(%s) заблокирована \n", y, x));
             } finally {
-                Thread.sleep(200);
+                Thread.sleep (1100);
                 this.board.getBoard()[y][x].unlock();
 
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("поток пробудился");
         }
     }
 }
