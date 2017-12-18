@@ -1,4 +1,4 @@
-package sqlJdbc.jdbc;
+package sqlJdbc.jdbc.optimization;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

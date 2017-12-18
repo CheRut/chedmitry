@@ -60,8 +60,10 @@ public class ConnectOptions {
     public   Connection connect_postgres_Db(String dbName) {
         try {
             Class.forName("org.sqlite.JDBC");
-            String dbUrl = "jdbc:postgresql://localhost:5432/"+dbName+"";
-            open = DriverManager.getConnection(dbUrl);
+            String dbUrl = "jdbc:postgresql://localhost:5432/tracker";
+            String name = "postgres";
+            String password = "domi21092012nika";
+            open = DriverManager.getConnection(dbUrl,name,password);
             return open;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -79,7 +81,7 @@ public class ConnectOptions {
             pst = open.prepareStatement(sql);
             pst.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+           log.error(e.getMessage(), e);
         }
 
     }

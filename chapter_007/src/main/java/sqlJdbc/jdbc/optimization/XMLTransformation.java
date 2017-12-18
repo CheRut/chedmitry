@@ -1,4 +1,4 @@
-package sqlJdbc.jdbc;
+package sqlJdbc.jdbc.optimization;
 
 import org.w3c.dom.Document;
 
