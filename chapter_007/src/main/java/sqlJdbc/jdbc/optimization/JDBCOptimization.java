@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-import sqlJdbc.jdbc.connection.ConnectOptions;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,7 +28,7 @@ public class JDBCOptimization {
     /**
      * устанавливаем подключение
      */
-    private ConnectOptions connection = null;
+    private Connection connection = null;
 
     XMLTransformation xTrans= new XMLTransformation();
     private final String dbName;
@@ -40,11 +39,42 @@ public class JDBCOptimization {
      */
     public JDBCOptimization (String dbName) {
         this.dbName = dbName;
-        this.connection = new ConnectOptions();
-        this.connection.connect_SQLite_Db (dbName);
-
     }
 
+    /**
+     * подключаемся к базе sqlite
+     * определяем имя базы
+     * @param dbName - наименование
+     *               подключаемой базы данных
+     *
+     * @return тип Connection  при успешном подключении
+     * или null - при неудаче
+     */
+    public   Connection openConnection(String dbName) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String dbUrl = "jdbc:sqlite:"+dbName+".sqlite";
+            connection = DriverManager.getConnection(dbUrl);
+            return connection;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    public void makeSQl(String dbName, String sql,PreparedStatement pst) {
+        openConnection(dbName);
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.execute();
+        } catch (SQLException e) {
+            log.error(e.getMessage(), e);
+        }
+
+    }
+    public PreparedStatement getStatment(String sql) throws SQLException {
+        return connection.prepareStatement(sql);
+    }
     /**
      * создаем таблицу
      * с единственным полем FIELD
@@ -52,7 +82,7 @@ public class JDBCOptimization {
     public void createTable() {
         PreparedStatement pst = null;
         String sql = "create table if not exists TEST(FIELD) ";
-        this.connection.makeSQl(this.dbName, sql, pst);
+        makeSQl(this.dbName, sql, pst);
     }
 
     /**
@@ -61,7 +91,7 @@ public class JDBCOptimization {
     public void clearTable() {
         PreparedStatement pst = null;
         String sql = "DELETE FROM TEST";
-        this.connection.makeSQl(this.dbName, sql,pst);
+        makeSQl(this.dbName, sql,pst);
 
     }
 
@@ -73,13 +103,13 @@ public class JDBCOptimization {
         PreparedStatement pst = null;
         String sql = "insert into TEST(field) VALUES (?)";
         try {
-            connection.getOpen().setAutoCommit(false);
-            pst = connection.getStatment(sql);
+            connection.setAutoCommit(false);
+            pst = getStatment(sql);
             for (int j = 1; j <= n ; j++) {
                 pst.setInt(1,j);
                 pst.execute();
             }
-            connection.getOpen().commit();
+            connection.commit();
             pst.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,7 +134,7 @@ public class JDBCOptimization {
             Element entries = document.createElement("entries");
             document.appendChild(entries);
             try {
-                pst = connection.getStatment(sql);
+                pst = getStatment(sql);
                 rs = pst.executeQuery();
                 while (rs.next()) {
 
@@ -120,9 +150,9 @@ public class JDBCOptimization {
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
-                if (connection.getOpen() != null) {
+                if (connection != null) {
                     try {
-                        connection.getOpen().close();
+                        connection.close();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
