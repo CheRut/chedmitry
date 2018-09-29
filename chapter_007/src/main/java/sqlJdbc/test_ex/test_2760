@@ -1,0 +1,61 @@
+﻿create table company(
+	id integer not null,
+	name character varying(20),
+	constraint company_pkey PRIMARY KEY (id)
+);
+
+create table person (
+	id integer not null,
+	name character varying(20),
+	company_id integer,
+	constraint person_pkey PRIMARY KEY (id)
+);
+insert into company(id,name) values(1,'oracle');
+insert into company(id,name) values(2,'google');
+insert into company(id,name) values(3,'facebook');
+insert into company(id,name) values(4,'badoo');
+insert into company(id,name) values(5,'mail.ru');
+
+
+
+select * from company;
+
+insert into person(id,name,company_id) values(1,'Глеб',5);
+insert into person(id,name,company_id) values(2,'Андрей',5);
+insert into person(id,name,company_id) values(3,'Роман',4);
+insert into person(id,name,company_id) values(4,'Александр',2);
+insert into person(id,name,company_id) values(5,'Дмитрий',5);
+
+
+
+/* Retrieve in a single query:
+- names of all persons that are NOT in the company with id = 5
+*/
+select p.name company_name from person p right  join company c on p.company_id = c.id and c.id!=5;
+
+/* Retrieve in a single query:
+- company name for each person
+*/
+select p.id,p.name,c.name company_name from person p left join company c on c.id=p.company_id;
+
+/* Select the name of the company with the maximum number of persons + number of persons in this company*/
+select company.name, count(*) maximum from company inner join person on person.company_id = company.id
+group by company.id order by maximum desc limit 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
