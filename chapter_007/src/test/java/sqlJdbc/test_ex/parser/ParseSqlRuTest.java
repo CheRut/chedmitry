@@ -37,7 +37,7 @@ public class ParseSqlRuTest {
 
     @Test
     public void pageCounter() {
-       assertTrue(parseSqlRu.pageCounter()!=-1);
+        assertTrue(parseSqlRu.pageCounter()!=-1);
     }
 
     /**
@@ -49,8 +49,8 @@ public class ParseSqlRuTest {
      */
     @Test
     public void parsePage() {
-       dropAndParse();
-       assertTrue(parseSqlRu.getVacancyList().size()!=0);
+        dropAndParse();
+        assertTrue(parseSqlRu.getVacancyList().size()!=0);
     }
 
     @Test
@@ -75,8 +75,8 @@ public class ParseSqlRuTest {
 
     @Test
     public void getDataFromDB() {
-      parseSqlRu.getDataFromDB();
-      assertTrue(parseSqlRu.getDataFromDB().size() > 0);
+        parseSqlRu.getDataFromDB();
+        assertTrue(parseSqlRu.getDataFromDB().size() > 0);
     }
 
     @Test
@@ -100,8 +100,7 @@ public class ParseSqlRuTest {
     @Test
     public void fillTable() {
         dropAndParse();
-
-      assertTrue(parseSqlRu.fillTable(parseSqlRu.getVacancyList()));
+        assertTrue(parseSqlRu.fillTable(parseSqlRu.getVacancyList()));
 
 
     }
