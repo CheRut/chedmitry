@@ -1,25 +1,21 @@
-package sqlJdbc.test_ex.parser;
-
-
+package sqljdbc.testex.parser;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-
-import sqlJdbc.jdbc.connection.ConnectOptions;
-import sqlJdbc.service.Settings;
+import sqljdbc.jdbc.connection.ConnectOptions;
+import sqljdbc.service.Settings;
+import sqljdbc.testex.parser.object.DateConverter;
+import sqljdbc.testex.parser.object.Vacancy;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
 
-
 public class ParseSqlRu  {
-
     /**
      * форматируем дату к удобному виду
      */
@@ -32,7 +28,7 @@ public class ParseSqlRu  {
     /**
      * файл логирования
      */
-    private static final Logger log = LogManager.getLogger(ConnectOptions.class);
+    private static final Logger LOGGER = LogManager.getLogger(ConnectOptions.class);
     /**
      * создаем параметр для подключения к базе данных
      */
@@ -46,22 +42,13 @@ public class ParseSqlRu  {
      */
     private int pageValue = 0;
     /**
-     * счетчик страниц
-     */
-    private String pageCount = "";
-
-    /**
      * объект обработки документа - web страницы в данном случае
      */
     private Document doc = null;
-
-
     /**
      * начало отсчета
      */
-    private final String STARTTIME = "01 янв 18, 00:00";
-
-
+    private final String startTime = "01 янв 18, 00:00";
     /**
      * Конструктор поумолчанию:
      * определяем контейнер в определенном порядке
@@ -95,8 +82,8 @@ public class ParseSqlRu  {
         String date = null;
         int beginOfYearCatch = 0;
         boolean lastDate = false;
-        if(!check())
-            while ( beginOfYearCatch != -1)   {
+        if (!check()) {
+            while (beginOfYearCatch != -1)   {
                 try {
                     Document document = Jsoup.connect(getProperty("jdbc.url") + pageValue).get();
                     Elements links = document.select("tr:contains(Java)");
@@ -104,19 +91,18 @@ public class ParseSqlRu  {
                         if (!t.text().contains("JavaScript")
                                 || !t.text().contains("Script")) {
                             date = dateFormat.yestTodayWordsChecker(t.child(5).text());
-                            if (!dateFormat.dateConverter(date).after(dateFormat.dateConverter(STARTTIME))) {
+                            if (!dateFormat.dateConverter(date).after(dateFormat.dateConverter(startTime))) {
                                 beginOfYearCatch = -1;
                             }
                         }
                     }
                 } catch (IOException e) {
-                    log.error(e);
+                    LOGGER.error(e);
                 }
-
                 pageValue++;
             }
-        else if(check()){
-            while (!lastDate){
+        } else if (check()) {
+            while (!lastDate) {
                 try {
                     Document doc = Jsoup.connect(getProperty("jdbc.url") + pageValue).get();
                     Elements links = doc.select("tr:contains(Java)");
@@ -129,7 +115,7 @@ public class ParseSqlRu  {
                         }
                     }
                 } catch (IOException e) {
-                    log.error(e);
+                    LOGGER.error(e);
                 }
                 pageValue++;
             }
@@ -138,8 +124,6 @@ public class ParseSqlRu  {
         }
         return --pageValue;
     }
-
-
     /**
      * ищем вакнсии,
      * удовлетворяющие требованиям
@@ -147,50 +131,45 @@ public class ParseSqlRu  {
      * значений нет,возвращаем
      * false
      */
-
     public  boolean   parsePage() {
         String autor = null;
         String date = null;
         String vacValue = null;
         Vacancy vacancy = null;
         pageCounter();
-        if (pageValue < 0){
-            log.info("Нечего добавлять на: "+ new Date()+ " число");
+        if (pageValue < 0) {
+            LOGGER.info("Нечего добавлять на: " + new Date() + " число");
         }
         if (!check()) {
             vacancyList = firstTimeAddingList(this.pageValue);
-        } else if(check()) {
+        } else if (check()) {
             getDataFromDB();
             while (page <= pageValue) {
                 try {
-                    doc = Jsoup.connect(getProperty("jdbc.url")+page).get();
+                    doc = Jsoup.connect(getProperty("jdbc.url") + page).get();
                     Elements links = doc.select("tr:contains(Java)");
                     for (Element t : links) {
                         if (!t.text().contains("JavaScript") || !t.text().contains("Script")) {
                             vacValue = t.getElementsByClass("postslisttopic").text();
                             date = dateFormat.yestTodayWordsChecker(t.child(5).text());
                             autor = t.child(2).text();
-                            if(compareLastAddingValue(date)){
-                                vacancy = new Vacancy(vacValue,autor,date);
-
+                            if (compareLastAddingValue(date)) {
+                                vacancy = new Vacancy(vacValue, autor, date);
                                 vacancyList.add(vacancy);
                             }
                         }
                     }
                 } catch (IOException e) {
-                    log.error(e);
+                    LOGGER.error(e);
                 }
                 page++;
             }
-
-        }
-        else {
+        } else {
             return false;
         }
         fillTable(vacancyList);
         return true;
     }
-
     /**
      * обращаемся к файлу
      * конфигурации,
@@ -205,7 +184,6 @@ public class ParseSqlRu  {
         s.load();
         return s.getValue(propertyLine);
     }
-
     /**
      * подключение к базе данных
      * @param dbName - название бд
@@ -215,61 +193,44 @@ public class ParseSqlRu  {
     public boolean connectDb(final String dbName) {
         try {
             Class.forName("org.postgresql.Driver");
-            openConn = DriverManager.getConnection(getProperty("jdbc.driver")+dbName,
+            openConn = DriverManager.getConnection(getProperty("jdbc.driver") + dbName,
                     getProperty("jdbc.username"),
                     getProperty("jdbc.password"));
-            log.info("Подключение к базе данных "+dbName+" успешно ");
+            LOGGER.info("Подключение к базе данных " + dbName + " успешно ");
             return true;
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
         return false;
     }
-
     /**
-     *
      * создаем таблицу,
      * если не создана.
      * Добавляем поля
-     *
      */
     public boolean createTable() {
         connectDb(getProperty("jdbc.dBName"));
-        PreparedStatement pst = null;
+        PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         boolean isCreated = false;
         try {
-            String newDbTable = "CREATE TABLE IF NOT EXISTS" +
-                    " vacancies(id serial primary key," +
-                    " vac_name text, "+
-                    " vac_autor text, "+
-                    " vac_create text" +
-                    ")";
-            pst = openConn.prepareStatement(newDbTable);
-            pst.execute();
-            log.info("Создана новая таблица для учета вакансий:  "+"vacancies");
+            String newDbTable = "CREATE TABLE IF NOT EXISTS"
+                    + " vacancies(id serial primary key,"
+                    + " vac_name text, "
+                    + " vac_autor text, "
+                    + " vac_create text)";
+
+            preparedStatement = openConn.prepareStatement(newDbTable);
+            preparedStatement.execute();
+            LOGGER.info("Создана новая таблица для учета вакансий:  " + "vacancies");
             isCreated = true;
+            preparedStatement.close();
+            openConn.close();
         } catch (Exception e) {
-            log.error(e);
-        }
-        finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pst != null) {
-                    pst.close();
-                }
-                if(openConn!=null){
-                    openConn.close();
-                }
-            } catch (Exception e) {
-                log.error(e);
-            }
+            LOGGER.error(e);
         }
         return isCreated;
     }
-
     /**
      * Получаем значения из базы данных
      *
@@ -286,23 +247,22 @@ public class ParseSqlRu  {
                 vacancyList.add(new Vacancy(
                         rs.getString("vac_name"),
                         rs.getString("vac_autor"),
-                        rs.getString("vac_create")));            }
-
-            log.info("получены данные из базы данных "+getProperty("jdbc.dBName"));
+                        rs.getString("vac_create")));
+            }
+            LOGGER.info("получены данные из базы данных " + getProperty("jdbc.dBName"));
             rs.close();
             pst.close();
             openConn.close();
         } catch (SQLException e) {
-            log.error(e + "Таблица не создана");
+            LOGGER.error(e + "Таблица не создана");
         }
         return vacancyList;
     }
-
     /**
      * Проверяем наличие таблицы в БД
      * @return true/false
      */
-    public boolean check(){
+    public boolean check() {
         connectDb(getProperty("jdbc.dBName"));
         DatabaseMetaData metadata = null;
         try {
@@ -310,17 +270,16 @@ public class ParseSqlRu  {
             ResultSet resultSet;
             resultSet = metadata.getTables(null,
                     null, null, null);
-            while(resultSet.next()){
-                if(resultSet.getString(3).equals("vacancies")){
+            while (resultSet.next()) {
+                if (resultSet.getString(3).equals("vacancies")) {
                     return true;
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
         return false;
     }
-
     /**
      * При наличии данных в таблице,
      * определяем дату последнего добавленного
@@ -332,7 +291,7 @@ public class ParseSqlRu  {
      * @param date - дата
      * @return true/false
      */
-    private boolean compareLastAddingValue(String date){
+    private boolean compareLastAddingValue(String date) {
         String last = null;
         connectDb(getProperty("jdbc.dBName"));
         PreparedStatement pst = null;
@@ -341,15 +300,14 @@ public class ParseSqlRu  {
         try {
             pst = openConn.prepareStatement(sqlQuery);
             rs = pst.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 last = rs.getString("vac_create");
             }
         } catch (SQLException e) {
-            log.error(e);
+            LOGGER.error(e);
         }
         return dateFormat.dateConverter(date).after(dateFormat.dateConverter(last));
     }
-
     /**
      * Если таблица создается в этой сессии,
      * то выбираем все значения сайта,
@@ -373,21 +331,19 @@ public class ParseSqlRu  {
                         vacValue = t.getElementsByClass("postslisttopic").text();
                         date = dateFormat.yestTodayWordsChecker(t.child(5).text());
                         autor = t.child(2).text();
-
-                        if (dateFormat.dateConverter(date).after(dateFormat.dateConverter(STARTTIME))) {
+                        if (dateFormat.dateConverter(date).after(dateFormat.dateConverter(startTime))) {
                             vacancy = new Vacancy(vacValue, autor, date);
                             vacancyList.add(vacancy);
                         }
                     }
                 }
             } catch (IOException e) {
-                log.error(e);
+                LOGGER.error(e);
             }
             page++;
         }
         return vacancyList;
     }
-
     /**
      * Очищаем таблицу
      * @return true если не возникло
@@ -400,14 +356,13 @@ public class ParseSqlRu  {
         try {
             prepSt = openConn.prepareStatement("delete from vacancies");
             prepSt.execute();
-            log.info("Таблица очищена");
+            LOGGER.info("Таблица очищена");
             isCleared = true;
             prepSt.close();
             openConn.close();
         } catch (SQLException e) {
-            log.error(e);
+            LOGGER.error(e);
         }
-
         return isCleared;
     }
     /**
@@ -424,36 +379,36 @@ public class ParseSqlRu  {
         clearTable();
         connectDb(getProperty("jdbc.dBName"));
         PreparedStatement preparedStatement = null;
-        if (vacancyList.size()==0){
-            log.error("Отстутствую данные для добавления");
+        if (vacancyList.size() == 0) {
+            LOGGER.error("Отстутствую данные для добавления");
             return false;
         }
         try {
             for (Vacancy v : vacList) {
-                preparedStatement = openConn.prepareStatement("insert into vacancies(vac_name,vac_autor,vac_create)" +
-                        " values ('" + v.getVacancyType() + "','" + v.getAuthor() + "','" + v.getCreate() + "')   ");
+                preparedStatement = openConn.prepareStatement("insert into"
+                        + " vacancies(vac_name,vac_autor,vac_create)"
+                        + " values ('" + v.getVacancyType() + "','"
+                        + v.getAuthor() + "','" + v.getCreate() + "')   ");
                 preparedStatement.execute();
             }
-            log.info("Данные добавлены");
+            LOGGER.info("Данные добавлены");
             return true;
         } catch (SQLException e) {
-            log.error(e);
+            LOGGER.error(e);
         } finally {
             try {
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
-                if(openConn != null){
+                if (openConn != null) {
                     openConn.close();
                 }
             } catch (Exception e) {
-                log.error(e);
+                LOGGER.error(e);
             }
         }
         return false;
     }
-
-
     /**
      * Порядок расположения элементов
      * в хранилище
@@ -462,14 +417,13 @@ public class ParseSqlRu  {
     private final Comparator<Vacancy> fromEarlierToLast = new Comparator<Vacancy>() {
         @Override
         public int compare(Vacancy o1, Vacancy o2) {
-            return dateFormat.dateConverter(o1.getCreate()).compareTo(dateFormat.dateConverter(o2.getCreate()));
+            return dateFormat.dateConverter(o1.getCreate())
+                    .compareTo(dateFormat.dateConverter(o2.getCreate()));
         }
     };
-
     public Set<Vacancy> getVacancyList() {
         return vacancyList;
     }
-
     /**
      * вспомагательный метод,
      * определенный для тестирования
@@ -481,21 +435,16 @@ public class ParseSqlRu  {
         PreparedStatement statement = null;
         connectDb("postgres");
         try {
-            statement =  openConn.prepareStatement("DROP TABLE IF EXISTS vacancies  ");
+            statement =  openConn.prepareStatement("DROP TABLE IF EXISTS vacancies ");
             statement.execute();
             statement.close();
             openConn.close();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
         return false;
     }
-
-
-
-
-
 }
 
 

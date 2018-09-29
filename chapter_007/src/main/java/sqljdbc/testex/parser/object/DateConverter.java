@@ -1,8 +1,8 @@
-package sqlJdbc.test_ex.parser;
+package sqljdbc.testex.parser.object;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import sqlJdbc.jdbc.connection.ConnectOptions;
+import sqljdbc.jdbc.connection.ConnectOptions;
 
 import java.text.DateFormatSymbols;
 
@@ -28,7 +28,7 @@ public class DateConverter {
     /**
      * файл логирования
      */
-    private static final Logger log = LogManager.getLogger(ConnectOptions.class);
+    private static final Logger LOGGER = LogManager.getLogger(ConnectOptions.class);
 
     /** преобразование дат из
      * таблицы сайта к одному фиду
@@ -41,7 +41,7 @@ public class DateConverter {
         try {
             date = format.parse(sd);
         } catch (Exception e) {
-            log.error(e);
+            LOGGER.error(e);
         }
 
         return date;
@@ -60,7 +60,9 @@ public class DateConverter {
             strDate = format.format(yesterday()) + "," + sd.substring(sd.lastIndexOf(",") + 1);
         } else if (sd.contains("сегодня")) {
             strDate = format.format(new Date()) + "," + sd.substring(sd.lastIndexOf(",") + 1);
-        } else strDate = sd;
+        } else {
+            strDate = sd;
+        }
         return strDate;
     }
 

@@ -1,4 +1,4 @@
-package sqlJdbc.test_ex.parser;
+package sqljdbc.testex.parser;
 /**
  * Задача создать парсер сайта sql.ru:
  *

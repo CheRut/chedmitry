@@ -1,4 +1,4 @@
-package sqlJdbc.test_ex.parser;
+package sqljdbc.testex.parser.object;
 
 
 import java.util.Objects;
@@ -33,13 +33,17 @@ public class Vacancy {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Vacancy vacancy = (Vacancy) o;
-        return hash == vacancy.hash &&
-                Objects.equals(author, vacancy.author) &&
-                Objects.equals(vacancyType, vacancy.vacancyType) &&
-                Objects.equals(create, vacancy.create);
+        return hash == vacancy.hash
+                && Objects.equals(author, vacancy.author)
+                && Objects.equals(vacancyType, vacancy.vacancyType)
+                && Objects.equals(create, vacancy.create);
     }
 
     @Override
@@ -53,14 +57,15 @@ public class Vacancy {
 
     @Override
     public String toString() {
-        return "Vacancy{" +
-                "author= '" + author + '\'' +
-                ", vacancyType='" + vacancyType + '\'' +
-                ", create= " + create +
-                '}';
+        return "Vacancy{"
+                + "author= '"
+                + author + '\''
+                + ", vacancyType = '"
+                + vacancyType + '\''
+                + ", create= "
+                + create
+                + '}';
     }
-
-
     public String getCreate() {
         return create;
     }
