@@ -1,5 +1,8 @@
 package sqlJdbc.jdbc.tracker;
 
+
+import ru.chedmitriy.models.Item;
+
 /**
  * Created by dimsan on 18.09.2016.
  */
@@ -32,7 +35,7 @@ public class TrackerJDBC extends DataBaseOperating {
      * @param item - заявка
      * @return - измененный параметр item
      */
-    public Item replace(String id, Item item) {return super.updateItem(id, item.getName(), item.getCreateDate());}
+    public Item replace(String id, Item item) {return super.updateItem(id, item.getName(), item.getCreate());}
 
     /**
      * отображавет вписок всех заявок

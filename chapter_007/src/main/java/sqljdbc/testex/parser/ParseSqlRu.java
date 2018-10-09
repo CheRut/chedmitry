@@ -1,14 +1,17 @@
-package sqljdbc.testex.parser;
+package sqlJdbc.testex.parser;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import sqljdbc.jdbc.connection.ConnectOptions;
-import sqljdbc.service.Settings;
-import sqljdbc.testex.parser.object.DateConverter;
-import sqljdbc.testex.parser.object.Vacancy;
+
+import sqlJdbc.service.Settings;
+
+
+import sqlJdbc.testex.object.DateConverter;
+import sqlJdbc.testex.object.Vacancy;
 
 import java.io.IOException;
 import java.sql.*;
@@ -28,7 +31,7 @@ public class ParseSqlRu  {
     /**
      * файл логирования
      */
-    private static final Logger LOGGER = LogManager.getLogger(ConnectOptions.class);
+    private  final Logger LOGGER = LogManager.getLogger(ParseSqlRu.class);
     /**
      * создаем параметр для подключения к базе данных
      */

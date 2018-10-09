@@ -2,6 +2,8 @@ package sqlJdbc.jdbc.tracker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.chedmitriy.models.Item;
+
 
 import java.sql.*;
 
@@ -100,7 +102,7 @@ public class DataBaseOperating {
         try {
             pst = openConnection.prepareStatement(sql);
             pst.setString(1,item.getName());
-            pst.setTimestamp(2,item.getCreateDate());
+            pst.setTimestamp(2,item.getCreate());
             pst.executeUpdate();
             pst.close();
         } catch (SQLException e) {

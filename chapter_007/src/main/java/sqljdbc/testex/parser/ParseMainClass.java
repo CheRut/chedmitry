@@ -1,9 +1,11 @@
-package sqljdbc.testex.parser;
+package sqlJdbc.testex.parser;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-import sqljdbc.service.Settings;
-import sqljdbc.testex.parser.quartz.ParsingJob;
+
+import sqlJdbc.service.Settings;
+import sqlJdbc.testex.quartz.ParsingJob;
+
 
 /**
  * Главный класс,
@@ -11,13 +13,9 @@ import sqljdbc.testex.parser.quartz.ParsingJob;
  *
  */
 public class ParseMainClass {
-    /**
-     * файл конфигурации
-     */
-   private static Settings settings;
 
     public static void main(String[] args) throws SchedulerException {
-        settings = new Settings();
+        Settings settings = new Settings();
         settings.load();
         /**
          * определим задачу

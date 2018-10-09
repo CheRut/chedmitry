@@ -2,7 +2,7 @@ package sqlJdbc.testex.object;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import sqlJdbc.jdbc.connection.ConnectOptions;
+
 
 import java.text.DateFormatSymbols;
 
@@ -28,7 +28,7 @@ public class DateConverter {
     /**
      * файл логирования
      */
-    private  final Logger LOGGER = LogManager.getLogger(ConnectOptions.class);
+    private  final Logger LOGGER = LogManager.getLogger(DateConverter.class);
 
     /** преобразование дат из
      * таблицы сайта к одному фиду

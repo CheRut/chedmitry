@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import sqlJdbc.service.Settings;
 
+
 import java.sql.Connection;
 
 import static org.hamcrest.core.Is.is;
