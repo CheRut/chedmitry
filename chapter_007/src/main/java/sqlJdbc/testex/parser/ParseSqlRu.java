@@ -8,8 +8,9 @@ import org.jsoup.select.Elements;
 
 
 import sqlJdbc.service.Settings;
-import sqlJdbc.testex.parser.object.DateConverter;
-import sqlJdbc.testex.parser.object.Vacancy;
+import sqlJdbc.testex.object.DateConverter;
+import sqlJdbc.testex.object.Vacancy;
+
 
 import java.io.IOException;
 import java.sql.*;
@@ -29,7 +30,7 @@ public class ParseSqlRu  {
     /**
      * файл логирования
      */
-    private static final Logger LOGGER = LogManager.getLogger(ParseSqlRu.class);
+    private  final Logger LOGGER = LogManager.getLogger(ParseSqlRu.class);
     /**
      * создаем параметр для подключения к базе данных
      */

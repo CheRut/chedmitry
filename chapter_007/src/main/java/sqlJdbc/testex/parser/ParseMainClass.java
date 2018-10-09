@@ -12,13 +12,10 @@ import sqlJdbc.testex.quartz.ParsingJob;
  *
  */
 public class ParseMainClass {
-    /**
-     * файл конфигурации
-     */
-   private static Settings settings;
 
     public static void main(String[] args) throws SchedulerException {
-        settings = new Settings();
+
+        Settings settings = new Settings();
         settings.load();
         /**
          * определим задачу

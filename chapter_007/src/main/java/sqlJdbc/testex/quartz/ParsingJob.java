@@ -17,7 +17,7 @@ public class ParsingJob implements Job {
     /**
      * файл логирования
      */
-    private static final Logger LOGGER = LogManager.getLogger(ParsingJob.class);
+    private  final Logger LOGGER = LogManager.getLogger(ParsingJob.class);
     /**
      * объект - парсер
      * */

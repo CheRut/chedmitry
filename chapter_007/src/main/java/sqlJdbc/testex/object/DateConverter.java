@@ -1,4 +1,4 @@
-package sqlJdbc.testex.parser.object;
+package sqlJdbc.testex.object;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -28,7 +28,7 @@ public class DateConverter {
     /**
      * файл логирования
      */
-    private static final Logger LOGGER = LogManager.getLogger(ConnectOptions.class);
+    private  final Logger LOGGER = LogManager.getLogger(ConnectOptions.class);
 
     /** преобразование дат из
      * таблицы сайта к одному фиду

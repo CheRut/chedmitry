@@ -1,4 +1,4 @@
-package sqlJdbc.testex.parser.object;
+package sqlJdbc.testex.object;
 
 
 import java.util.Objects;
