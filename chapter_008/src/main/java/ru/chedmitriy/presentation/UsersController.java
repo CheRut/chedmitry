@@ -2,6 +2,7 @@ package ru.chedmitriy.presentation;
 
 import ru.chedmitriy.logic.ValidateService;
 import ru.chedmitriy.models.User;
+import ru.chedmitriy.persistent.MemoryStore;
 import ru.chedmitriy.service.Settings;
 
 import javax.servlet.RequestDispatcher;
@@ -19,7 +20,7 @@ import java.io.IOException;
  * @see ru.chedmitriy.logic.ValidateService - синглтон взаимодействия пользователей с базой данных-
  * хранилищем
  */
-public class UserServlet extends HttpServlet {
+public class UsersController extends HttpServlet {
 
 
     /**
@@ -49,7 +50,21 @@ public class UserServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       doPost(req,resp);
+        String action = req.getServletPath();
+        switch (action) {
+            case "/new":
+                showAddUserWindow(req,resp);
+                break;
+            case "/edit":
+                showEditUserWindow(req,resp);
+                break;
+            case "/delete":
+                deleteUser(req,resp);
+                break;
+            default:
+                userList(req,resp);
+                break;
+        }
     }
 
     /** выполняем действия: добавление,удаление,редактирование
@@ -62,27 +77,16 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getServletPath();
         switch (action) {
-            case "/new":
-                showAddUserWindow(req,resp);
-                break;
             case "/insert":
                 addUser(req,resp);
-                break;
-            case "/edit":
-                showEditUserWindow(req,resp);
                 break;
             case "/update":
                 editUser(req,resp);
                 break;
-            case "/delete":
-                deleteUser(req,resp);
-            default:
-                userList(req,resp);
-                break;
+
+
         }
-
     }
-
     /**
      * Добавляем нового пользователя
      * Параметры запроса соответствуют
@@ -134,9 +138,10 @@ public class UserServlet extends HttpServlet {
      * @param response
      * @throws IOException
      */
-    private void deleteUser(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    private void deleteUser(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
         valServ.delete(id);
+        response.sendRedirect("list");
     }
 
     /**
@@ -163,7 +168,7 @@ public class UserServlet extends HttpServlet {
      */
     private void showAddUserWindow(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/addUser.jsp");
+
         RequestDispatcher dispatcher = request.getRequestDispatcher(getProperty("servlet.addUserForm"));
         dispatcher.forward(request, response);
     }

@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Класс - хранилище данных
  */
-public class MemoryStore implements Store {
+public class MemoryStore implements Store<User> {
     /**
      *  синглтон с Volatile
      *  может привести к проблемам на мультипроцессорных системах

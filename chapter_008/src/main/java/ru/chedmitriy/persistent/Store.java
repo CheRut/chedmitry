@@ -1,5 +1,6 @@
 package ru.chedmitriy.persistent;
 
+
 import ru.chedmitriy.models.User;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.Collection;
  * поиск.
  *
  */
-public interface Store {
+public interface Store<User>{
 
     /** Поиск по id
      * Также используется при удалении и

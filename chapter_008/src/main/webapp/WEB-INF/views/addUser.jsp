@@ -12,6 +12,7 @@
     </h3>
 </center>
 <div align="center">
+
     <c:if test="${user != null}">
     <form action="update" method="post">
         </c:if>
@@ -63,6 +64,8 @@
                 </tr>
             </table>
         </form>
+    </form>
+
 </div>
 </body>
 </html>

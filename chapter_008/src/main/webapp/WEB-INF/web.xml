@@ -1,13 +1,13 @@
 <web-app>
     <servlet>
         <servlet-name>
-            UserServlet
+            Users Controller
         </servlet-name>
-        <servlet-class>ru.chedmitriy.presentation.UserServlet</servlet-class>
+        <servlet-class>ru.chedmitriy.presentation.UsersController</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>UserServlet</servlet-name>
+        <servlet-name>Users Controller</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 

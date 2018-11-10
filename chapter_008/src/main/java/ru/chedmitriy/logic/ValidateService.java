@@ -3,6 +3,7 @@ package ru.chedmitriy.logic;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ru.chedmitriy.models.User;
+import ru.chedmitriy.persistent.DBStore;
 import ru.chedmitriy.persistent.MemoryStore;
 import ru.chedmitriy.persistent.Store;
 
@@ -87,10 +88,12 @@ public class ValidateService {
      * @return true/false
      */
     public boolean delete (final int id) {
-
         if(storeInstance.getById(id)!= null) {
             storeInstance.delete(id);
             LG.info("Удаление пользователя успешно выполненно" );
+
+
+
             return true;
         }
         else  {
@@ -107,8 +110,8 @@ public class ValidateService {
      */
     public User getById(final int id) {
         if(id > 0 && storeInstance.getById(id)!= null) {
-            LG.info("пользователь с порядковым номером - "+id+": "+storeInstance.getById(id));
-            return storeInstance.getById(id);
+            LG.info("пользователь с порядковым номером - "+id+": "+storeInstance.getById(id)+"найден");
+            return (User) storeInstance.getById(id);
         }
         else    {
             LG.error("пользователь с порядковым номером - "+id+" не найден");
