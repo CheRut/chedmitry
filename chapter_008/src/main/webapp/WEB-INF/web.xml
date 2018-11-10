@@ -3,7 +3,7 @@
         <servlet-name>
             UserServlet
         </servlet-name>
-        <servlet-class>ru.chedmitriy.servlets.UserServlet</servlet-class>
+        <servlet-class>ru.chedmitriy.presentation.UserServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

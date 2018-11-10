@@ -3,105 +3,127 @@ package ru.chedmitriy.logic;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ru.chedmitriy.models.User;
-import ru.chedmitriy.servlets.UserServlet;
+import ru.chedmitriy.persistent.MemoryStore;
+import ru.chedmitriy.persistent.Store;
 
 import java.util.Collection;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Singleton
+ * If the program will always need an instance,
+ * or if the cost of creating the instance is not
+ * too large in terms of time/resources,
+ * the programmer can switch to eager initialization,
+ * which always creates an instance when the class is loaded into the JVM.
  */
 public class ValidateService {
     /**
-     * файл логирования
+     * Logging fail
      */
-    private  final Logger LOGGER = LogManager.getLogger(UserServlet.class);
+    private  final Logger LG = LogManager.getLogger(ValidateService.class);
     /**
-     *
+     * Static member holds only one instance of the
+     * ValidateService class
      */
     private static final ValidateService instance = new ValidateService();
 
     /**
-     *
+     * ValidateService prevents any
+     * other class from instantiating
      */
-    private final ConcurrentHashMap<Integer,User> users = new ConcurrentHashMap<Integer, User>();
-
-
+    private ValidateService() {
+    }
     /**
-     * @return
-     */
-    public static ValidateService getInstance(){
+     *  Providing Global point of access
+     * */
+    public static final ValidateService getInstance() {
         return instance;
     }
 
     /**
-     * @return
+     * Call the singleton
      */
-    public Collection<User> values() {
-        return this.users.values();
-    }
+    private final Store storeInstance = MemoryStore.getInstance();
 
     /**
-     * @param user
-     *
+     * Trying to add a
+     * new User
+     * @param User - adding auto
+     * @return - true/false
      */
-    public boolean add(final User user) {
-        if (user == null){
-            LOGGER.error("Ошибка! Попытка добавления пустого значечния");
+    public boolean add(final User User) {
+        storeInstance.add(User);
+        if(storeInstance.values().contains(User)) {
+            LG.info("Добавлен новый пользователь: "+User);
+            return true;
+        }
+        else {
+            LG.error("Произошла ошибка при добавлении" +
+                    " нового пользователя");
             return false;
         }
-        this.users.put(user.getId(),user);
-        LOGGER.info("Пользователь "+user+ " добавлен в коллекцию");
-        return true;
     }
 
     /**
-     * @param user
+     * Trying to edit an User
+     * @param User - founded User
+     * @return true/false
      */
-    public boolean edit (final User user) {
-        if (user == null){
-            LOGGER.error("Ошибка редактирования");
+    public boolean edit (final User User){
+        if(User != null ){
+            storeInstance.edit(User);
+            LG.info("Редактирование пользователя  успешно выполнено, новое значение: "+User);
+            return true;
+        }
+        else {
+            LG.error("Ошибка при редактировании пользователя: "+User);
             return false;
         }
-        this.users.replace(user.getId(),user);
-        LOGGER.info("Редактирование успешно проаедено");
-        return true;
     }
 
     /**
-     * @param id
+     * Trying to delete
+     * an User by own id
+     * @param id - deleting auto
+     * @return true/false
      */
     public boolean delete (final int id) {
-        if (getById(id)==null) {
-            LOGGER.error("Ошибка!Пользователя с тамим id не существует");
+
+        if(storeInstance.getById(id)!= null) {
+            storeInstance.delete(id);
+            LG.info("Удаление пользователя успешно выполненно" );
+            return true;
+        }
+        else  {
+            LG.error("Ошибка при удалении пользователя! ");
             return false;
         }
-            LOGGER.info("Удаление пользователя "+getById(id));
-            this.users.remove(id);
-            LOGGER.info("Пользователь удален");
-        return true;
     }
 
-
     /**
+     * Try to find an User by
+     * parameter id
+     * @param id - finding User
      * @return
      */
-    public Collection<User> findAll(){
-
-        return this.users.values();
-    }
-
-
-    /**
-     * @param id
-     * @return
-     */
-    public User getById (final int id) {
-        if (users.get(id)==null){
-            LOGGER.error("Ошибка!Пользователя с тамим id не существует");
+    public User getById(final int id) {
+        if(id > 0 && storeInstance.getById(id)!= null) {
+            LG.info("пользователь с порядковым номером - "+id+": "+storeInstance.getById(id));
+            return storeInstance.getById(id);
         }
-        return this.users.get(id);
+        else    {
+            LG.error("пользователь с порядковым номером - "+id+" не найден");
+            return null;
+        }
     }
 
+    /**
+     * Try to view all
+     * Users of the store
+     * @return - storage values
+     */
+    public Collection<User> getAllValues(){
+        return storeInstance.values();
+
+    }
 
 }

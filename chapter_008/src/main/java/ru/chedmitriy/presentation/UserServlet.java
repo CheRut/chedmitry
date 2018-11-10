@@ -1,7 +1,5 @@
-package ru.chedmitriy.servlets;
+package ru.chedmitriy.presentation;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import ru.chedmitriy.logic.ValidateService;
 import ru.chedmitriy.models.User;
 import ru.chedmitriy.service.Settings;
@@ -13,13 +11,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Класс взаимодействия объектов User
+ * с хранилищем данных,а также -
+ * с Web сервисом
+ * @see ru.chedmitriy.models.User - класс свойств пользователей
+ * @see ru.chedmitriy.logic.ValidateService - синглтон взаимодействия пользователей с базой данных-
+ * хранилищем
+ */
 public class UserServlet extends HttpServlet {
 
 
+    /**
+     * вызов синглтона
+     */
     private final ValidateService valServ = ValidateService.getInstance();
 
 
-
+    /**
+     * Заполним хранилише дефолтными
+     * значениями
+     * @throws ServletException
+     */
     @Override
     public void init() throws ServletException {
         valServ.add(new User(1,"Ivan","ivan@Mail.ru","1.02.2008"));
@@ -27,8 +40,26 @@ public class UserServlet extends HttpServlet {
 
     }
 
+    /**
+     * работа с аттрибутами,отображение страниц и т.д
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+       doPost(req,resp);
+    }
+
+    /** выполняем действия: добавление,удаление,редактирование
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getServletPath();
         switch (action) {
             case "/new":
@@ -38,7 +69,7 @@ public class UserServlet extends HttpServlet {
                 addUser(req,resp);
                 break;
             case "/edit":
-               showEditUserWindow(req,resp);
+                showEditUserWindow(req,resp);
                 break;
             case "/update":
                 editUser(req,resp);
@@ -46,14 +77,10 @@ public class UserServlet extends HttpServlet {
             case "/delete":
                 deleteUser(req,resp);
             default:
-               userList(req,resp);
+                userList(req,resp);
                 break;
         }
-    }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req,resp);
     }
 
     /**
@@ -70,7 +97,8 @@ public class UserServlet extends HttpServlet {
      * @throws IOException
      */
     private void addUser(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        int id = valServ.values().size();
+        // делаем привязку id к размеру хранилища
+        int id = valServ.getAllValues().size();
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String create = request.getParameter("create");
@@ -81,6 +109,8 @@ public class UserServlet extends HttpServlet {
     }
 
     /**
+     * Редактируем пользователя,
+     * вызываем метод синглтона edit(User user)
      * @param request
      * @param response
      * @throws IOException
@@ -98,6 +128,8 @@ public class UserServlet extends HttpServlet {
     }
 
     /**
+     * Удаляем пользователя,
+     * вызываем метод синглтона
      * @param request
      * @param response
      * @throws IOException
@@ -108,18 +140,22 @@ public class UserServlet extends HttpServlet {
     }
 
     /**
+     * получаем список всех
+     * пользователей
      * @param request
      * @param response
      * @throws IOException
      * @throws ServletException
      */
     private void userList(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
-        request.setAttribute("userList",valServ.values());
+        request.setAttribute("userList",valServ.getAllValues());
         RequestDispatcher dis = request.getRequestDispatcher(getProperty("servlet.mainPage"));
         dis.forward(request,response);
     }
 
     /**
+     * Отображение окна для
+     * добавления
      * @param request
      * @param response
      * @throws ServletException
@@ -133,6 +169,8 @@ public class UserServlet extends HttpServlet {
     }
 
     /**
+     * Отображение окна для
+     * редактирования
      * @param request
      * @param response
      * @throws ServletException

@@ -1,4 +1,4 @@
-package ru.chedmitriy.servlets;
+package ru.chedmitriy.presentation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
