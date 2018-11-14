@@ -1,4 +1,4 @@
-package ru.chedmitriy.chess.logicExceptions;
+package ru.chedmitriy.chess.logicexceptions;
 
 import java.util.logging.Logger;
 
@@ -8,15 +8,10 @@ import java.util.logging.Logger;
  * @project junior
  * @since 0.1
  */
-public class MovementException extends Exception{
+public class MovementException extends Exception {
     private Logger lg = Logger.getLogger(getClass().getName());
 
-    /**
-     * Constructs a new exception with {@code null} as its detail message.
-     * The cause is not initialized, and may subsequently be initialized by a
-     * call to {@link #initCause}.
-     */
-    public MovementException() {    }
+
 
     public MovementException(String message) {
         super(message);

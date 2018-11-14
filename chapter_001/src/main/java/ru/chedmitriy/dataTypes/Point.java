@@ -1,4 +1,4 @@
-package ru.chedmitriy.dataTypes;
+package ru.chedmitriy.datatypes;
 
 /**
  * Class Point определяет расстояние между точками - длину будущих сторон
@@ -20,7 +20,7 @@ public class Point {
  * */
 
     public double distanceTo(Point point) {
-        return Math.sqrt(Math.pow((this.x - point.x),2) + Math.pow((this.y - point.y),2));
+        return Math.sqrt(Math.pow((this.x - point.x), 2) + Math.pow((this.y - point.y), 2));
     }
 }
 
@@ -49,7 +49,7 @@ public class Point {
             double bc = b.distanceTo(c);
             double ac = a.distanceTo(c);
             double halfPer = (ab + bc + ac) / 2;
-            return Math.sqrt(halfPer * (halfPer-ab) * (halfPer-bc) * (halfPer-ac));
+            return Math.sqrt(halfPer * (halfPer - ab) * (halfPer - bc) * (halfPer - ac));
     }
 }
 /**
@@ -63,15 +63,15 @@ public class Point {
  * Для удобства сравнения вывожу значения в консоль
  * Далее использую оператор сравнения, где выбираю наибольшее значение
  * */
-class MaxSide{
-   public double max(Point a,Point b,Point c) {
+class MaxSide {
+   public double max(Point a, Point b, Point c) {
        double maxValue = 0;
        double ab = a.distanceTo(b);
        double bc = b.distanceTo(c);
        double ac = a.distanceTo(c);
-       System.out.println(String.format("ab: %s",ab));
-       System.out.println(String.format("bc: %s",bc));
-       System.out.println(String.format("ac: %s",ac));
+       System.out.println(String.format("ab: %s", ab));
+       System.out.println(String.format("bc: %s", bc));
+       System.out.println(String.format("ac: %s", ac));
 
        if ((ab > bc) && (ab > ac)) {
                maxValue = ab;

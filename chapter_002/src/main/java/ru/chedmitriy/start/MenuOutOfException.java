@@ -10,8 +10,6 @@ public class MenuOutOfException  {
 
     Logger lg = Logger.getLogger(MenuOutOfException.class.getName());
 
-
-
     public MenuOutOfException(String loggerMessage) {
         lg.log(Level.WARNING, loggerMessage);
     }

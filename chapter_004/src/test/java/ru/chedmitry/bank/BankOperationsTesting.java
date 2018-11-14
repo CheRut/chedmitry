@@ -2,11 +2,11 @@ package ru.chedmitry.bank;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.chedmitriy.collections.bank.Account;
-import ru.chedmitriy.collections.bank.DataBase;
-import ru.chedmitriy.collections.bank.User;
-import ru.chedmitriy.collections.bank.exceptions.AccountNotFoundException;
-import ru.chedmitriy.collections.bank.exceptions.UserNotFoundException;
+import ru.chedmitriy.bank.Account;
+import ru.chedmitriy.bank.DataBase;
+import ru.chedmitriy.bank.User;
+import ru.chedmitriy.bank.exceptions.AccountNotFoundException;
+import ru.chedmitriy.bank.exceptions.UserNotFoundException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -16,22 +16,18 @@ import java.util.ArrayList;
 public class BankOperationsTesting {
     private DataBase dataBase;
 
-    private final User user1 = new User("Dmitry","221133");
-    private final User user2 = new User("Viktor","003333");
-    private final User user3 = new User("Alex","225144");
+    private final User user1 = new User("Dmitry", "221133");
+    private final User user2 = new User("Viktor", "003333");
+    private final User user3 = new User("Alex", "225144");
     User errorUser;
 
     @Before
     public void init() {
         dataBase = new DataBase();
-        dataBase.client.put(user1,new ArrayList<Account>());
-        dataBase.client.put(user2,new ArrayList<Account>());
-        dataBase.client.put(user3,new ArrayList<Account>());
-        errorUser = new User("errorName","someErrorPasport");
-
-
-
-
+        dataBase.client.put(user1, new ArrayList<Account>());
+        dataBase.client.put(user2, new ArrayList<Account>());
+        dataBase.client.put(user3, new ArrayList<Account>());
+        errorUser = new User("errorName", "someErrorPasport");
     }
     /**.
      * Тестирование метода add:
@@ -41,12 +37,12 @@ public class BankOperationsTesting {
     @Test
     public void whenNewUserAdding() {
         int exp = 3;
-        assertThat(dataBase.client.size(),is(exp));
-        dataBase.addUser(new User("Evgeniy","123456"));
-        dataBase.addUser(new User("Aleksey","000223"));
-        dataBase.addUser(new User("Oleg","111234"));
+        assertThat(dataBase.client.size(), is(exp));
+        dataBase.addUser(new User("Evgeniy", "123456"));
+        dataBase.addUser(new User("Aleksey", "000223"));
+        dataBase.addUser(new User("Oleg", "111234"));
         exp = 6;
-        assertThat(dataBase.client.size(),is(exp));
+        assertThat(dataBase.client.size(), is(exp));
     }
     /**
      * Тестирование метода
@@ -56,9 +52,9 @@ public class BankOperationsTesting {
      * */
     @Test
     public void whenAccountAddingToUser() throws UserNotFoundException {
-        dataBase.addAccountToUser(user1,new Account(3000,"1234 5678 9123 4560"));
+        dataBase.addAccountToUser(user1, new Account(3000, "1234 5678 9123 4560"));
         String exp = "1234 5678 9123 4560";
-        assertThat(dataBase.client.get(user1).get(0).getRequisites(),is(exp));
+        assertThat(dataBase.client.get(user1).get(0).getRequisites(), is(exp));
     }
     /**
      * Получаем информацию об аккаунте
@@ -68,8 +64,8 @@ public class BankOperationsTesting {
      * */
     @Test
     public void whenTryingToGetAccount() throws UserNotFoundException {
-        dataBase.addAccountToUser(user1,new Account(3000,"1234 5678 9123 4560"));
-        assertThat(dataBase.getUserAccounts(user1).get(0).getValue(),is(3000.0));
+        dataBase.addAccountToUser(user1, new Account(3000, "1234 5678 9123 4560"));
+        assertThat(dataBase.getUserAccounts(user1).get(0).getValue(), is(3000.0));
     }
     /**
      * Тестирование метода deleteUser
@@ -81,7 +77,7 @@ public class BankOperationsTesting {
     public void whenUserDelete() throws UserNotFoundException {
         dataBase.deleteUser(user1);
         int newSizeOfDb = 2;
-        assertThat(dataBase.client.size(),is(newSizeOfDb));
+        assertThat(dataBase.client.size(), is(newSizeOfDb));
     }
     /**
      * Тестируем метод addAccountToUser
@@ -90,14 +86,15 @@ public class BankOperationsTesting {
      * затем удаляем один объект
      * */
     @Test
-    public void whenUserAccountWasDeleted() throws UserNotFoundException, AccountNotFoundException {
-        Account firstUserAccount = new Account(1000,"some requisites");
-        Account secondUserAccount = new Account(2000,"new some requisites");
-        dataBase.addAccountToUser(user1,firstUserAccount);
-        dataBase.addAccountToUser(user1,secondUserAccount);
-        assertTrue(dataBase.getUserAccounts(user1).size()==2);
-        dataBase.deleteAccountFromUser(user1,secondUserAccount);
-        assertFalse(dataBase.getUserAccounts(user1).size()==2);
+    public void whenUserAccountWasDeleted() throws UserNotFoundException,
+            AccountNotFoundException {
+        Account firstUserAccount = new Account(1000, "some requisites");
+        Account secondUserAccount = new Account(2000, "new some requisites");
+        dataBase.addAccountToUser(user1, firstUserAccount);
+        dataBase.addAccountToUser(user1, secondUserAccount);
+        assertTrue(dataBase.getUserAccounts(user1).size() == 2);
+        dataBase.deleteAccountFromUser(user1, secondUserAccount);
+        assertFalse(dataBase.getUserAccounts(user1).size() == 2);
 
     }
     /**
@@ -109,11 +106,11 @@ public class BankOperationsTesting {
      * */
     @Test
     public void whenTransferTrying() throws UserNotFoundException, AccountNotFoundException {
-        Account firstUserAccount = new Account(1000,"some requisites");
-        Account secondUserAccount = new Account(2000,"new some requisites");
-        dataBase.addAccountToUser(user1,firstUserAccount);
-        dataBase.addAccountToUser(user1,secondUserAccount);
-        dataBase.transferMoney(user1,firstUserAccount,user1,secondUserAccount,100);
+        Account firstUserAccount = new Account(1000, "some requisites");
+        Account secondUserAccount = new Account(2000, "new some requisites");
+        dataBase.addAccountToUser(user1, firstUserAccount);
+        dataBase.addAccountToUser(user1, secondUserAccount);
+        dataBase.transferMoney(user1, firstUserAccount, user1, secondUserAccount, 100);
         assertTrue(dataBase.getUserAccounts(user1).get(0).getValue() == 900);
         assertTrue(dataBase.getUserAccounts(user1).get(1).getValue() == 2100);
     }

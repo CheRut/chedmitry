@@ -1,9 +1,10 @@
-package ru.chedmitriy.socket.fileManager.model;
+package ru.chedmitriy.socket.filemanager.model;
 
 import org.apache.log4j.Logger;
-import ru.chedmitriy.chess.usage.ConsoleIO;
+
+import ru.chedmitriy.bank.ConsoleIO;
 import ru.chedmitriy.service.Settings;
-import ru.chedmitriy.socket.fileManager.objects.Client;
+import ru.chedmitriy.socket.filemanager.objects.Client;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,11 +16,12 @@ import java.util.Scanner;
  * @project junior
  * @since 0.1
  */
-public abstract class ClientServerDialog implements SocketRequestModel, ServerAnswerModel {
+public abstract class ClientServerDialog implements SocketRequestModel,
+        ServerAnswerModel {
     /**
      * размер файл при передаче/приеме
      */
-    private final int SIZE = 64 * 1024; // 64 KB
+    private final int size = 64 * 1024; // 64 KB
 
     /**
      * .
@@ -32,7 +34,7 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
      * объвление константы
      * для логгирования
      */
-    private static final Logger log = Logger.getLogger(Client.class.getName());
+    private static final Logger LOG = Logger.getLogger(Client.class.getName());
     /**
      * .
      * Класс ввода/вывода
@@ -124,7 +126,8 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
             }
             cIO.println("");
         } else {
-            log.error("Директории(файла)" + this.clientSideFile.getName() + " не существует ");
+            LOG.error("Директории(файла)" + this.clientSideFile.getName()
+                    + " не существует ");
         }
 
     }
@@ -154,7 +157,8 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
                 out.println(" - " + f.getName());
             }
         } else {
-            log.error("Директории(файла)" + file.getName() + " не существует ");
+            LOG.error("Директории(файла)"
+                    + file.getName() + " не существует ");
         }
         out.println("Конец списка:");
         out.println("");
@@ -170,14 +174,15 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
     @Override
     public void upClientRootDirectory(String requestMessage) {
         if ("up".equals(requestMessage)) {
-            log.info("Перемещаемся в родительский каталог");
+            LOG.info("Перемещаемся в родительский каталог");
             File file = this.clientSideFile.getAbsoluteFile().getParentFile();
             if (file.exists()) {
                 for (File f : file.listFiles()) {
                     cIO.println("- " + f.getName());
                 }
             } else {
-                log.error("Директории(файла)" + this.clientSideFile.getName() + " не существует ");
+                LOG.error("Директории(файла)"
+                        + this.clientSideFile.getName() + " не существует ");
             }
             cIO.println("");
         }
@@ -192,7 +197,7 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
     @Override
     public void downClientDirectory(String requestMessage) {
         if ("down".equals(requestMessage)) {
-            log.info("Движение по директории вниз:");
+            LOG.info("Движение по директории вниз:");
             String path;
             String absPath = "./";
             do {
@@ -208,13 +213,16 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
                 }
                 this.clientSideFile = new File(absPath + "\\" + path);
                 System.out.println(this.clientSideFile.getAbsolutePath());
-                log.info("Выбрана папка " + this.clientSideFile);
-                if (clientSideFile.exists() && clientSideFile.isDirectory()) {
-                    for (File f : clientSideFile.getAbsoluteFile().listFiles()) {
+                LOG.info("Выбрана папка " + this.clientSideFile);
+                if (clientSideFile.exists()
+                        && clientSideFile.isDirectory()) {
+                    for (File f
+                            : clientSideFile.getAbsoluteFile().listFiles()) {
                         System.out.println(f.getName());
                     }
                 } else {
-                    log.error("Директории " + clientSideFile.getName() + " не существует ");
+                    LOG.error("Директории "
+                            + clientSideFile.getName() + " не существует ");
                 }
                 absPath = absPath + "\\" + this.clientSideFile;
 
@@ -234,7 +242,9 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
      * @throws IOException - исключение ввода/вывода
      */
     @Override
-    public void showClient(String requestMessage, BufferedReader in, PrintWriter out) throws IOException {
+    public void showClient(String requestMessage,
+                           BufferedReader in,
+                           PrintWriter out) throws IOException {
         if ("showC".equals(requestMessage)) {
             listOfFilesIn();
             this.clientHD = true;
@@ -277,16 +287,18 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
      * @param requestMessage - принимаемый запрос
      */
     @Override
-    public void upServerRootDirectory(String requestMessage, String fileName, PrintWriter out) {
+    public void upServerRootDirectory(String requestMessage,
+                                      String fileName, PrintWriter out) {
         if ("up".equals(requestMessage)) {
-            log.info("Перемещаемся в родительский каталог");
+            LOG.info("Перемещаемся в родительский каталог");
             File file = new File(fileName).getAbsoluteFile().getParentFile();
             if (file.exists()) {
                 for (File f : file.listFiles()) {
                     out.println("- " + f.getName());
                 }
             } else {
-                log.error("Директории(файла)" + this.clientSideFile.getName() + " не существует ");
+                LOG.error("Директории(файла)"
+                        + this.clientSideFile.getName() + " не существует ");
             }
             out.println("");
         }
@@ -305,18 +317,20 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
      */
     @Override
     public void downServerDirectory(String requestMessage, PrintWriter out) {
-        if ("down".equals(requestMessage) && this.serverHD) {
+        if ("down".equals(requestMessage)
+                && this.serverHD) {
             String absServerPath = "./";
             String path;
             path = ask("Выберите папкку,содержимое которой Вас интересует: ");
             this.serverFilePath = new File(absServerPath + "\\" + path);
-            log.info("Выбрана папка в директории сервера: "
+            LOG.info("Выбрана папка в директории сервера: "
                     + this.serverFilePath.getName());
             do {
-                if (this.serverFilePath.exists() && this.serverFilePath.isDirectory()) {
+                if (this.serverFilePath.exists()
+                        && this.serverFilePath.isDirectory()) {
                     listOfFilesOut(this.serverFilePath, out);
                 } else {
-                    log.error("Директории "
+                    LOG.error("Директории "
                             + this.serverFilePath.getName()
                             + " не существует ");
                 }
@@ -324,7 +338,8 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
                         + this.serverFilePath;
             } while (!"ok".equals(path));
             this.serverFilePath = new File("./");
-        } else if ("downClientDirectory".equals(requestMessage) && this.clientHD) {
+        } else if ("downClientDirectory".equals(requestMessage)
+                && this.clientHD) {
             downClientDirectory(requestMessage);
         }
     }
@@ -342,7 +357,10 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
      * @param pw             - передача запросов -ключей серверу
      */
     @Override
-    public void recieveFileByClient(String requestMessage, BufferedReader br, InputStream in, PrintWriter pw) throws IOException {
+    public void recieveFileByClient(String requestMessage,
+                                    BufferedReader br,
+                                    InputStream in,
+                                    PrintWriter pw) throws IOException {
         if ("download".equals(requestMessage)) {
             String readLines;
             do {
@@ -352,13 +370,16 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
             readLines = ask("Введите название файла для скачивания ");
             pw.println(readLines);
             this.clientSideFile = new File(readLines);
-            log.info("Выбран файл для скачивания: " + this.clientSideFile.getName());
-            log.info("Принимаем файл " + this.clientSideFile.getName());
-            try (OutputStream out = new FileOutputStream(configToDowloadUpload("download.path", this.clientSideFile))) {
-                byte[] bytes = new byte[SIZE];
+            LOG.info("Выбран файл для скачивания: "
+                    + this.clientSideFile.getName());
+            LOG.info("Принимаем файл "
+                    + this.clientSideFile.getName());
+            try (OutputStream out
+                         = new FileOutputStream(configToDowloadUpload("download.path", this.clientSideFile))) {
+                byte[] bytes = new byte[size];
                 in.read(bytes);
                 out.write(bytes);
-                log.info("Файл " + readLines + " загружен клиенту...");
+                LOG.info("Файл " + readLines + " загружен клиенту...");
             }
         }
     }
@@ -390,13 +411,13 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
             if (this.serverFilePath.exists()) {
                 try (InputStream in = new FileInputStream(this.serverFilePath.getAbsolutePath())) {
                     byte[] fileByByte = new byte[(int) this.serverFilePath.length()];
-                    log.info("Передаем файл: " + this.serverFilePath.getAbsolutePath());
+                    LOG.info("Передаем файл: " + this.serverFilePath.getAbsolutePath());
                     in.read(fileByByte, 0, fileByByte.length);
                     out.write(fileByByte, 0, fileByByte.length);
                 }
-                log.info(this.serverFilePath.getName() + " " + "Был успешно сохранен на стороне клиента");
+                LOG.info(this.serverFilePath.getName() + " " + "Был успешно сохранен на стороне клиента");
             } else {
-                log.error("Директории(файла)" + this.serverFilePath.getName() + " не существует ");
+                LOG.error("Директории(файла)" + this.serverFilePath.getName() + " не существует ");
             }
         }
 
@@ -421,16 +442,16 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
             if (this.clientSideFile.exists()) {
                 pw.println(readLines);
                 byte[] fileByByte = new byte[(int) this.clientSideFile.length()];
-                log.info("передача файла " + this.clientSideFile.getName() + " с клиента");
+                LOG.info("передача файла " + this.clientSideFile.getName() + " с клиента");
                 try (InputStream in = new FileInputStream(this.clientSideFile.getAbsolutePath())) {
                     in.read(fileByByte, 0, fileByByte.length);
                     out.write(fileByByte, 0, fileByByte.length);
-                    log.info("Выбран файл для загрузки: " + this.clientSideFile.getName());
+                    LOG.info("Выбран файл для загрузки: " + this.clientSideFile.getName());
                 }
-                log.info("файл передан с клиента");
+                LOG.info("файл передан с клиента");
             } else {
-                log.error("Ошибка выбора файла! " +
-                        System.getProperty("line.separator") + " Файл - "
+                LOG.error("Ошибка выбора файла! "
+                        + System.getProperty("line.separator") + " Файл - "
                         + this.clientSideFile.getName() + " не найден");
             }
 
@@ -476,13 +497,13 @@ public abstract class ClientServerDialog implements SocketRequestModel, ServerAn
     public void recieveFileByServer(String requestMessage, BufferedReader br, InputStream in, PrintWriter pw) throws IOException {
         if ("upload".equals(requestMessage)) {
             this.serverFilePath = new File(br.readLine());
-            log.info("Загружаем файл  на сервер");
+            LOG.info("Загружаем файл  на сервер");
             try (OutputStream out = new FileOutputStream(configToDowloadUpload("upload.path", this.serverFilePath))) {
-                log.info("пернимаю файла " + this.clientSideFile.getName() + " с клиента");
-                byte[] fileByBy = new byte[SIZE];
+                LOG.info("пернимаю файла " + this.clientSideFile.getName() + " с клиента");
+                byte[] fileByBy = new byte[size];
                 in.read(fileByBy);
                 out.write(fileByBy);
-                log.info("Файл успешно загружен на сервер");
+                LOG.info("Файл успешно загружен на сервер");
             }
 
         }

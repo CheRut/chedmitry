@@ -36,8 +36,8 @@ public class UsersController extends HttpServlet {
      */
     @Override
     public void init() throws ServletException {
-        valServ.add(new User(1,"Ivan","ivan@Mail.ru","1.02.2008"));
-        valServ.add(new User(2,"Dmitry","dmitry@Mail.ru","1.05.2009"));
+        valServ.add(new User(1, "Ivan", "ivan@Mail.ru", "1.02.2008"));
+        valServ.add(new User(2, "Dmitry", "dmitry@Mail.ru", "1.05.2009"));
 
     }
 
@@ -53,16 +53,16 @@ public class UsersController extends HttpServlet {
         String action = req.getServletPath();
         switch (action) {
             case "/new":
-                showAddUserWindow(req,resp);
+                showAddUserWindow(req, resp);
                 break;
             case "/edit":
-                showEditUserWindow(req,resp);
+                showEditUserWindow(req, resp);
                 break;
             case "/delete":
-                deleteUser(req,resp);
+                deleteUser(req, resp);
                 break;
             default:
-                userList(req,resp);
+                userList(req, resp);
                 break;
         }
     }
@@ -78,12 +78,14 @@ public class UsersController extends HttpServlet {
         String action = req.getServletPath();
         switch (action) {
             case "/insert":
-                addUser(req,resp);
+                addUser(req, resp);
                 break;
             case "/update":
-                editUser(req,resp);
+                editUser(req, resp);
                 break;
-
+            default:
+                userList(req, resp);
+                break;
 
         }
     }
@@ -100,13 +102,13 @@ public class UsersController extends HttpServlet {
      * @param response - ответ
      * @throws IOException
      */
-    private void addUser(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    private void addUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // делаем привязку id к размеру хранилища
         int id = valServ.getAllValues().size();
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String create = request.getParameter("create");
-        User newUser = new User(++id,name,email,create);
+        User newUser = new User(++id, name, email, create);
         valServ.add(newUser);
         response.sendRedirect("list");
 
@@ -119,15 +121,14 @@ public class UsersController extends HttpServlet {
      * @param response
      * @throws IOException
      */
-    private void editUser(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    private void editUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String create = request.getParameter("create");
 
-        User editUser = new User(id,name,email,create);
+        User editUser = new User(id, name, email, create);
         valServ.edit(editUser);
-
         response.sendRedirect("list");
     }
 
@@ -138,7 +139,7 @@ public class UsersController extends HttpServlet {
      * @param response
      * @throws IOException
      */
-    private void deleteUser(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
         valServ.delete(id);
         response.sendRedirect("list");
@@ -152,10 +153,10 @@ public class UsersController extends HttpServlet {
      * @throws IOException
      * @throws ServletException
      */
-    private void userList(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
-        request.setAttribute("userList",valServ.getAllValues());
+    private void userList(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setAttribute("userList", valServ.getAllValues());
         RequestDispatcher dis = request.getRequestDispatcher(getProperty("servlet.mainPage"));
-        dis.forward(request,response);
+        dis.forward(request, response);
     }
 
     /**
@@ -185,7 +186,8 @@ public class UsersController extends HttpServlet {
             throws  ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         User existingUser = valServ.getById(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(getProperty("servlet.addUserForm"));
+        RequestDispatcher dispatcher
+                = request.getRequestDispatcher(getProperty("servlet.addUserForm"));
         request.setAttribute("user", existingUser);
         dispatcher.forward(request, response);
 

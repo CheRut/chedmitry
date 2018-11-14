@@ -1,4 +1,4 @@
-package ru.chedmitriy.abusesDropping;
+package ru.chedmitriy.abusesdropping;
 
 import java.io.*;
 
@@ -31,19 +31,19 @@ public class Abuse {
     int t;
     /**
      * .
-     * PATH - путь к
+     * path - путь к
      * конкретному файлу
      * 'numbers.txt'
      * в папке resources
      */
-    public final String PATH = "chapter_003/src/main/resources/abuses.txt";
+    public final String path = "chapter_003/src/main/resources/abuses.txt";
     /**
      * .
-     * PATHOUT - путь
+     * pathout - путь
      * в место сохранения файла
      *
      */
-    public final String PATHOUT = "chapter_003/src/main/resources/abusesOut.txt";
+    public final String pathout = "chapter_003/src/main/resources/abusesOut.txt";
 
     /**
      * .
@@ -57,10 +57,11 @@ public class Abuse {
      * @param abuse - массив слов,которые необходимо
      *               убрать из исходного файла.
      */
-    public void dropAbuses(InputStream in, OutputStream out, String[] abuse)throws IOException {
+    public void dropAbuses(InputStream in, OutputStream out, String[] abuse)
+            throws IOException {
         try (InputStreamReader inputStreamReader = new  InputStreamReader(in);
              OutputStreamWriter outputWriter = new OutputStreamWriter((out))) {
-            while ((t = inputStreamReader.read()) !=-1) {
+            while ((t = inputStreamReader.read()) != -1) {
                 c = (char) t;
                 stringBuilder.append(c);
                 for (String ab : abuse) {

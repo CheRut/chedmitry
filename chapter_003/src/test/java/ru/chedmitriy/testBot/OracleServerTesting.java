@@ -1,7 +1,6 @@
-package ru.chedmitriy.testBot;
+package ru.chedmitriy.testbot;
 
 import com.google.common.base.Joiner;
-import com.sun.javafx.binding.StringFormatter;
 import org.junit.Test;
 import ru.chedmitriy.socket.server.OracleServer;
 
@@ -56,7 +55,7 @@ public class OracleServerTesting {
                         "unsupported ask",
                         "exit"
                 ),
-                Joiner.on(LN).join("I can't answer on your question", "","")
+                Joiner.on(LN).join("I can't answer on your question", "", "")
         );
     }
 }

@@ -1,4 +1,4 @@
-package ru.chedmitriy.dataTypes;
+package ru.chedmitriy.datatypes;
 
 /**
  * Class ChangeState
@@ -26,6 +26,7 @@ public class ChangeTask {
      *  "task".
      * */
     private static void processClaim(Claim value) {
+
         value.name = "task";
     }
 }

@@ -6,4 +6,4 @@
  * В данном пакета представлен
  * вариант работы консольного чата
  * */
-package ru.chedmitriy.consoleChat;
+package ru.chedmitriy.consolechat;

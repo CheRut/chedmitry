@@ -3,29 +3,28 @@ package ru.chedmitriy.logic;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ru.chedmitriy.models.User;
-import ru.chedmitriy.persistent.DBStore;
 import ru.chedmitriy.persistent.MemoryStore;
 import ru.chedmitriy.persistent.Store;
 
 import java.util.Collection;
 
 /**
- * If the program will always need an instance,
- * or if the cost of creating the instance is not
+ * If the program will always need an INSTANCE,
+ * or if the cost of creating the INSTANCE is not
  * too large in terms of time/resources,
  * the programmer can switch to eager initialization,
- * which always creates an instance when the class is loaded into the JVM.
+ * which always creates an INSTANCE when the class is loaded into the JVM.
  */
 public class ValidateService {
     /**
      * Logging fail
      */
-    private  final Logger LG = LogManager.getLogger(ValidateService.class);
+    private  final Logger logger = LogManager.getLogger(ValidateService.class);
     /**
-     * Static member holds only one instance of the
+     * Static member holds only one INSTANCE of the
      * ValidateService class
      */
-    private static final ValidateService instance = new ValidateService();
+    private static final ValidateService INSTANCE = new ValidateService();
 
     /**
      * ValidateService prevents any
@@ -37,7 +36,7 @@ public class ValidateService {
      *  Providing Global point of access
      * */
     public static final ValidateService getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -47,36 +46,34 @@ public class ValidateService {
 
     /**
      * Trying to add a
-     * new User
-     * @param User - adding auto
+     * new user
+     * @param user - adding auto
      * @return - true/false
      */
-    public boolean add(final User User) {
-        storeInstance.add(User);
-        if(storeInstance.values().contains(User)) {
-            LG.info("Добавлен новый пользователь: "+User);
+    public boolean add(final User user) {
+        storeInstance.add(user);
+        if (storeInstance.values().contains(user)) {
+            logger.info("Добавлен новый пользователь: " + user);
             return true;
-        }
-        else {
-            LG.error("Произошла ошибка при добавлении" +
-                    " нового пользователя");
+        } else {
+            logger.error("Произошла ошибка при добавлении"
+                    + " нового пользователя");
             return false;
         }
     }
 
     /**
-     * Trying to edit an User
-     * @param User - founded User
+     * Trying to edit an user
+     * @param user - founded user
      * @return true/false
      */
-    public boolean edit (final User User){
-        if(User != null ){
-            storeInstance.edit(User);
-            LG.info("Редактирование пользователя  успешно выполнено, новое значение: "+User);
+    public boolean edit(final User user) {
+        if (user != null) {
+            storeInstance.edit(user);
+            logger.info("Редактирование пользователя  успешно выполнено, новое значение: " + user);
             return true;
-        }
-        else {
-            LG.error("Ошибка при редактировании пользователя: "+User);
+        } else {
+            logger.error("Ошибка при редактировании пользователя: " + user);
             return false;
         }
     }
@@ -87,17 +84,13 @@ public class ValidateService {
      * @param id - deleting auto
      * @return true/false
      */
-    public boolean delete (final int id) {
-        if(storeInstance.getById(id)!= null) {
+    public boolean delete(final int id) {
+        if (storeInstance.getById(id) != null) {
             storeInstance.delete(id);
-            LG.info("Удаление пользователя успешно выполненно" );
-
-
-
+            logger.info("Удаление пользователя успешно выполненно");
             return true;
-        }
-        else  {
-            LG.error("Ошибка при удалении пользователя! ");
+        } else  {
+            logger.error("Ошибка при удалении пользователя! ");
             return false;
         }
     }
@@ -109,12 +102,12 @@ public class ValidateService {
      * @return
      */
     public User getById(final int id) {
-        if(id > 0 && storeInstance.getById(id)!= null) {
-            LG.info("пользователь с порядковым номером - "+id+": "+storeInstance.getById(id)+"найден");
+        if (id > 0 && storeInstance.getById(id) != null) {
+            logger.info("пользователь с порядковым номером - " + id
+                    + ": " + storeInstance.getById(id) + "найден");
             return (User) storeInstance.getById(id);
-        }
-        else    {
-            LG.error("пользователь с порядковым номером - "+id+" не найден");
+        } else {
+            logger.error("пользователь с порядковым номером - " + id + " не найден");
             return null;
         }
     }
@@ -124,7 +117,7 @@ public class ValidateService {
      * Users of the store
      * @return - storage values
      */
-    public Collection<User> getAllValues(){
+    public Collection<User> getAllValues() {
         return storeInstance.values();
 
     }

@@ -7,7 +7,7 @@ package ru.chedmitriy.loops;
 public class CubeFunctionMain {
     public static void main(String[] args) {
 		//Создаем объект класса CubeFunction - solution
-        CubeFunction solution = new CubeFunction(2,6,3);
+        CubeFunction solution = new CubeFunction(2, 6, 3);
         solution.diskriminant();
     }
 }

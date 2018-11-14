@@ -3,11 +3,7 @@
     <artifactId>chapter_003</artifactId>
     <version>2.0</version>
     <dependencies>
-        <dependency>
-            <groupId>ru.chedmitriy</groupId>
-            <artifactId>chapter_002</artifactId>
-            <version>2.0</version>
-        </dependency>
+
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
@@ -17,6 +13,13 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>RELEASE</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>r05</version>
         </dependency>
     </dependencies>
     <packaging>jar</packaging>

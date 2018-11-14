@@ -1,12 +1,12 @@
-package ru.chedmitry.trackerModif;
+package ru.chedmitry.trackermodif;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.chedmitriy.collections.modifiingTracker.objects.Tracker;
-import ru.chedmitriy.collections.modifiingTracker.objects.Comments;
-import ru.chedmitriy.collections.modifiingTracker.objects.Item;
-import ru.chedmitriy.collections.modifiingTracker.objects.Task;
+import ru.chedmitriy.modifiingtracker.objects.Tracker;
+import ru.chedmitriy.modifiingtracker.objects.Comments;
+import ru.chedmitriy.modifiingtracker.objects.Item;
+import ru.chedmitriy.modifiingtracker.objects.Task;
 
 
 import static org.hamcrest.core.Is.is;
@@ -31,14 +31,14 @@ public class StartUiTest {
         tracker.add(new Task("sixth task", "sixth desc"));
         tracker.add(new Task("seventh task", "seventh desc"));
         tracker.add(new Task("eighth task", "eighth desc"));
-        tracker.add(new Comments("tenth task", "tens desc","this is comments"));
+        tracker.add(new Comments("tenth task", "tens desc", "this is comments"));
     }
 
     /**
      * По оканчании вы полнения тестов,удаляем все элементы
      * */
     @After
-    public void cleareList(){
+    public void cleareList() {
         tracker.getItems().clear();
     }
 
@@ -62,7 +62,7 @@ public class StartUiTest {
      * при вызове этого элемента после удаления -  результат false
      * */
     @Test
-    public void deleteItemTester(){
+    public void deleteItemTester() {
         Item exp = tracker.getItems().get(1);
         tracker.deleteById(tracker.getItems().get(1));
         assertFalse((tracker.getItems().get(1)).equals(exp));
@@ -73,7 +73,7 @@ public class StartUiTest {
      * Проверяем это
      * */
     @Test
-    public void commentAddingTester(){
+    public void commentAddingTester() {
         assertTrue(tracker.getItems().get(8) instanceof Comments);
 
     }

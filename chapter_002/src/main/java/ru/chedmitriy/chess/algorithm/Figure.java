@@ -2,8 +2,8 @@ package ru.chedmitriy.chess.algorithm;
 
 
 import ru.chedmitriy.chess.context.Cell;
-import ru.chedmitriy.chess.logicExceptions.MovementException;
-import ru.chedmitriy.chess.logicExceptions.OccupiedWayExceptions;
+import ru.chedmitriy.chess.logicexceptions.MovementException;
+import ru.chedmitriy.chess.logicexceptions.OccupiedWayExceptions;
 
 /**.
  * @author Dmitry Cherutsa on 10.12.2016.
@@ -34,7 +34,7 @@ public abstract class Figure  {
      * .*/
    public final Cell position =  new Cell(x, y);
 
-   public Cell[]cells =new Cell[16];
+   public Cell[]cells = new Cell[16];
 
 
 /**

@@ -4,4 +4,4 @@
  * @version $Id$
  * @since 0.1
  */
-package ru.chedmitriy.chess.logicExceptions;
+package ru.chedmitriy.chess.logicexceptions;

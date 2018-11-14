@@ -1,12 +1,11 @@
 package ru.chedmitriy.start;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ru.chedmitriy.bracketsChecker.BracketsChecker;
+import ru.chedmitriy.bracketschecker.BracketsChecker;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
+
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -17,22 +16,22 @@ public class BracketsTest {
     String s1;
 
     @Before
-    public void variantsOfStrings(){
+    public void variantsOfStrings() {
         bc = new BracketsChecker();
 
 
     }
 
     @Test
-    public void closeOpentest(){
+    public void closeOpentest() {
         s1 = ")(";
-        assertFalse( bc.bracketsOpenAndClose(s1));
+        assertFalse(bc.bracketsOpenAndClose(s1));
 
     }
     @Test
-    public void openClosetest(){
+    public void openClosetest() {
         s1 = "((()))";
-        assertTrue( bc.bracketsOpenAndClose(s1));
+        assertTrue(bc.bracketsOpenAndClose(s1));
 
     }
 }

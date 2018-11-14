@@ -11,14 +11,14 @@ public class DuplicateCleanerTest {
 	public void duplicateCleanerTesting() {
 		//Assign block
 		DuplicateCleaner delDup = new DuplicateCleaner();
-		String[] values = new String[]{"I","va","li","ke","ja","ke","va","li"};
-		String[] expectedValues = new String[]{"I","li","ke","ja","va"};
+		String[] values = new String[]{"I", "va", "li", "ke", "ja", "ke", "va", "li"};
+		String[] expectedValues = new String[]{"I", "li", "ke", "ja", "va"};
 		
 		//Act block
 		String[] result = delDup.showArr(values);
 		
 		//Action block
-		assertThat(Arrays.toString(result),is(Arrays.toString(expectedValues)));
+		assertThat(Arrays.toString(result), is(Arrays.toString(expectedValues)));
 	}
 
 }

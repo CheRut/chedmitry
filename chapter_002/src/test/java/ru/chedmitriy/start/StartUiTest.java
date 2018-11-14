@@ -10,7 +10,7 @@ import ru.chedmitriy.models.Task;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-public class StartUiTest{	
+public class StartUiTest {
 	private Tracker tracker;
 	private Item resultItem;
     
@@ -27,11 +27,11 @@ public class StartUiTest{
         tracker.add(new Task("sixth task", "sixth desc"));
         tracker.add(new Task("seventh task", "seventh desc"));
         tracker.add(new Task("eighth task", "eighth desc"));
-        tracker.add(new Comments("tenth task", "tens desc","this is comments"));
+        tracker.add(new Comments("tenth task", "tens desc", "this is comments"));
     }
 	
     @After
-    public void itemListCleared(){
+    public void itemListCleared() {
         for (int index = 0; index < tracker.getItems().length; index++) {
             tracker.getItems()[index] = null;
             assertNull(tracker.getItems()[index]);
@@ -51,25 +51,25 @@ public class StartUiTest{
     }
 
     @Test
-    public void getItemListTest(){
+    public void getItemListTest() {
            assertNotNull(tracker.getItems());
 }
 
     @Test
-    public void deleteItemTester(){
+    public void deleteItemTester() {
         String exp = null;
-        for(int index=0;index<tracker.getItems().length;index++){
+        for (int index = 0; index < tracker.getItems().length; index++) {
             tracker.deleteById(tracker.getItems()[2]);
             break;
         }
-        for(int index=0;index<tracker.getItems().length;index++){
-            assertThat((tracker.getItems()[2].getName()),is(exp));
+        for (int index = 0; index < tracker.getItems().length; index++) {
+            assertThat((tracker.getItems()[2].getName()), is(exp));
         }
     }
     @Test
-    public void commentAddingTester(){
+    public void commentAddingTester() {
 
-        for (int index = 0; index <tracker.getItems().length ; index++) {
+        for (int index = 0; index < tracker.getItems().length; index++) {
           assertTrue(tracker.getItems()[8] instanceof Comments);
         }
     }   

@@ -1,9 +1,9 @@
-package ru.chedmitry.mapExample;
+package ru.chedmitry.mapexample;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.chedmitriy.collections.mapExample.User;
-import ru.chedmitriy.collections.mapExample.UserConvert;
+import ru.chedmitriy.mapexample.User;
+import ru.chedmitriy.mapexample.UserConvert;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,16 +14,16 @@ import static org.junit.Assert.assertThat;
 
 public class UserListConvertToMapTest {
     List<User> u;
-    HashMap<Integer,User> dataList;
+    HashMap<Integer, User> dataList;
     @Before
     public void initData() {
         u = new ArrayList<>();
         dataList = new HashMap<>();
-        u.add(new User(1,"Dmitry","Yalta"));
-        u.add(new User(2,"Alex","Moscow"));
-        u.add(new User(3,"John","Piter"));
-        u.add(new User(4,"Jack","Moscow"));
-        u.add(new User(5,"Mary","Moscow"));
+        u.add(new User(1, "Dmitry", "Yalta"));
+        u.add(new User(2, "Alex", "Moscow"));
+        u.add(new User(3, "John", "Piter"));
+        u.add(new User(4, "Jack", "Moscow"));
+        u.add(new User(5, "Mary", "Moscow"));
 
     }
 
@@ -33,7 +33,7 @@ public class UserListConvertToMapTest {
         UserConvert uc = new UserConvert();
         dataList = uc.process(u);
         String wantedNameById = "John";
-       assertThat(dataList.get(3).getName(),is(wantedNameById));
+       assertThat(dataList.get(3).getName(), is(wantedNameById));
 
     }
 

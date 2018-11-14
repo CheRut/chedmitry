@@ -15,23 +15,23 @@ import static org.junit.Assert.*;
  */
 public class SettingsTest {
     @Test
-    public void whenLoadThen() throws IOException{
+    public void whenLoadThen() throws IOException {
         Settings settings = new Settings();
         File file = new File("./../app.properties");
-        try(FileInputStream io = new FileInputStream(file)){
+        try (FileInputStream io = new FileInputStream(file)) {
             settings.load(io);
         }
         String value = settings.getValue("home.path");
         assertThat(value, is("c:\\temp\\"));
     }
     @Test
-    public void whenClassLoader() throws IOException{
+    public void whenClassLoader() throws IOException {
         Settings settings = new Settings();
         ClassLoader loader = Settings.class.getClassLoader();
-        try(InputStream io = loader.getResourceAsStream("app.properties")){
+        try (InputStream io = loader.getResourceAsStream("app.properties")) {
             settings.load(io);
         }
         String value = settings.getValue("sourceFile");
-        assertThat(value, is("ru/chedmitriy/extSort/source/source.txt"));
+        assertThat(value, is("ru/chedmitriy/extsort/source/source.txt"));
     }
 }

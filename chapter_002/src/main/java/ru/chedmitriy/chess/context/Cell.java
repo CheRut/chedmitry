@@ -1,7 +1,5 @@
 package ru.chedmitriy.chess.context;
 
-import ru.chedmitriy.chess.algorithm.Figure;
-import ru.chedmitriy.chess.logicExceptions.OccupiedWayExceptions;
 
 /**.
  * @author Dmitry Cherutsa on 10.12.2016.

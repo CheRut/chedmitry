@@ -1,4 +1,4 @@
-package ru.chedmitriy.dataTypes;
+package ru.chedmitriy.datatypes;
 
 public class RefTask {
 	
@@ -12,7 +12,4 @@ public class RefTask {
 	}
 	
 }
-/*
-//вместо public написано publib
-//отсутствовала скобка,закрывающая класс.
-*/
+

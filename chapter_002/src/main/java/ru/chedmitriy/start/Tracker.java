@@ -9,17 +9,16 @@ public class Tracker {
      * All values are stored in this array
      * */
     private Item[] items = new Item[10];
-    private ConsoleInput cInput=new ConsoleInput();
+    private ConsoleInput cInput = new ConsoleInput();
     private int position = 0;
 
 
-    public Tracker()
-    {
+    public Tracker() {
         this(10);
     }
 
     /**
-     * Constructor for tracker.
+     * Constructor for trackerduplicate.
      * @param size of items list.
      */
     public Tracker(int size) {
@@ -73,8 +72,8 @@ public class Tracker {
      * @param: items - list of items
      * */
 
-    public void editById(Item item,String name,String description) {
-       if(item!=null) {
+    public void editById(Item item, String name, String description) {
+       if (item != null) {
            for (Item item1 : this.items) {
                if (item.equals(item1)) {
                    item1.setName(name);
@@ -110,25 +109,27 @@ public class Tracker {
 
         for (int i = 0; i < this.items.length; i++) {
 
-            if (items[i].equals(item)&& items[i] instanceof Comments) {
+            if (items[i].equals(item) && items[i] instanceof Comments) {
               Comments  comments = (Comments) items[i];
-                comments.setComments(cInput.ask("please add the comments: "));
+                comments.setComments(cInput.ask("please "
+                        + "add the comments: "));
             }
 
         }
 
     }
     /**
-     * This method filters array , leaving only the elements with even serial numbers
+     * This method filters array ,
+     * leaving only the elements with even serial numbers
      * @param: items -  list of items
      * @param: result -  new list of items
      * */
 
     public Item[] findBy() {
         Item[] result = new Item[10];
-        for (int i = 0; i <items.length ; i++) {
-            for (int j = 0; j <items.length ; j++) {
-                if(i%2!=0){
+        for (int i = 0; i < items.length; i++) {
+            for (int j = 0; j < items.length; j++) {
+                if (i % 2 != 0) {
                     result[i] = items[i];
                 }
             }

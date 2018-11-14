@@ -6,4 +6,4 @@
  * В этом пакете содержится класс,предназначенный
  * для удаления ненужных слов
  */
-package ru.chedmitriy.abusesDropping;
+package ru.chedmitriy.abusesdropping;

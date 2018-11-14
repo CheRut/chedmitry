@@ -1,6 +1,8 @@
 package ru.chedmitriy.polindrom;
 
-import ru.chedmitriy.chess.usage.ConsoleIO;
+
+
+import ru.chedmitriy.bank.ConsoleIO;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,7 +43,7 @@ public class Palindrome {
     public boolean isPalindrome(String inputLine) throws IOException {
         boolean isPal = false;
         word = inputLine.toLowerCase().toCharArray();
-        if(word.length==5) {
+        if (word.length == 5) {
             for (int i = 0; i < word.length; i++) {
                 if (word[i] != word[word.length - 1 - i]) {
                     isPal = false;
@@ -50,9 +52,9 @@ public class Palindrome {
                     isPal = true;
                 }
             }
-        }
-       else {
-            throw new IOException("Ошибка,длина слова должна состоять из пяти букв!");
+        } else {
+            throw new IOException("Ошибка,длина "
+                    + "слова должна состоять из пяти букв!");
         }
         cIO.println(isPal);
         return isPal;
@@ -66,7 +68,8 @@ public class Palindrome {
         cIO.println("Введите слово из пяти букв: ");
         String checkingLine;
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+            try (BufferedReader br
+                         = new BufferedReader(new InputStreamReader(System.in))) {
                 checkingLine = br.readLine();
                 isPalindrome(checkingLine);
                 }

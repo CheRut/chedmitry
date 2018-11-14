@@ -7,26 +7,26 @@ import java.util.*;
  * @param: arr - исходный массив строк.
  * @param: count - целое число,счетчик
  */
-public class DuplicateCleaner{
+public class DuplicateCleaner {
     
     int count = 0;
     /**метод ShowArr
      * выводит в консоль исходный массив
      * */
-    String[] showArr(String[] endArr){
+    String[] showArr(String[] endArr) {
         String[] withoutNullarray;
         int count = 0;
-        String[] withNullArray = new String [5];
-        withNullArray= arrFormat(arrAlg(endArr));
-        for (int i = 0; i <withNullArray.length ; i++) {
-            if (withNullArray[i]!=null){
+        String[] withNullArray = new String[5];
+        withNullArray = arrFormat(arrAlg(endArr));
+        for (int i = 0; i < withNullArray.length; i++) {
+            if (withNullArray[i] != null) {
                 count++;
             }
         }
-        withoutNullarray= new String[count];
-        for (int i = 0; i <withNullArray.length ; i++) {
-            if (withNullArray[i]!=null){
-                withoutNullarray[i]=withNullArray[i];
+        withoutNullarray = new String[count];
+        for (int i = 0; i < withNullArray.length; i++) {
+            if (withNullArray[i] != null) {
+                withoutNullarray[i] = withNullArray[i];
             }
         }
         System.out.printf("\nresult:");
@@ -43,7 +43,7 @@ public class DuplicateCleaner{
          * значение уже встречалось (счетчик = 1)
          * присваиваем j значение null
          * */
-       public String [] arrAlg(String[] shufArr) {            
+       public String[] arrAlg(String[] shufArr) {
             for (int i = 0; i < shufArr.length; i++) {
                 for (int j = 0; j < shufArr.length; j++) {
                     if (shufArr[j] == (shufArr[i])) {

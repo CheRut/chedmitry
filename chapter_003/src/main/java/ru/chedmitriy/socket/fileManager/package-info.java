@@ -16,4 +16,4 @@
  * <p>
  * 4. настройки портов и адреса считывать с app.properties
  */
-package ru.chedmitriy.socket.fileManager;
+package ru.chedmitriy.socket.filemanager;

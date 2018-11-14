@@ -7,4 +7,4 @@
  * по обработке
  * входного потока
  */
-package ru.chedmitriy.byteStreamChecker;
+package ru.chedmitriy.bytestreamchecker;

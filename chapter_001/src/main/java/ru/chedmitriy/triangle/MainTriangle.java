@@ -7,8 +7,8 @@ package ru.chedmitriy.triangle;
  * Метод coordinats - метод,который принимает значения координат
  */
 public class MainTriangle {
-    private static Point coordinats(double x,double y){
-        return new Point(x,y);
+    private static Point coordinats(double x, double y) {
+        return new Point(x, y);
     }
     /**
      * Метод main посредством выполнения метода coordinats
@@ -21,18 +21,19 @@ public class MainTriangle {
      * при равенстве одной из сторон "0", выводится ошибка,возврашается "-1" дальнейшие вычисления не имеют смысла
      * */
     public static void main(String[] args) {
-        Point a = coordinats(1,1);
-        Point b = coordinats(7,8);
-        Point c = coordinats(6,3);
-        Point d = coordinats(2,4);
-        Point e = coordinats(3,6);
-        Triangle triangle = new Triangle(a,b,c);
+        Point a = coordinats(1, 1);
+        Point b = coordinats(7, 8);
+        Point c = coordinats(6, 3);
+        Point d = coordinats(2, 4);
+        Point e = coordinats(3, 6);
+        Triangle triangle = new Triangle(a, b, c);
         double area = triangle.area();
         MaxSide maxSide = new MaxSide();
-        maxSide.max(a,b,c);//-для треугольника
-        maxSide.maxFour(a,b,c,d);//-для четырехугольника
-        maxSide.maxFive(a,b,c,d,e);//-для пятиугольника
-        if(area!=-1)
+        maxSide.max(a, b, c);
+        maxSide.maxFour(a, b, c, d);
+        maxSide.maxFive(a, b, c, d, e);
+        if (area != -1) {
             System.out.println(String.format("Площадь треугольника равна: %s", area));
+        }
     }
 }

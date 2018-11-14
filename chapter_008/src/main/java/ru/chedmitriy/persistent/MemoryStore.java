@@ -20,7 +20,7 @@ public class MemoryStore implements Store<User> {
      *  хранилище пользователей
      *  вида ключ-значение
      */
-    private final ConcurrentHashMap<Integer, User> Users = new ConcurrentHashMap<Integer, User>();
+    private final ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<Integer, User>();
 
     /**
      *  конструктор по умолчанию
@@ -36,14 +36,14 @@ public class MemoryStore implements Store<User> {
      *  @return - хранилище объектов
      */
     public Collection<User> values() {
-        return this.Users.values();
+        return this.users.values();
     }
     /** вызов Синглтона
      * @return
      */
     public static MemoryStore getInstance() {
-        if(instance == null){
-            synchronized ( MemoryStore.class) {
+        if (instance == null) {
+            synchronized (MemoryStore.class) {
                 if (instance == null) {
                     instance = new MemoryStore();
                 }
@@ -61,18 +61,17 @@ public class MemoryStore implements Store<User> {
      * с таким ключом-id
      */
     public User getById(int id) {
-        return this.Users.get(id);
+        return this.users.get(id);
     }
 
     /**
      * Добавляем пользователь
-     * @param User новый пользователь
+     * @param user новый пользователь
      * @return - true при успешном
      * добавлении,иначе - false
      */
-    public void add(User User) {
-        this.Users.put(User.getId(),
-                User);
+    public void add(User user) {
+        this.users.put(user.getId(), user);
     }
 
     /**
@@ -84,18 +83,18 @@ public class MemoryStore implements Store<User> {
      *           пользователя
      */
     public void delete(int id) {
-        this.Users.remove(id);
+        this.users.remove(id);
     }
 
     /**
      * пользователь ищется в
      * хранилище,
      * затем редактируется
-     * @param User - id редактируемого
+     * @param user - id редактируемого
      *           пользователя
      */
-    public void edit(User User) {
-        this.Users.replace(User.getId(),User);
+    public void edit(User user) {
+        this.users.replace(user.getId(), user);
     }
 
     /**
@@ -104,6 +103,6 @@ public class MemoryStore implements Store<User> {
      * @return - значения из хранилища
      */
     public Collection<User> viewAll() {
-        return this.Users.values();
+        return this.users.values();
     }
 }

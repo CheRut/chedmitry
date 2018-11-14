@@ -12,7 +12,7 @@ public class DBStore  implements Store<User> {
 
 
     private static final BasicDataSource SOURCE = new BasicDataSource();
-    private static DBStore INSTANCE = new DBStore();
+    private static DBStore instance = new DBStore();
 
 
     public DBStore() {
@@ -25,7 +25,7 @@ public class DBStore  implements Store<User> {
     }
 
     public static DBStore getInstance() {
-        return INSTANCE;
+        return instance;
     }
 
     /**
@@ -44,14 +44,14 @@ public class DBStore  implements Store<User> {
     /**
      * Добавляем пользователя
      *
-     * @param User новый пользователь
+     * @param user новый пользователь
      */
     @Override
-    public void add(User User) {
+    public void add(User user) {
         try (Connection connection = SOURCE.getConnection();
              Statement st = connection.prepareStatement("...")
         ) {
-
+            String nullValue; // just to do this section is not empty
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,11 +87,11 @@ public class DBStore  implements Store<User> {
      * хранилище по id,
      * затем редактируется
      *
-     * @param User - id редактируемого
+     * @param user - id редактируемого
      *             пользователя
      */
     @Override
-    public void edit(User User) {
+    public void edit(User user) {
 
     }
 

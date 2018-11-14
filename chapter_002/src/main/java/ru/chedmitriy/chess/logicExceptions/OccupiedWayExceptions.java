@@ -1,4 +1,4 @@
-package ru.chedmitriy.chess.logicExceptions;
+package ru.chedmitriy.chess.logicexceptions;
 
 import java.util.logging.Logger;
 
@@ -26,8 +26,8 @@ public class OccupiedWayExceptions extends Exception {
      */
     @Override
     public String getMessage() {
-        lg.info("Невозможно выполнить перемещение фигуры." +
-                "Не все ячейки свободны");
+        lg.info("Невозможно выполнить перемещение фигуры."
+                + "Не все ячейки свободны");
         return super.getMessage();
     }
 }

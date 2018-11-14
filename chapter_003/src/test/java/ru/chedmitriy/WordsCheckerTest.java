@@ -4,8 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.chedmitriy.polindrom.Palindrome;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
+
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -37,7 +36,6 @@ public class WordsCheckerTest {
    @Test
     public void wordCheckerTrueTest() throws Exception {
      String in = "РоТоР";
-
         assertTrue(pB.isPalindrome(in));
 
    }
@@ -48,7 +46,6 @@ public class WordsCheckerTest {
      * */
     @Test
     public void wordCheckerFalseTest() throws Exception {
-
         String in = "савок";
 
         assertFalse(pB.isPalindrome(in));

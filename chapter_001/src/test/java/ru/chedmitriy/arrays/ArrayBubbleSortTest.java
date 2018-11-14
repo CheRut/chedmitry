@@ -15,15 +15,12 @@ public class ArrayBubbleSortTest {
 	
 	
    @Test
-   public void arrayBubleSortTester(){
+   public void arrayBubleSortTester() {
    ArrayBubbleSort testArray = new ArrayBubbleSort();
-   int[] rndm = new int[]{2,4,5,1,9,7,6,3,8};
-   int[] exp = new int[]{1,2,3,4,5,6,7,8,9};
-   
+   int[] rndm = new int[]{2, 4, 5, 1, 9, 7, 6, 3, 8};
+   int[] exp = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
    
 		testArray.bubbleSort(rndm);
-		
-		
 		assertThat(Arrays.toString(rndm), is(Arrays.toString(exp)));
    }
 }

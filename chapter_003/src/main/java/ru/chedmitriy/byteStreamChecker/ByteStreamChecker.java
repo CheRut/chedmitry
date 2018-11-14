@@ -1,7 +1,9 @@
-package ru.chedmitriy.byteStreamChecker;
+package ru.chedmitriy.bytestreamchecker;
 
 
-import ru.chedmitriy.chess.usage.ConsoleIO;
+
+
+import ru.chedmitriy.bank.ConsoleIO;
 
 import java.io.*;
 
@@ -19,13 +21,13 @@ public class ByteStreamChecker {
     ConsoleIO cIO = new ConsoleIO();
 
     /**.
-     * PATH - путь к
+     * path - путь к
      * конкретному файлу
      * 'numbers.txt'
      * в папке resources
      *
      * */
-     public final String PATH = "chapter_003/src/main/resources/numbers.txt";
+     public final String path = "chapter_003/src/main/resources/numbers.txt";
 
 /**.
  * Данный метод,принимает параметр
@@ -38,7 +40,7 @@ public class ByteStreamChecker {
  * @return значение true,при определении четного числа
  * и false-при определении нечетного числа
  * */
-public boolean isNumber(InputStream in) throws IOException{
+public boolean isNumber(InputStream in) throws IOException {
         boolean evenNumb = false;
         String s;
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -54,12 +56,12 @@ public boolean isNumber(InputStream in) throws IOException{
                         cIO.println("");
                     }
                 }
-            } catch(FileNotFoundException fex) {
+            } catch (FileNotFoundException fex) {
                 cIO.println(fex.toString());
-            }
-                finally {
-                    try { br.close();
-                    } catch(IOException iex){
+            } finally {
+                    try {
+                        br.close();
+                    } catch (IOException iex) {
                    cIO.println(iex.toString());
                 }
             }

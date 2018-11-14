@@ -1,4 +1,4 @@
-package ru.chedmitriy.socket.fileManager.model;
+package ru.chedmitriy.socket.filemanager.model;
 
 import java.io.*;
 
@@ -44,7 +44,8 @@ public interface ServerAnswerModel {
      * @param pw             -исходящий поток ключ
      * @param requestMessage - ключ входа в метод
      */
-    void transmitFileFromServer(String requestMessage, OutputStream out, BufferedReader br, PrintWriter pw) throws IOException;
+    void transmitFileFromServer(String requestMessage, OutputStream out,
+                                BufferedReader br, PrintWriter pw) throws IOException;
     /**
      * .
      * метод загрузки на сервер
@@ -53,5 +54,6 @@ public interface ServerAnswerModel {
      * @param pw             -исходящий поток ключ
      * @param requestMessage - ключ входа в метод
      */
-    void recieveFileByServer(String requestMessage, BufferedReader br, InputStream in, PrintWriter pw) throws IOException;
+    void recieveFileByServer(String requestMessage, BufferedReader br,
+                             InputStream in, PrintWriter pw) throws IOException;
 }

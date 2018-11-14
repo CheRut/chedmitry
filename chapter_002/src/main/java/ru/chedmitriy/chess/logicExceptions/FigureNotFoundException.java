@@ -1,4 +1,4 @@
-package ru.chedmitriy.chess.logicExceptions;
+package ru.chedmitriy.chess.logicexceptions;
 
 import java.util.logging.Logger;
 

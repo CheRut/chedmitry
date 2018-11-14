@@ -2,7 +2,7 @@ package ru.chedmitriy.service;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.RandomAccessFile;
+
 import java.util.Properties;
 
 /**
@@ -11,11 +11,13 @@ import java.util.Properties;
 public class Settings {
     private final Properties prop = new Properties();
 
-    public void load(InputStream io){
-        try{
+    public void load(InputStream io) {
+        try {
             this.prop.load(io);
             
-        }catch (IOException ex){ex.printStackTrace();}
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public String getValue(String key) {

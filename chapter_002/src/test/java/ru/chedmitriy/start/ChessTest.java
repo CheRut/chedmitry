@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import ru.chedmitriy.chess.context.Board;
 import ru.chedmitriy.chess.context.Cell;
-import ru.chedmitriy.chess.logicExceptions.FigureNotFoundException;
-import ru.chedmitriy.chess.logicExceptions.MovementException;
-import ru.chedmitriy.chess.logicExceptions.OccupiedWayExceptions;
+import ru.chedmitriy.chess.logicexceptions.FigureNotFoundException;
+import ru.chedmitriy.chess.logicexceptions.MovementException;
+import ru.chedmitriy.chess.logicexceptions.OccupiedWayExceptions;
 import ru.chedmitriy.chess.models.Pawn;
 
 
@@ -34,7 +34,8 @@ public class ChessTest {
  *
  * */
     @Before
-    public void addingItemTester() throws MovementException, OccupiedWayExceptions, FigureNotFoundException {
+    public void addingItemTester() throws MovementException,
+            OccupiedWayExceptions, FigureNotFoundException {
         /**.
          * объект класса Board для доступа
          * ко всем ключевым методам*/
@@ -61,9 +62,9 @@ public class ChessTest {
         /**.
          * Добавляем координаты и фигуры
          * */
-        board.addPosition(p1,p1.position);
+        board.addPosition(p1, p1.position);
 
-        board.addPosition(p2,p2.position);
+        board.addPosition(p2, p2.position);
 
 
     }
@@ -72,9 +73,9 @@ public class ChessTest {
      * после отработки теста
      * */
     @After
-    public void itemListCleared(){
+    public void itemListCleared() {
         for (int index = 0; index < board.figures.length; index++) {
-            board.figures[index]=null;
+            board.figures[index] = null;
             assertNull(board.figures[index]);
         }
 
@@ -84,15 +85,18 @@ public class ChessTest {
      * движения
      * */
     @Test(expected = MovementException.class)
-    public void movingLogicTest() throws MovementException, OccupiedWayExceptions, FigureNotFoundException {
+    public void movingLogicTest() throws MovementException,
+            OccupiedWayExceptions, FigureNotFoundException {
         board.move(p1.position, new Cell(3, 5));
 
-    }/**.
+    }
+    /**.
      * тестируем наличие препятствия
      *
      * */
     @Test(expected = OccupiedWayExceptions.class)
-    public void movingThrowObstaclesTest() throws MovementException, OccupiedWayExceptions, FigureNotFoundException {
+    public void movingThrowObstaclesTest() throws MovementException,
+            OccupiedWayExceptions, FigureNotFoundException {
         board.move(p1.position, new Cell(1, 3));
     }
     /**.
@@ -101,7 +105,8 @@ public class ChessTest {
      *
      * */
     @Test(expected = FigureNotFoundException.class)
-    public void movingThrowNullTest() throws MovementException, OccupiedWayExceptions, FigureNotFoundException {
+    public void movingThrowNullTest() throws MovementException,
+            OccupiedWayExceptions, FigureNotFoundException {
         board.move(p3.position, new Cell(4, 5));
     }
 }

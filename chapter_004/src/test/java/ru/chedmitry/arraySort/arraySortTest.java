@@ -1,11 +1,11 @@
-package ru.chedmitry.arraySort;
+package ru.chedmitry.arraysort;
 
 
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.chedmitriy.collections.arraySort.SortUser;
-import ru.chedmitriy.collections.arraySort.User;
+import ru.chedmitriy.arraysort.SortUser;
+import ru.chedmitriy.arraysort.User;
 
 import java.util.*;
 
@@ -13,7 +13,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-public class arraySortTest {
+public class ArraySortTest {
     private SortUser sortUser;
     private List<User> users = new ArrayList<>();
 
@@ -47,10 +47,10 @@ public class arraySortTest {
     public void testWhenSortingByHashCode() {
         List<User> userList;
         userList = sortUser.sortHash(users);
-        assertTrue(userList.get(0).hashCode()<userList.get(1).hashCode());
-        assertTrue(userList.get(1).hashCode()<userList.get(2).hashCode());
-        assertTrue(userList.get(2).hashCode()<userList.get(3).hashCode());
-        assertTrue(userList.get(3).hashCode()<userList.get(4).hashCode());
+        assertTrue(userList.get(0).hashCode() < userList.get(1).hashCode());
+        assertTrue(userList.get(1).hashCode() < userList.get(2).hashCode());
+        assertTrue(userList.get(2).hashCode() < userList.get(3).hashCode());
+        assertTrue(userList.get(3).hashCode() < userList.get(4).hashCode());
 
 
 

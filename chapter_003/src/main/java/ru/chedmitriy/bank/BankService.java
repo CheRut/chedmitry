@@ -1,6 +1,6 @@
 package ru.chedmitriy.bank;
 
-import ru.chedmitriy.chess.usage.ConsoleIO;
+
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -39,7 +39,7 @@ public class BankService {
     /**
      * Отмечаем начало отсечта - принимаем время открытия банка
      * */
- private final LocalTime openTime = LocalTime.of(8,0);
+ private final LocalTime openTime = LocalTime.of(8, 0);
  /**
   * Отмечаем конец временного промежутка - время закрытия банка
   * */
@@ -48,11 +48,11 @@ public class BankService {
    /**
     * Константа времени - секунды в минуте
     * */
-    private final int SECONDS_PER_MINUTE = 60;
+    private final int secondsPerMinute = 60;
     /**
      * Константа времени - секунды в часе
      * */
-    private final int SECONDS_PER_HOUR = 3600;
+    private final int secondsPerHour = 3600;
     /**
      * Массив,содержащий информацию о перегрузке
      * */
@@ -80,9 +80,9 @@ public class BankService {
     LocalTime bankWorkingTime = LocalTime.of(openTime.getHour(), openTime.getMinute());
     Duration duration = Duration.between(bankWorkingTime, clientInTime);
     long seconds = duration.getSeconds();
-    long hours = seconds / SECONDS_PER_HOUR;
-    long minutes = ((seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
-    return (hours*60)+minutes;
+    long hours = seconds / secondsPerHour;
+    long minutes = ((seconds % secondsPerHour) / secondsPerMinute);
+    return (hours * 60) + minutes;
 }
 /**
  * Для каждого нового клиента получаем время начала работы с клиентом
@@ -91,8 +91,10 @@ public class BankService {
  * @param client - обрабатываемый клиент
  * */
       public void clientVisitTime(Client client) {
-          client.setTimeHasPassedBeforeClientHasComeIn(getTime(this.openTime,client.getTimeIn()));
-          client.setTimeDuringTheClientHasVisitingBank(getTime(this.openTime,client.getTimeOut()));
+          client.setTimeHasPassedBeforeClientHasComeIn(getTime(this.openTime,
+                  client.getTimeIn()));
+          client.setTimeDuringTheClientHasVisitingBank(getTime(this.openTime,
+                  client.getTimeOut()));
 
       }
 /**
@@ -100,28 +102,34 @@ public class BankService {
  * определить время максимальной нагрузки
  * @param clients - клиенты,посетившие банк
  * */
-    public void theMostOverloadTimeInterval(ArrayList<Client>clients) {
+    public void theMostOverloadTimeInterval(ArrayList<Client> clients) {
     long timeMinutesOverloadFrom = 0;
     long timeMinutesOverloadTo = 0;
     int timeInQuantityOfClients = 0;
-    for (Client clientWhoVisitTheBank : this.getClientsForAllDay()) {
+    for (Client clientWhoVisitTheBank
+            : this.getClientsForAllDay()) {
         for (int i = 0; i < this.getClientsForAllDay().size(); i++) {
-            if ((getClientsForAllDay().get(i).getTimeHasPassedBeforeClientHasComeIn() <
-                    clientWhoVisitTheBank.getTimeDuringTheClientHasVisitingBank())) {
-                   timeMinutesOverloadFrom = getClientsForAllDay().get(i).getTimeHasPassedBeforeClientHasComeIn();
-               if(getClientsForAllDay().get(i).getTimeDuringTheClientHasVisitingBank()>
-                        clientWhoVisitTheBank.getTimeHasPassedBeforeClientHasComeIn())
-                timeInQuantityOfClients++;
+            if ((getClientsForAllDay().get(i).getTimeHasPassedBeforeClientHasComeIn()
+                    < clientWhoVisitTheBank.getTimeDuringTheClientHasVisitingBank())) {
+                   timeMinutesOverloadFrom
+                           = getClientsForAllDay().get(i).
+                           getTimeHasPassedBeforeClientHasComeIn();
+               if (getClientsForAllDay().get(i).getTimeDuringTheClientHasVisitingBank()
+                       > clientWhoVisitTheBank.getTimeHasPassedBeforeClientHasComeIn()) {
+                   timeInQuantityOfClients++;
+               }
                theBiggestClientsQuantity = timeInQuantityOfClients;
                 }
 
-               timeMinutesOverloadTo = clientWhoVisitTheBank.getTimeDuringTheClientHasVisitingBank();
+               timeMinutesOverloadTo =
+                       clientWhoVisitTheBank.getTimeDuringTheClientHasVisitingBank();
 
             }
-            overloadCatcher.add(new Client(timeMinutesOverloadFrom,timeMinutesOverloadTo,timeInQuantityOfClients));
+            overloadCatcher.add(new Client(timeMinutesOverloadFrom,
+                    timeMinutesOverloadTo,
+                    timeInQuantityOfClients));
             timeInQuantityOfClients = 0;
         }
-
     overloadOutTimeCorrect(overloadCatcher);
     getOverloadTimeInterval(overloadCatcher);
 }
@@ -131,7 +139,7 @@ public class BankService {
  * нагруженный среди них
  * @param overloadCatcher - массив загрузки банка
  * */
-    public int maxClientCounter(ArrayList<Client>overloadCatcher) {
+    public int maxClientCounter(ArrayList<Client> overloadCatcher) {
         int theBiggestClientsQuantity = 0;
         for (Client overLoad : overloadCatcher) {
             if (overLoad.getCounter() > theBiggestClientsQuantity) {
@@ -160,14 +168,16 @@ public class BankService {
      * в "часы : минуты"
      * @param clients - массив перегрузки
      * */
-    public void getOverloadTimeInterval(ArrayList<Client>clients) {
+    public void getOverloadTimeInterval(ArrayList<Client> clients) {
         for (Client c : clients) {
             if (c.getCounter() == maxClientCounter(clients)) {
                 for (Client cfad : this.clientsForAllDay) {
-                    if (cfad.getTimeHasPassedBeforeClientHasComeIn() == c.getInTimeOverload()) {
+                    if (cfad.getTimeHasPassedBeforeClientHasComeIn()
+                            == c.getInTimeOverload()) {
                         from = cfad.getTimeIn().toString();
                     }
-                    if (cfad.getTimeDuringTheClientHasVisitingBank() == theLowestDuringTime) {
+                    if (cfad.getTimeDuringTheClientHasVisitingBank()
+                            == theLowestDuringTime) {
                         to = cfad.getTimeOut().toString();
                     }
                 }

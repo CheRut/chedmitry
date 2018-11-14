@@ -1,4 +1,4 @@
-package ru.chedmitriy.socket.fileManager.model;
+package ru.chedmitriy.socket.filemanager.model;
 
 import java.io.*;
 

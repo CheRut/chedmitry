@@ -2,7 +2,7 @@ package ru.chedmitriy;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.chedmitriy.abusesDropping.Abuse;
+import ru.chedmitriy.abusesdropping.Abuse;
 
 import java.io.*;
 
@@ -22,13 +22,13 @@ public class AbuseTest {
      * */
     OutputStream out;
     /**.
-     * FILEOUTNAME - путь записи файла
+     * fileoutname - путь записи файла
      * */
-    final String FILEOUTNAME = "src/main/resources/abusesOut.txt";
+    final String fileoutname = "src/main/resources/abusesOut.txt";
     /**.
-     * FILEINNAME - путь чтения файла
+     * fileinname - путь чтения файла
      * */
-    final String FILEINNAME = "src/main/resources/abuses.txt";
+    final String fileinname = "src/main/resources/abuses.txt";
     /**.
      * параметр класса Abuse для
      * доступа к методу
@@ -67,10 +67,10 @@ public class AbuseTest {
 @Before
 public void init() throws FileNotFoundException {
      ab = new Abuse();
-     abuse = new String[] {"two", "four", "five", "eight", "ten","seven"};
-     in= new FileInputStream(new File(FILEINNAME).getAbsolutePath());
-     out = new FileOutputStream(new File(FILEOUTNAME).getAbsolutePath());
-     inReadOut = new FileInputStream(new File(FILEOUTNAME).getAbsolutePath());
+     abuse = new String[] {"two", "four", "five", "eight", "ten", "seven"};
+     in = new FileInputStream(new File(fileinname).getAbsolutePath());
+     out = new FileOutputStream(new File(fileoutname).getAbsolutePath());
+     inReadOut = new FileInputStream(new File(fileoutname).getAbsolutePath());
 }
     /**
      * в данном тесте
@@ -83,12 +83,12 @@ public void init() throws FileNotFoundException {
     public void dropAbuseTest() throws IOException {
         String actualTrue = "onethreesixnine";
         String actualFalse = "onetwothreesixnine";
-        ab.dropAbuses(in,out,abuse);
+        ab.dropAbuses(in, out, abuse);
         try {
             while ((readInt = inReadOut.read()) != -1) {
                 s.append((char) readInt);
             }
-    }catch(IOException ex){
+    } catch (IOException ex) {
                 System.out.println("Ошибка ввода/вывода");
                 ex.printStackTrace();
             }

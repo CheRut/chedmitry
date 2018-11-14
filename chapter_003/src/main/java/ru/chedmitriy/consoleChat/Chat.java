@@ -1,7 +1,8 @@
-package ru.chedmitriy.consoleChat;
+package ru.chedmitriy.consolechat;
 
 import org.apache.log4j.Logger;
-import ru.chedmitriy.chess.usage.ConsoleIO;
+import ru.chedmitriy.bank.ConsoleIO;
+
 import java.io.*;
 import java.util.ArrayList;
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * @project junior
  * @since 0.1
  */
-public class Chat  {
+public class Chat {
     /**
      * source - параметр,который принимает
      * файл - список ответов
@@ -20,7 +21,8 @@ public class Chat  {
      * объвление константы
      * для логгирования
      * */
-    private static final Logger log = Logger.getLogger(Chat.class.getName());
+    private static final Logger LOG = Logger.getLogger(Chat.class.getName());
+
     /**.
      * answerOutput - параметр,который
      * принимает строки потока
@@ -29,12 +31,12 @@ public class Chat  {
     /**
      * использую ArrayList для
      * удобства - размер меняется динамически*/
-    ArrayList<String>answerList;
+    ArrayList<String> answerList;
     /**.
      * roboAnswer -
      * параметр,который принимает
      * случайный элемент массива*/
-    String roboAnswer="";
+    String roboAnswer = "";
     /**.
      * randomIndex- целочисленный параметр,
      * который принимает случайное число
@@ -51,7 +53,7 @@ public class Chat  {
     boolean robotSpeakingAllowed;
     ConsoleIO cIO = new ConsoleIO();
 
-    public Chat(File answerSource)  {
+    public Chat(File answerSource) {
         this.answerSource = answerSource;
     }
     /**.
@@ -64,7 +66,8 @@ public class Chat  {
    public String answer() throws IOException {
        answerList = new ArrayList<>();
        if (robotSpeakingAllowed) {
-           try (BufferedReader randomAnswer = new BufferedReader(new FileReader(this.answerSource))) {
+           try (BufferedReader randomAnswer
+                        = new BufferedReader(new FileReader(this.answerSource))) {
                while ((answerOutput = randomAnswer.readLine()) != null) {
                    answerList.add(answerOutput);
                }
@@ -72,7 +75,7 @@ public class Chat  {
                cIO.print("Robot: ");
                roboAnswer = answerList.get(randomIndex);
                cIO.println(roboAnswer);
-               log.info("Robot сказал: "+ roboAnswer);
+               LOG.info("Robot сказал: " + roboAnswer);
            } catch (IOException ex) {
                ex.printStackTrace();
            }
@@ -85,13 +88,14 @@ public class Chat  {
      * пользователем фразу
      * @return строку - введенное слово
      * */
-public String userTalk(){
+public String userTalk() {
     robotSpeakingAllowed = true;
     String userSpeaking = cIO.ask("User: ");
-    log.info("User сказал "+ userSpeaking);
-        if(muteRoboChatting(userSpeaking)) {
-            while (!continueRoboChat(userTalk()))
-            robotSpeakingAllowed = false;
+    LOG.info("User сказал " + userSpeaking);
+        if (muteRoboChatting(userSpeaking)) {
+            while (!continueRoboChat(userTalk())) {
+                robotSpeakingAllowed = false;
+            }
         }
  return  userSpeaking;
 }
@@ -125,7 +129,7 @@ public String userTalk(){
  * метод - имитирующий диалог
  * пользователя и компьютера */
     public void dialog() throws IOException {
-        while(!stopChatting(userTalk())) {
+        while (!stopChatting(userTalk())) {
                      answer();
                  }
     }

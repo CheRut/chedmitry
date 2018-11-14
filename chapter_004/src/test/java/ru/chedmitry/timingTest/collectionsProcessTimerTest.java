@@ -1,10 +1,10 @@
-package ru.chedmitry.timingTest;
+package ru.chedmitry.timingtest;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.chedmitriy.collections.collections.CollectionsProcessTiming;
-import ru.chedmitriy.collections.modifiingTracker.objects.ConsoleInput;
+import ru.chedmitriy.collections.CollectionsProcessTiming;
+import ru.chedmitriy.modifiingtracker.objects.ConsoleInput;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,13 +13,14 @@ import java.util.TreeSet;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class collectionsProcessTimerTest {
+public class CollectionsProcessTimerTest {
     ConsoleInput cIO = new ConsoleInput();
     ArrayList<String> aList;
     LinkedList<String> linkList;
     TreeSet<String> tSetList;
     CollectionsProcessTiming collectionsProcessTiming;
-    String[] lines = {"one","two","three","four","five","six","seven","eight","nine","ten"};
+    String[] lines = {"one", "two", "three", "four",
+            "five", "six", "seven", "eight", "nine", "ten"};
     /**
      * Инициализируем значения для
      * тестирования*/
@@ -31,19 +32,22 @@ public class collectionsProcessTimerTest {
         tSetList = new TreeSet();
         collectionsProcessTiming = new CollectionsProcessTiming();
         result = 0;
-        for(String line:lines)
+        for (String line : lines) {
             result += collectionsProcessTiming.add(aList, line, 1);
-        cIO.outPrintln(String.format("%5s %5s %5s %5s%n",result,"-","при работе  с контейнером типа ",
+        }
+        cIO.outPrintln(String.format("%5s %5s %5s %5s%n", result, "-", "при работе  с контейнером типа ",
                 aList.getClass().getName()));
-        result=0;
-        for(String line:lines)
+        result = 0;
+        for (String line : lines) {
             result += collectionsProcessTiming.add(linkList, line, 1);
-        cIO.outPrintln(String.format("%5s %5s %5s %5s%n",result,"-","при работе  с контейнером типа ",
+        }
+        cIO.outPrintln(String.format("%5s %5s %5s %5s%n", result, "-", "при работе  с контейнером типа ",
                 linkList.getClass().getName()));
         result = 0;
-        for(String line:lines)
+        for (String line:lines) {
             result += collectionsProcessTiming.add(tSetList, line, 1);
-        cIO.outPrintln(String.format("%5s %5s %5s %5s%n",result,"-","при работе  с контейнером типа ",
+        }
+        cIO.outPrintln(String.format("%5s %5s %5s %5s%n", result, "-", "при работе  с контейнером типа ",
                 tSetList.getClass().getName()));
 
     }
@@ -51,7 +55,7 @@ public class collectionsProcessTimerTest {
      * Чистим все коллекции
      * */
     @After
-    public void clearedCollections(){
+    public void clearedCollections() {
         aList.clear();
         linkList.clear();
         tSetList.clear();
@@ -63,7 +67,7 @@ public class collectionsProcessTimerTest {
     @Test
     public void arrayListCheckContent() {
         int expectedSize = 10;
-        assertThat(this.aList.size(),is(expectedSize));
+        assertThat(this.aList.size(), is(expectedSize));
     }
     /**
      * Добавляем значения в LinkedList collection
@@ -72,7 +76,7 @@ public class collectionsProcessTimerTest {
     @Test
     public void linkedListCheckContent() {
         int expectedSize = 10;
-        assertThat(this.linkList.size(),is(expectedSize));
+        assertThat(this.linkList.size(), is(expectedSize));
     }
     /**
      * Добавляем значения в TreeSet collection
@@ -81,7 +85,7 @@ public class collectionsProcessTimerTest {
     @Test
     public void tSetListCheckContent() {
         int expectedSize = 10;
-        assertThat(this.tSetList.size(),is(expectedSize));
+        assertThat(this.tSetList.size(), is(expectedSize));
     }
     /**
      * Удаляем значения в ArrayList collection
@@ -89,9 +93,9 @@ public class collectionsProcessTimerTest {
      * */
     @Test
     public void arrayListCheckContentAfterDeleting() {
-        collectionsProcessTiming.delete(aList,5);
+        collectionsProcessTiming.delete(aList, 5);
         int expectedSize = 5;
-        assertThat(this.aList.size(),is(expectedSize));
+        assertThat(this.aList.size(), is(expectedSize));
     }
     /**
      * Удаляем значения в LinkedList collection
@@ -99,9 +103,9 @@ public class collectionsProcessTimerTest {
      * */
     @Test
     public void linkedListCheckContentAfterDeleting() {
-        collectionsProcessTiming.delete(linkList,5);
+        collectionsProcessTiming.delete(linkList, 5);
         int expectedSize = 5;
-        assertThat(this.linkList.size(),is(expectedSize));
+        assertThat(this.linkList.size(), is(expectedSize));
     }
     /**
      * Удаляем значения в TreeSet collection
@@ -109,9 +113,9 @@ public class collectionsProcessTimerTest {
      * */
     @Test
     public void tSetListCheckContentAfterDeleting() {
-        collectionsProcessTiming.delete(tSetList,5);
+        collectionsProcessTiming.delete(tSetList, 5);
         int expectedSize = 5;
-        assertThat(this.tSetList.size(),is(expectedSize));
+        assertThat(this.tSetList.size(), is(expectedSize));
     }
 
 }

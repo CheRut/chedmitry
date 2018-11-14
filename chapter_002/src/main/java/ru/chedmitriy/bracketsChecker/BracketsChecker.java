@@ -1,4 +1,4 @@
-package ru.chedmitriy.bracketsChecker;
+package ru.chedmitriy.bracketschecker;
 
 /**.
  * @author Dmitry Cherutsa on 10.12.2016.
@@ -38,7 +38,9 @@ public class BracketsChecker {
                 close++;
             }
         }
-         if (open==close){correct=true;}
+         if (open == close) {
+             correct = true;
+         }
 
         return correct;
     }

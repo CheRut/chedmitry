@@ -1,8 +1,8 @@
-package ru.chedmitry.convertTest;
+package ru.chedmitry.converttest;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.chedmitriy.collections.collections.ConvertList;
+import ru.chedmitriy.collections.ConvertList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class ConverterTest {
     @Before
     public void init() {
         cList = new ConvertList();
-        ar = cList.randomNumberFill(2,4);
+        ar = cList.randomNumberFill(2, 4);
         al = cList.toList(ar);
     }
     /**
@@ -31,8 +31,8 @@ public class ConverterTest {
     public void toListTest() {
        int expected = 8;
        int checkValue = ar[1][2];
-       assertThat(al.size(),is(expected));
-       assertThat(al.get(6),is(checkValue));
+       assertThat(al.size(), is(expected));
+       assertThat(al.get(6), is(checkValue));
     }
     /**
      * Проверяем метод преобразования
@@ -44,9 +44,9 @@ public class ConverterTest {
     @Test
     public void toArrayTest() {
         List<Integer> result = new ArrayList<>();
-         ar = cList.toArray(al,5);
+         ar = cList.toArray(al, 5);
          result = cList.toList(ar);
-         if(al.size()<result.size()) {
+         if (al.size() < result.size()) {
              assertTrue(result.contains(0));
          }
     }
@@ -56,9 +56,9 @@ public class ConverterTest {
      * */
     @Test
     public void whenTwoArraysCreatingList() {
-        int[]a = {1,2,3,4,12,14};
-        int[]b = {5,6,7,8};
-        List<int[]>list = new ArrayList<>();
+        int[]a = {1, 2, 3, 4, 12, 14};
+        int[]b = {5, 6, 7, 8};
+        List<int[]> list = new ArrayList<>();
         list.add(a);
         list.add(b);
         cList.convert(list);

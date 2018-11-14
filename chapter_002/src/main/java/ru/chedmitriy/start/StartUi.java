@@ -8,20 +8,20 @@ public class StartUi  {
     private  final ConsoleInput cIn;
 
 
-    public StartUi(ConsoleInput cIn){
+    public StartUi(ConsoleInput cIn) {
         this.cIn = cIn;
         tracker = new Tracker();
     }
 	/*
 	* Method, which shows us the greeting at startup
 	**/
-	public void greeting(){
+	public void greeting() {
     System.out.println("WELCOME TO TRACKER");
 	}
 	/*
 	* Method, which shows us some text at the close of the program
 	**/
-    public void exitAppText(){
+    public void exitAppText() {
         System.out.println("creating by dmiCher");
 
     }
@@ -30,7 +30,7 @@ public class StartUi  {
 	**/
     public  void init() {
         greeting();
-        MenuTracker mTracker = new MenuTracker(this.cIn,this.tracker);
+        MenuTracker mTracker = new MenuTracker(this.cIn, this.tracker);
         mTracker.menuActionFilling();
         do {
             mTracker.showMenu();

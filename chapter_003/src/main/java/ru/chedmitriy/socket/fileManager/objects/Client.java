@@ -1,7 +1,8 @@
-package ru.chedmitriy.socket.fileManager.objects;
+package ru.chedmitriy.socket.filemanager.objects;
 
-import ru.chedmitriy.chess.usage.ConsoleIO;
-import ru.chedmitriy.socket.fileManager.model.ClientServerDialog;
+
+import ru.chedmitriy.bank.ConsoleIO;
+import ru.chedmitriy.socket.filemanager.model.ClientServerDialog;
 
 import java.io.*;
 import java.net.InetAddress;

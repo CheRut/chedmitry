@@ -1,4 +1,4 @@
-package ru.chedmitriy.extSort;
+package ru.chedmitriy.extsort;
 
 
 
@@ -100,8 +100,8 @@ public class ReadFile {
 
             }
 
-            sortinglines(firstHalfOfSource,firstFileLinesCounter);
-            sortinglines(secondHalfOfSource,secFileLinesCounter);
+            sortinglines(firstHalfOfSource, firstFileLinesCounter);
+            sortinglines(secondHalfOfSource, secFileLinesCounter);
             sourceStream.close();
             firstHalfOfSource.close();
             secondHalfOfSource.close();
@@ -118,37 +118,45 @@ public class ReadFile {
      * Когда в одном из файлов прочитаются все строки,
      * в конечный файл добавятся остальные строки из второго файла
      */
-    public void merge(RandomAccessFile distStream, RandomAccessFile firstHalfOfSource, RandomAccessFile secondHalfOfSource) throws IOException {
+    public void merge(RandomAccessFile distStream,
+                      RandomAccessFile firstHalfOfSource,
+                      RandomAccessFile secondHalfOfSource) throws IOException {
         this.firstHalfOfSource = firstHalfOfSource;
         this.secondHalfOfSource = secondHalfOfSource;
         this.distStream = distStream;
 
-        String line1,line2 ;
+        String line1 = firstHalfOfSource.readLine();
+        String line2 = secondHalfOfSource.readLine();
         firstHalfOfSource.seek(0);
         secondHalfOfSource.seek(0);
 
-        while (((line1 = firstHalfOfSource.readLine()) != null && (line2 = secondHalfOfSource.readLine()) != null)) {
-            if (line1.length() <= line2.length() && this.firstFileLinesCounter > 0) {
+        while (((line1 != null
+                && (line2  != null)))) {
+            if (line1.length() <= line2.length()
+                    && this.firstFileLinesCounter > 0) {
                 distStream.write(line1.getBytes());
                 distStream.writeUTF(System.getProperty("line.separator"));
                 removeLine(firstHalfOfSource, line1);
                 this.firstFileLinesCounter--;
 
-            } else if (line2.length() <= line1.length() && this.secFileLinesCounter > 0) {
+            } else if (line2.length() <= line1.length()
+                    && this.secFileLinesCounter > 0) {
                 distStream.write(line2.getBytes());
                 distStream.writeUTF(System.getProperty("line.separator"));
                 removeLine(secondHalfOfSource, line2);
                 this.secFileLinesCounter--;
             }
-            if(this.firstFileLinesCounter==0 && this.secFileLinesCounter>0){
-                while(secFileLinesCounter>0){
+            if (this.firstFileLinesCounter == 0
+                    && this.secFileLinesCounter > 0) {
+                while (secFileLinesCounter > 0) {
                     distStream.write(line2.getBytes());
                     distStream.writeUTF(System.getProperty("line.separator"));
                     this.secFileLinesCounter--;
                 }
             }
-            if(this.firstFileLinesCounter>0 && this.secFileLinesCounter==0){
-                while(secFileLinesCounter>0){
+            if (this.firstFileLinesCounter > 0
+                    && this.secFileLinesCounter == 0) {
+                while (secFileLinesCounter > 0) {
                     distStream.write(line1.getBytes());
                     distStream.writeUTF(System.getProperty("line.separator"));
                     this.secFileLinesCounter--;
@@ -162,12 +170,12 @@ public class ReadFile {
      * Метод,создает  массив размером
      * количества строк из считанного ранее файла
      * */
-public void sortinglines(RandomAccessFile raf,int size) throws IOException {
+public void sortinglines(RandomAccessFile raf, int size) throws IOException {
     String line;
     String[] sortered = new String[size];
     try {
         while ((line = raf.readLine()) != null) {
-            for (int i = 0; i <sortered.length ; i++) {
+            for (int i = 0; i < sortered.length; i++) {
                sortered[i] = line;
             }
 
@@ -186,7 +194,9 @@ public void sortinglines(RandomAccessFile raf,int size) throws IOException {
             raf.writeUTF(sortered[i]);
         }
 
-    } catch (IOException ex){ex.printStackTrace();}
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
 }
     /**
      * .
@@ -195,7 +205,8 @@ public void sortinglines(RandomAccessFile raf,int size) throws IOException {
      * строку,занесенную
      * в файл distFile
      */
-    public static void removeLine(RandomAccessFile raf, String line) throws IOException {
+    public static void removeLine(RandomAccessFile raf, String line)
+            throws IOException {
         raf.seek(raf.getFilePointer() - (line.length() + 1));
         System.out.println(raf.getFilePointer());
         try {
@@ -219,14 +230,18 @@ public void sortinglines(RandomAccessFile raf,int size) throws IOException {
         File fstHalf = null;
         File secHalf = null;
         try {
-            fstHalf = File.createTempFile("fst", ".txt", new File(System.getProperty("java.io.tmpdir")));
-            secHalf = File.createTempFile("sec", ".txt", new File(System.getProperty("java.io.tmpdir")));
+            fstHalf = File.createTempFile("fst",
+                    ".txt",
+                    new File(System.getProperty("java.io.tmpdir")));
+            secHalf = File.createTempFile("sec",
+                    ".txt",
+                    new File(System.getProperty("java.io.tmpdir")));
             this.sourceStream = new RandomAccessFile(source, "r");
             this.distStream = new RandomAccessFile(dist, "rw");
-            this.firstHalfOfSource = new RandomAccessFile(fstHalf,"rw");
-            this.secondHalfOfSource = new RandomAccessFile(secHalf,"rw");
-            fileSharing(sourceStream,firstHalfOfSource,secondHalfOfSource);
-            merge(distStream,firstHalfOfSource,secondHalfOfSource);
+            this.firstHalfOfSource = new RandomAccessFile(fstHalf, "rw");
+            this.secondHalfOfSource = new RandomAccessFile(secHalf, "rw");
+            fileSharing(sourceStream, firstHalfOfSource, secondHalfOfSource);
+            merge(distStream, firstHalfOfSource, secondHalfOfSource);
 
         } catch (IOException ex) {
             ex.printStackTrace();

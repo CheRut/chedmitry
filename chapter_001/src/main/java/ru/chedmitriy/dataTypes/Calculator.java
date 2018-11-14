@@ -1,4 +1,4 @@
-package ru.chedmitriy.dataTypes;
+package ru.chedmitriy.datatypes;
 
 /**
  * Class Calculator задает алгоритм действий
@@ -15,7 +15,7 @@ package ru.chedmitriy.dataTypes;
      * @param second второй аргумент
      * @return результат
      */
-   public double add(double first,double second){
+   public double add(double first, double second) {
         result = first + second;
 		return result;
     }
@@ -25,7 +25,7 @@ package ru.chedmitriy.dataTypes;
      * @param second второй аргумент
      * @return результат
      */
-    public double substract(double first,double second){
+    public double substract(double first, double second) {
         result = first - second;
 		return result;
     }
@@ -35,7 +35,8 @@ package ru.chedmitriy.dataTypes;
      * @param second второй аргумент
      * @return результат
      */
-    public void div(double first,double second){
+    public void div(double first, double second) {
+
         result = first / second;
     }
     /**
@@ -44,7 +45,7 @@ package ru.chedmitriy.dataTypes;
      * @param second второй аргумент
      * @return результат
      */
-    public void multiple(double first,double second){
+    public void multiple(double first, double second) {
         result = first * second;
     }
 

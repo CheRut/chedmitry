@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class OracleClient {
     private final int port;
     private final String ip;
-    public OracleClient(String ip,int port){
+    public OracleClient(String ip, int port) {
         this.port = port;
         this.ip = ip;
     }
@@ -20,7 +20,7 @@ public class OracleClient {
     public void clientRequest() throws IOException {
 
         Socket socket = new Socket(InetAddress.getByName(ip), port);
-        System.out.println("подключаемся к серверу: "+ port);
+        System.out.println("подключаемся к серверу: " + port);
 
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -28,21 +28,21 @@ public class OracleClient {
         String userPrint = null;
         String streamRead = null;
 
-    do {
-        userPrint = console.nextLine();
-        out.println(userPrint);
+        do {
+            userPrint = console.nextLine();
+            out.println(userPrint);
+            streamRead = in.readLine();
+            if ("exit".equals(userPrint)) {
+                while (!streamRead .isEmpty()) {
+                    System.out.println(streamRead);
+                }
+            }
 
-        if("exit".equals(userPrint)){
-           while (!(streamRead = in.readLine()).isEmpty()){
-               System.out.println(streamRead);
-           }
-        }
-
-    } while (!("exit".equals(userPrint)));
+        } while (!("exit".equals(userPrint)));
     }
 
     public static void main(String[] args) throws IOException {
-        OracleClient oracleClient = new OracleClient("localhost",5000);
+        OracleClient oracleClient = new OracleClient("localhost", 5000);
         oracleClient.clientRequest();
     }
 }

@@ -6,7 +6,7 @@ package ru.chedmitriy.models;
 public class Comments extends Item {
     public String comments = "there are no comments";
 
-    public Comments(String name, String description,String comments) {
+    public Comments(String name, String description, String comments) {
         super(name, description);
         this.comments = comments;
     }

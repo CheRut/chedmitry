@@ -2,7 +2,7 @@ package ru.chedmitriy;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.chedmitriy.byteStreamChecker.ByteStreamChecker;
+import ru.chedmitriy.bytestreamchecker.ByteStreamChecker;
 
 import java.io.*;
 
@@ -20,21 +20,23 @@ public class ByteStreamCheckerTest {
     InputStream inputstreamTrueEven;
     InputStream inputStreamFalseEven;
     /**.
-     * FILEINNAME - путь чтения файла
+     * fileinname - путь чтения файла
      * */
-    final String FILEINNAMEEVEN = "src/main/resources/evenTrueNumbers.txt";
-    final String FILEINNAMENOTEVEN = "src/main/resources/evenFalseNumbers.txt";
+    final String fileinnameeven = "src/main/resources/evenTrueNumbers.txt";
+    final String fileinnamenoteven = "src/main/resources/evenFalseNumbers.txt";
 
     @Before
     public void init() throws FileNotFoundException {
         byteStreamChecker =  new ByteStreamChecker();
-        inputstreamTrueEven = new FileInputStream(new File(FILEINNAMEEVEN).getAbsolutePath());
-        inputStreamFalseEven =new FileInputStream(new File(FILEINNAMENOTEVEN).getAbsolutePath());
+        inputstreamTrueEven
+                = new FileInputStream(new File(fileinnameeven).getAbsolutePath());
+        inputStreamFalseEven
+                = new FileInputStream(new File(fileinnamenoteven).getAbsolutePath());
     }
     @Test
     public void tryStream() throws IOException {
         boolean evenNumber = true;
-       assertEquals(evenNumber,byteStreamChecker.isNumber(inputstreamTrueEven));
-        assertNotEquals(evenNumber,byteStreamChecker.isNumber(inputStreamFalseEven));
+       assertEquals(evenNumber, byteStreamChecker.isNumber(inputstreamTrueEven));
+        assertNotEquals(evenNumber, byteStreamChecker.isNumber(inputStreamFalseEven));
     }
 }

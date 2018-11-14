@@ -41,7 +41,8 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 /**
  * Конструктор регистрации клиентов в банке
  * */
-    public Client(String name,String surName,String timeIn,String timeOut,long timeHasPassedBeforeClientHasComeIn,
+    public Client(String name, String surName, String timeIn,
+                  String timeOut, long timeHasPassedBeforeClientHasComeIn,
                   long timeDuringTheClientHasVisitingBank) {
         this.name = name;
         this.surName = surName;
