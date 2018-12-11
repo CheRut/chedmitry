@@ -8,16 +8,18 @@
 <body>
 <center>
     <h3>
-        <a href="/list">Main page</a>
+        <a href="/users">Main page</a>
     </h3>
 </center>
 <div align="center">
 
     <c:if test="${user != null}">
-    <form action="update" method="post">
+
+
         </c:if>
         <c:if test="${user == null}">
-        <form action="insert" method="post">
+
+
             </c:if>
             <table border="1" cellpadding="5">
                 <caption>
@@ -31,6 +33,7 @@
                     </h2>
                 </caption>
                 <c:if test="${user != null}">
+
                     <input type="hidden" name="id" value="<c:out value='${user.id}' />" />
                 </c:if>
                 <tr>

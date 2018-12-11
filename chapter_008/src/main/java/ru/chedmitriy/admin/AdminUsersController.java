@@ -1,15 +1,16 @@
-package ru.chedmitriy.presentation;
+package ru.chedmitriy.admin;
 
 import ru.chedmitriy.logic.ValidateService;
 import ru.chedmitriy.models.User;
-import ru.chedmitriy.persistent.MemoryStore;
 import ru.chedmitriy.service.Settings;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -20,7 +21,8 @@ import java.io.IOException;
  * @see ru.chedmitriy.logic.ValidateService - синглтон взаимодействия пользователей с базой данных-
  * хранилищем
  */
-public class UsersController extends HttpServlet {
+@WebServlet("/admin/users")
+public class AdminUsersController extends HttpServlet {
 
 
     /**
@@ -29,17 +31,6 @@ public class UsersController extends HttpServlet {
     private final ValidateService valServ = ValidateService.getInstance();
 
 
-    /**
-     * Заполним хранилише дефолтными
-     * значениями
-     * @throws ServletException
-     */
-    @Override
-    public void init() throws ServletException {
-        valServ.add(new User(1, "Ivan", "ivan@Mail.ru", "1.02.2008"));
-        valServ.add(new User(2, "Dmitry", "dmitry@Mail.ru", "1.05.2009"));
-
-    }
 
     /**
      * работа с аттрибутами,отображение страниц и т.д
@@ -50,21 +41,7 @@ public class UsersController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getServletPath();
-        switch (action) {
-            case "/new":
-                showAddUserWindow(req, resp);
-                break;
-            case "/edit":
-                showEditUserWindow(req, resp);
-                break;
-            case "/delete":
-                deleteUser(req, resp);
-                break;
-            default:
-                userList(req, resp);
-                break;
-        }
+        doPost(req, resp);
     }
 
     /** выполняем действия: добавление,удаление,редактирование
@@ -75,8 +52,20 @@ public class UsersController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getServletPath();
+
+        String action = req.getParameter("action");
+
         switch (action) {
+            case "/new":
+                showAddUserWindow(req, resp);
+                break;
+            case "/edit":
+
+                showEditUserWindow(req, resp);
+                break;
+            case "/delete":
+                deleteUser(req, resp);
+                break;
             case "/insert":
                 addUser(req, resp);
                 break;
@@ -88,6 +77,7 @@ public class UsersController extends HttpServlet {
                 break;
 
         }
+
     }
     /**
      * Добавляем нового пользователя
@@ -102,7 +92,7 @@ public class UsersController extends HttpServlet {
      * @param response - ответ
      * @throws IOException
      */
-    private void addUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void addUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // делаем привязку id к размеру хранилища
         int id = valServ.getAllValues().size();
         String name = request.getParameter("name");
@@ -110,7 +100,7 @@ public class UsersController extends HttpServlet {
         String create = request.getParameter("create");
         User newUser = new User(++id, name, email, create);
         valServ.add(newUser);
-        response.sendRedirect("list");
+        userList(request, response);
 
     }
 
@@ -122,14 +112,18 @@ public class UsersController extends HttpServlet {
      * @throws IOException
      */
     private void editUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
         int id = Integer.parseInt(request.getParameter("id"));
+
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String create = request.getParameter("create");
 
         User editUser = new User(id, name, email, create);
+        System.out.println(editUser);
         valServ.edit(editUser);
         response.sendRedirect("list");
+
     }
 
     /**
@@ -155,7 +149,7 @@ public class UsersController extends HttpServlet {
      */
     private void userList(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("userList", valServ.getAllValues());
-        RequestDispatcher dis = request.getRequestDispatcher(getProperty("servlet.mainPage"));
+        RequestDispatcher dis = request.getRequestDispatcher(getProperty("servlet.adminPage"));
         dis.forward(request, response);
     }
 
@@ -172,6 +166,8 @@ public class UsersController extends HttpServlet {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(getProperty("servlet.addUserForm"));
         dispatcher.forward(request, response);
+
+
     }
 
     /**
@@ -184,10 +180,13 @@ public class UsersController extends HttpServlet {
      */
     private void showEditUserWindow(HttpServletRequest request, HttpServletResponse response)
             throws  ServletException, IOException {
+
+        System.out.println(request.getParameter("id"));
         int id = Integer.parseInt(request.getParameter("id"));
         User existingUser = valServ.getById(id);
         RequestDispatcher dispatcher
                 = request.getRequestDispatcher(getProperty("servlet.addUserForm"));
+
         request.setAttribute("user", existingUser);
         dispatcher.forward(request, response);
 

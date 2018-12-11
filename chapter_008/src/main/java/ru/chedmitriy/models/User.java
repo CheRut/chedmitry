@@ -3,19 +3,34 @@ package ru.chedmitriy.models;
 import java.util.Objects;
 
 public class User {
+    public enum Role {
+        ADMINISTRATOR,USER,GUEST
+    }
 
     private  int id;
     private  String name;
     private  String email;
     private  String create;
 
+
+
+    private Role role = Role.GUEST;
+
     public User(int id, String name, String email, String create) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.create = create;
-    }
 
+    }
+    public User(int id, String name, String email, String create,Role role) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.create = create;
+        this.role = role;
+
+    }
 
 
     @Override
@@ -70,6 +85,9 @@ public class User {
         this.create = create;
     }
 
+    public Role getRole() {
+        return role;
+    }
     @Override
     public String toString() {
         return "User{"
