@@ -9,11 +9,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>autorization</title>
+    <title>authorization</title>
 </head>
 <body>
 <fieldset>
-    <legend>Login</legend>
+    <legend>Authorization</legend>
     <c:if test="${error!= ''}">
         <div style="background-color: red" >
             <c:out value="${error}"/>
@@ -23,8 +23,8 @@
     <form method="post" action="account">
         <table cellpadding="2" cellspacing="2">
             <tr>
-                <td>Username</td>
-                <td><input type="text" name="username"></td>
+                <td>Login</td>
+                <td><input type="text" name="login"></td>
             </tr>
             <tr>
                 <td>Password</td>
@@ -37,6 +37,9 @@
         </table>
     </form>
 
+    administrator:"admin","123"
+    <br>
+    user:"user","111"
 
 
 

@@ -6,7 +6,7 @@
     <title>users</title>
 </head>
 <body>
-<form align="left" action="" method="post">
+<form align="left" action="${pageContext.servletContext.contextPath}/admin/users?action=/list" method="post">
     <caption><h2>ADMINISTRATOR PAGE</h2></caption>
 
     <c:forEach var="user" items="${userList}">
@@ -18,22 +18,22 @@
             <li> Email:<c:out value="${user.email}" /></li>
             <li> Create:<c:out value="${user.create}" /></li>
             <li> Role:<c:out value="${user.role}" /></li>
-            <a> Actions:
-                <a href="${pageContext.servletContext.contextPath}/admin/users?action=/edit"/>Edit</a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="${pageContext.servletContext.contextPath}/admin/users?action=/delete"/>Delete</a>
+            <li> Actions:
+
+                <a href="${pageContext.servletContext.contextPath}/admin/users?action=/edit&id=${user.id}"/>Edit</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="${pageContext.servletContext.contextPath}/admin/users?action=/delete&id=${user.id}"/>Delete</a>
 
             </li>
         </ul>
     </c:forEach>
 
-
-
     <%--<a href="/admin/users?action=%2fnew">Add User</a>--%>
     <a href="${pageContext.servletContext.contextPath}/admin/users?action=/new">Add User</a>
 
 
-    <a href="account?action=Login">Logout</a>
+    <a href="${pageContext.servletContext.contextPath}/admin/account?action=logout">Logout</a>
+
 
 
 </form>

@@ -1,4 +1,4 @@
-package ru.chedmitriy.presentation;
+package ru.chedmitriy.presentation.user;
 
 
 import ru.chedmitriy.logic.ValidateService;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/users")
-public class UsersViews extends HttpServlet {
+public class GuestsUsersViews extends HttpServlet {
     /**
      * вызов синглтона
      */
@@ -28,20 +28,22 @@ public class UsersViews extends HttpServlet {
      */
     @Override
     public void init() throws ServletException {
-        valServ.add(new User(1, "Ivan", "ivan@Mail.ru", "1.02.2008", User.Role.USER));
-        valServ.add(new User(2, "Dmitry", "dmitry@Mail.ru", "1.05.2009", User.Role.ADMINISTRATOR));
-        valServ.add(new User(3, "Gleb", "gleb@Mail.ru", "22.08.2009"));
+        valServ.add(new User(1, "Ivan", "ivan@Mail.ru",
+                "1.02.2008","user","111", User.Role.USER));
+        valServ.add(new User(2, "Dmitry", "dmitry@Mail.ru",
+                "1.05.2009","admin","123", User.Role.ADMINISTRATOR));
+        valServ.add(new User(3, "Gleb", "gleb@Mail.ru", "22.08.2009","gleb","222", User.Role.USER));
 
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("userList", valServ.getAllValues());
         RequestDispatcher dis = request.getRequestDispatcher(getProperty("servlet.mainPage"));
         dis.forward(request, response);
-        System.out.println("gshasjasjkajsalksl");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+doPost(request, response);
     }
 
     /**

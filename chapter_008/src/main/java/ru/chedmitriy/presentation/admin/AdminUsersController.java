@@ -1,4 +1,4 @@
-package ru.chedmitriy.admin;
+package ru.chedmitriy.presentation.admin;
 
 import ru.chedmitriy.logic.ValidateService;
 import ru.chedmitriy.models.User;
@@ -33,15 +33,19 @@ public class AdminUsersController extends HttpServlet {
 
 
     /**
-     * работа с аттрибутами,отображение страниц и т.д
-     * @param req
-     * @param resp
+     * работа с аттрибутами,
+     * отображение страниц и т.д
+     * @param request
+     * @param response
      * @throws ServletException
      * @throws IOException
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+            doPost(request, response);
+
     }
 
     /** выполняем действия: добавление,удаление,редактирование
@@ -111,18 +115,21 @@ public class AdminUsersController extends HttpServlet {
      * @param response
      * @throws IOException
      */
-    private void editUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+    private void editUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        final HttpSession session = request.getSession();
         int id = Integer.parseInt(request.getParameter("id"));
 
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String create = request.getParameter("create");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
 
-        User editUser = new User(id, name, email, create);
-        System.out.println(editUser);
+        User.Role role = User.Role.valueOf(request.getParameter("roles"));
+        System.out.println(role);
+        User editUser = new User(id, name, email, create, login, password,role);
         valServ.edit(editUser);
-        response.sendRedirect("list");
+        userList(request, response);
 
     }
 
@@ -136,7 +143,9 @@ public class AdminUsersController extends HttpServlet {
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
         valServ.delete(id);
-        response.sendRedirect("list");
+        //response.sendRedirect(getProperty("servlet.adminPage"));
+        userList(request, response);
+
     }
 
     /**
@@ -180,13 +189,11 @@ public class AdminUsersController extends HttpServlet {
      */
     private void showEditUserWindow(HttpServletRequest request, HttpServletResponse response)
             throws  ServletException, IOException {
-
         System.out.println(request.getParameter("id"));
         int id = Integer.parseInt(request.getParameter("id"));
         User existingUser = valServ.getById(id);
         RequestDispatcher dispatcher
                 = request.getRequestDispatcher(getProperty("servlet.addUserForm"));
-
         request.setAttribute("user", existingUser);
         dispatcher.forward(request, response);
 

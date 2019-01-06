@@ -122,4 +122,26 @@ public class ValidateService {
 
     }
 
+    /**
+     * getting the user's role
+     * that have been try to register
+     * @param login
+     * @param password
+     * @return
+     */
+    public User.Role registeredRole(final String login, final String password) {
+        User.Role role = User.Role.GUEST;
+        for (User user:getAllValues()) {
+
+            if (user.getLogin().equals(login)
+                    && user.getPassword().equals(password)) {
+                role = user.getRole();
+                break;
+            }
+
+        }  return role;
+    }
+
+
+
 }

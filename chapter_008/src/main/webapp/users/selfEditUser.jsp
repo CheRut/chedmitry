@@ -8,24 +8,18 @@
 <body>
 <center>
     <h3>
-        <a href="/list">Main page</a>
+      Edit user
     </h3>
 </center>
 <div align="center">
     <c:if test="${user != null}">
-    <form action="${pageContext.servletContext.contextPath}/admin/users?action=/update" method="post">
+    <form action="${pageContext.servletContext.contextPath}/users/selfpage?action=/update" method="post">
         </c:if>
-        <c:if test="${user == null}">
-            <form action="${pageContext.servletContext.contextPath}/admin/users?action=/insert" method="post">
-            </c:if>
             <table border="1" cellpadding="5">
                 <caption>
                     <h2>
                         <c:if test="${user != null}">
                             Edit User
-                        </c:if>
-                        <c:if test="${user == null}">
-                            Add New User
                         </c:if>
                     </h2>
                 </caption>
@@ -56,19 +50,9 @@
                         />
                     </td>
                 </tr>
-                <tr>
-                    <th>Role: </th>
-                    <td>
-                    <select name="roles">
-                        <option value="USER">USER</option>
-                        <option value="ADMINISTRATOR">ADMINISTRATOR</option>
-                        <option value="GUEST">GUEST</option>
-                    </select>
-                    </td>
-                </tr>
                 <input type="hidden" name="login" value="<c:out value='${user.login}' />" />
                 <input type="hidden" name="password" value="<c:out value='${user.password}' />" />
-               <input type="hidden" name="role" value="<c:out value="${user.role}" />" />
+                <input type="hidden" name="role" value="<c:out value='${user.role}' />" />
                 <tr>
                     <td colspan="2" align="center">
                         <input type="submit" value="Save" />

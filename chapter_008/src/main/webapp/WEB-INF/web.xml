@@ -17,12 +17,12 @@
 
     <filter >
         <filter-name>
-            AdminFilter
+            adminFilter
         </filter-name>
         <filter-class>ru.chedmitriy.filter.AdminFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>AdminFilter</filter-name>
+        <filter-name>adminFilter</filter-name>
         <url-pattern>/admin/*</url-pattern>
     </filter-mapping>
 
